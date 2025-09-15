@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserimento Guidato Codice Fiscale</title>
+    
+    <script src="https://www.google.com/recaptcha/api.js?render=6LePV8orAAAAALarT1J4ZEwsmnN59s-wm9Z4FFNK"></script>
+
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-color: #f0f2f5; 
+            margin: 0; 
+            padding: 10px;
+        }
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            text-align: center; 
+            width: 100%; 
+            max-width: 550px; 
+        }
+        h1 { color: #333; }
+        p { color: #666; margin-bottom: 25px; }
+        .cf-input-group input {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            text-align: center; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 5px;
+            width: 70px;
+        }
+        #part1 { width: 60px; }
+        #part2 { width: 80px; }
+        #part3 { width: 40px; }
+        #part4 { width: 80px; }
+        #part5 { width: 60px; }
+        .hidden { display: none; }
+        #submit_button { 
+            background-color: #0078d4; color: white; border: none; padding: 12px 25px; 
+            border-radius: 4px; font-size: 1em; cursor: pointer; margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        #submit_button:hover { background-color: #005a9e; }
+        #submit_button:disabled { background-color: #a1a1a1; cursor: not-allowed; }
+        
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .cf-input-group input { width: 14%; padding: 8px; font-size: 1em; margin: 1%; min-width: 30px; }
+            #part1, #part2, #part3, #part4, #part5 { width: 14%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Benvenuto/a!</h1>
+        <p>Inserisci il tuo Codice Fiscale un pezzo alla volta.</p>
+        
+        <form id="cf_form" novalidate>
+            <div class="cf-input-group">
+                <input type="text" id="part1" maxlength="3" autocomplete="off">
+                <input type="text" id="part2" maxlength="4" class="hidden" autocomplete="off">
+                <input type="text" id="part3" maxlength="2" class="hidden" autocomplete="off">
+                <input type="text" id="part4" maxlength="4" class="hidden" autocomplete="off">
+                <input type="text" id="part5" maxlength="3" class="hidden" autocomplete="off">
+            </div>
+            <button type="submit" id="submit_button" disabled>Procedi alla compilazione</button>
+        </form>
+    </div>
+
+    <script>
+        // --- CONFIGURAZIONE ---
+        const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
+        const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
+        // Chiave del sito reCAPTCHA inserita qui
+        const RECAPTCHA_SITE_KEY = "6LePV8orAAAAALarT1J4ZEwsmnN59s-wm9Z4FFNK";
+        
+        // --- VARIABILI DI MEMORIA ---
+        let ultimoCodiceErrato = null;
+        let utenteHaModificato = false;
+
+        function validaCodiceFiscale(cf) {
+            if (!cf || cf.length !== 16) return false;
+            const cfUpper = cf.toUpperCase();
+            const regex = /^[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$/;
+            if (!regex.test(cfUpper)) return false;
+            let s = 0;
+            const mapDispari = { '0':1,'1':0,'2':5,'3':7,'4':9,'5':13,'6':15,'7':17,'8':19,'9':21,'A':1,'B':0,'C':5,'D':7,'E':9,'F':13,'G':15,'H':17,'I':19,'J':21,'K':2,'L':4,'M':18,'N':20,'O':11,'P':3,'Q':6,'R':8,'S':12,'T':14,'U':16,'V':10,'W':22,'X':25,'Y':24,'Z':23 };
+            for (let i = 0; i < 15; i++) {
+                const c = cfUpper[i];
+                if ((i + 1) % 2 === 0) { s += isNaN(parseInt(c, 10)) ? c.charCodeAt(0) - 'A'.charCodeAt(0) : parseInt(c, 10); } else { s += mapDispari[c]; }
+            }
+            return cfUpper[15] === String.fromCharCode('A'.charCodeAt(0) + (s % 26));
+        }
+
+        const inputs = [ document.getElementById('part1'), document.getElementById('part2'), document.getElementById('part3'), document.getElementById('part4'), document.getElementById('part5') ];
+        const submitButton = document.getElementById('submit_button');
+        const form = document.getElementById('cf_form');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('paste', e => e.preventDefault());
+
+            input.addEventListener('input', () => {
+                utenteHaModificato = true;
+                input.value = input.value.toUpperCase();
+                if (input.value.length > input.maxLength) { input.value = input.value.slice(0, input.maxLength); }
+                if (input.value.length === input.maxLength && index < inputs.length - 1) { inputs[index + 1].classList.remove('hidden'); }
+                submitButton.disabled = !inputs.every(i => i.value.length === i.maxLength);
+            });
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            submitButton.disabled = true;
+
+            grecaptcha.ready(function() {
+                grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token) {
+                    const fullCF = inputs.map(i => i.value).join('');
+
+                    function proceedToForm() {
+                        const finalUrl = `${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`;
+                        window.location.href = finalUrl;
+                    }
+
+                    if (validaCodiceFiscale(fullCF)) {
+                        proceedToForm();
+                    } else {
+                        if (fullCF === ultimoCodiceErrato && utenteHaModificato) {
+                            const userIsSure = confirm("Il Codice Fiscale inserito non sembra valido. Sei sicuro che sia corretto?");
+                            if (userIsSure) { proceedToForm(); }
+                        } else {
+                            alert("Il Codice Fiscale inserito non è valido. Si prega di controllare.");
+                            ultimoCodiceErrato = fullCF;
+                        }
+                    }
+                    submitButton.disabled = false;
+                    utenteHaModificato = false;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
