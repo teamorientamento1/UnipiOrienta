@@ -3,43 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inserimento Guidato Codice Fiscale</title>
+    <title>Inserimento Guidato Codice Fiscale - Università di Pisa</title>
     
-    <script src="https://www.google.com/recaptcha/api.js?render=6LePV8orAAAAALarT1J4ZEwsmnN59s-wm9Z4FFNK"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY"></script>
 
     <style>
+        :root {
+            --colore-primario-unipi: #003366;
+            --colore-sfondo: #f4f7f6;
+            --colore-testo-secondario: #6c757d;
+            --colore-bianco: #ffffff;
+            --colore-ombra: rgba(0, 0, 0, 0.08);
+        }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Montserrat', sans-serif;
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
-            background-color: #f0f2f5; 
+            background-color: var(--colore-sfondo); 
             margin: 0; 
-            padding: 10px;
+            padding: 20px;
         }
         .container { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            background: var(--colore-bianco); 
+            padding: 40px 50px; 
+            border-radius: 12px;
+            box-shadow: 0 10px 25px var(--colore-ombra);
             text-align: center; 
             width: 100%; 
-            max-width: 550px; 
+            max-width: 550px;
+            border-top: 5px solid var(--colore-primario-unipi);
         }
-        h1 { color: #333; }
-        p { color: #666; margin-bottom: 25px; }
+        .logo-unipi {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 25px;
+        }
+        h1 { 
+            color: var(--colore-primario-unipi);
+            font-weight: 700;
+            margin-top: 0;
+        }
+        p { 
+            color: var(--colore-testo-secondario); 
+            margin-bottom: 30px; 
+        }
         .cf-input-group input {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em; 
             padding: 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
+            border: 2px solid #dee2e6; 
+            border-radius: 6px; 
             text-align: center; 
             letter-spacing: 2px;
             text-transform: uppercase;
             margin: 5px;
             width: 70px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .cf-input-group input:focus {
+            border-color: var(--colore-primario-unipi);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
+            outline: none;
         }
         #part1 { width: 60px; }
         #part2 { width: 80px; }
@@ -48,15 +78,28 @@
         #part5 { width: 60px; }
         .hidden { display: none; }
         #submit_button { 
-            background-color: #0078d4; color: white; border: none; padding: 12px 25px; 
-            border-radius: 4px; font-size: 1em; cursor: pointer; margin-top: 20px;
-            transition: background-color 0.2s;
+            background-color: var(--colore-primario-unipi);
+            color: var(--colore-bianco);
+            border: none;
+            padding: 12px 30px; 
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.2s, transform 0.2s;
+            text-transform: uppercase;
         }
-        #submit_button:hover { background-color: #005a9e; }
-        #submit_button:disabled { background-color: #a1a1a1; cursor: not-allowed; }
-        
+        #submit_button:hover:not(:disabled) { 
+            background-color: #004488;
+            transform: translateY(-2px);
+        }
+        #submit_button:disabled { 
+            background-color: #a1a1a1; 
+            cursor: not-allowed; 
+        }
         @media (max-width: 600px) {
-            .container { padding: 20px; }
+            .container { padding: 30px 25px; }
             .cf-input-group input { width: 14%; padding: 8px; font-size: 1em; margin: 1%; min-width: 30px; }
             #part1, #part2, #part3, #part4, #part5 { width: 14%; }
         }
@@ -65,8 +108,10 @@
 <body>
 
     <div class="container">
-        <h1>Benvenuto/a!</h1>
-        <p>Inserisci il tuo Codice Fiscale un pezzo alla volta.</p>
+        <img src="images/marchio_unipi_orizz_pant541.png" alt="Logo Università di Pisa" class="logo-unipi">
+        
+        <h1>Validazione Codice Fiscale</h1>
+        <p>Per procedere, inserisci il tuo codice fiscale un pezzo alla volta.</p>
         
         <form id="cf_form" novalidate>
             <div class="cf-input-group">
@@ -76,7 +121,7 @@
                 <input type="text" id="part4" maxlength="4" class="hidden" autocomplete="off">
                 <input type="text" id="part5" maxlength="3" class="hidden" autocomplete="off">
             </div>
-            <button type="submit" id="submit_button" disabled>Procedi alla compilazione</button>
+            <button type="submit" id="submit_button" disabled>Procedi</button>
         </form>
     </div>
 
@@ -84,8 +129,7 @@
         // --- CONFIGURAZIONE ---
         const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
         const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
-        // Chiave del sito reCAPTCHA inserita qui
-        const RECAPTCHA_SITE_KEY = "6LePV8orAAAAALarT1J4ZEwsmnN59s-wm9Z4FFNK";
+        const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
         
         // --- VARIABILI DI MEMORIA ---
         let ultimoCodiceErrato = null;
@@ -111,7 +155,6 @@
 
         inputs.forEach((input, index) => {
             input.addEventListener('paste', e => e.preventDefault());
-
             input.addEventListener('input', () => {
                 utenteHaModificato = true;
                 input.value = input.value.toUpperCase();
@@ -124,16 +167,13 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault(); 
             submitButton.disabled = true;
-
             grecaptcha.ready(function() {
                 grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token) {
                     const fullCF = inputs.map(i => i.value).join('');
-
                     function proceedToForm() {
                         const finalUrl = `${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`;
                         window.location.href = finalUrl;
                     }
-
                     if (validaCodiceFiscale(fullCF)) {
                         proceedToForm();
                     } else {
