@@ -13,8 +13,8 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY"></script>
 
     <style>
-        :root { --colore-primario-unipi: #003366; --colore-sfondo: #f4f7f6; --colore-testo-secondario: #6c757d; --colore-bianco: #ffffff; --colore-ombra: rgba(0, 0, 0, 0.08); }
-        body { font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: var(--colore-sfondo); margin: 0; padding: 40px 20px; }
+        :root { --colore-primario-unipi: #003366; --colore-sfondo: #f4f7f6; --colore-testo: #333; --colore-testo-secondario: #6c757d; --colore-bianco: #ffffff; --colore-ombra: rgba(0, 0, 0, 0.08); }
+        body { font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: var(--colore-sfondo); margin: 0; padding: 40px 20px; box-sizing: border-box; }
         .container { background: #fff; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 25px var(--colore-ombra); text-align: center; width: 100%; max-width: 800px; border-top: 5px solid var(--colore-primario-unipi); }
         .logo-unipi { max-width: 200px; margin-bottom: 25px; }
         h1, h2 { color: var(--colore-primario-unipi); }
@@ -26,111 +26,152 @@
         label, .label-group { display: block; margin-bottom: 8px; font-weight: 700; color: #6c757d; text-align: left; }
         input, select { font-family: 'Montserrat', sans-serif; font-size: 1em; width: 100%; padding: 10px; border: 2px solid #dee2e6; border-radius: 6px; box-sizing: border-box; }
         input:focus, select:focus { border-color: var(--colore-primario-unipi); box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); outline: none; }
-        select:disabled { background-color: #e9ecef; }
+        select:disabled { background-color: #e9ecef; cursor: not-allowed; }
         .hidden { display: none; }
-        #scuola-results { position: absolute; background: white; border: 1px solid #ddd; max-height: 150px; overflow-y: auto; width: 100%; z-index: 1000; text-align: left; }
+        .autocomplete-results { position: absolute; background: white; border: 1px solid #ddd; max-height: 150px; overflow-y: auto; width: 100%; z-index: 1000; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 0 0 6px 6px; }
         .result-item { padding: 10px; cursor: pointer; } .result-item:hover { background-color: #f0f0f0; }
-        #submit_button { background-color: var(--colore-primario-unipi); color: #fff; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1em; font-weight: 700; cursor: pointer; margin-top: 25px; transition: background-color 0.2s, transform 0.2s; text-transform: uppercase; }
+        #submit_button { background-color: var(--colore-primario-unipi); color: #fff; border: none; padding: 14px 40px; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; margin-top: 25px; transition: background-color 0.2s, transform 0.2s; text-transform: uppercase; letter-spacing: 1px; }
         #submit_button:disabled { background-color: #a1a1a1; cursor: not-allowed; }
         .checkbox-label { display: flex; align-items: center; font-weight: normal; }
         .checkbox-label input { width: auto; margin-right: 10px; }
+        .radio-group label { display: inline-block; margin-right: 20px; font-weight: 400; }
+        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+
     <div class="container">
         <img src="images/marchio_unipi_orizz_pant541.png" alt="Logo Università di Pisa" class="logo-unipi">
-        <h1>Modulo di Iscrizione</h1>
-        <p>Per procedere, compila tutti i campi richiesti.</p>
+        <h1>Modulo Iscrizione Evento</h1>
+        <p>Per procedere, compila tutti i campi richiesti. Molti campi offrono suggerimenti automatici per limitare gli errori.</p>
         
         <form id="main_form" novalidate>
-            <h2>Dati Anagrafici</h2>
-            <div class="form-grid">
-                <div class="input-group"><label for="nome_input">Nome</label><input type="text" id="nome_input" required></div>
-                <div class="input-group"><label for="cognome_input">Cognome</label><input type="text" id="cognome_input" required></div>
-                <div class="input-group"><label for="data_nascita_input">Data di Nascita</label><input type="date" id="data_nascita_input" required></div>
-                <div class="input-group"><label for="genere_input">Genere</label><select id="genere_input" required><option value="" disabled selected>Seleziona...</option><option value="M">Maschio</option><option value="F">Femmina</option></select></div>
-                <div class="input-group full-width"><label class="checkbox-label"><input type="checkbox" id="nato_estero_check"> Sono nato/a all'Estero</label></div>
-                <div id="luogo_nascita_italia" class="form-grid full-width">
-                    <div class="input-group"><label for="provincia_nascita_input">Provincia di Nascita</label><select id="provincia_nascita_input" required></select></div>
-                    <div class="input-group"><label for="comune_nascita_input">Comune di Nascita</label><input type="text" id="comune_nascita_input" autocomplete="off" required></div>
-                </div>
-                <div id="luogo_nascita_estero" class="input-group full-width hidden"><label for="stato_nascita_input">Stato Estero di Nascita</label><input type="text" id="stato_nascita_input"></div>
-            </div>
-            <h2>Scuola di Provenienza</h2>
-            <div class="form-grid">
-                <div class="input-group"><label for="regione_scuola_input">Regione</label><select id="regione_scuola_input" required></select></div>
-                <div class="input-group"><label for="provincia_scuola_input">Provincia</label><select id="provincia_scuola_input" required disabled></select></div>
-                <div class="input-group"><label for="comune_scuola_input">Comune</label><select id="comune_scuola_input" required disabled></select></div>
-                <div class="input-group"><label for="scuola_input">Cerca Plesso/Scuola</label><input type="text" id="scuola_input" autocomplete="off" required disabled><div id="scuola-results" class="hidden"></div></div>
-            </div>
-            <h2>Codice Fiscale</h2>
-            <div class="input-group full-width"><label>Inserisci il tuo Codice Fiscale</label><div class="cf-input-group"></div></div>
-            <button type="submit" id="submit_button" disabled>Procedi</button>
-        </form>
+             </form>
     </div>
 
     <script>
     // --- CONFIGURAZIONE DA COMPLETARE ---
     const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
-    const CF_FIELD_ID = "r_cf_id_qui";
     const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
-    // Aggiungi qui gli altri ID delle domande del tuo form
-    const FIELD_IDS = {
-        NOME: "r_nome_id_qui",
-        COGNOME: "r_cognome_id_qui",
-        // ... completa con tutti gli altri campi
-    };
+    // ... e tutti i FIELD_IDS
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Funzione per caricare i dati JSON e avviare l'applicazione
-        async function initializeApp() {
-            try {
-                // Carica i dati dai file JSON
-                const [comuniRes, scuoleRes] = await Promise.all([
-                    fetch('comuni.json'),
-                    fetch('scuole.json')
-                ]);
-                
-                if (!comuniRes.ok || !scuoleRes.ok) {
-                    throw new Error('Errore nel caricamento dei file JSON.');
-                }
-
-                const comuniData = await comuniRes.json();
-                const scuoleData = await scuoleRes.json();
-
-                // Ora che i dati sono caricati, avvia tutte le logiche del form
-                setupFormLogic(comuniData, scuoleData);
-
-            } catch (error) {
-                console.error("Impossibile inizializzare l'applicazione:", error);
-                alert("Errore critico: impossibile caricare i dati necessari per il modulo. Riprova più tardi.");
-            }
-        }
-
-        function setupFormLogic(comuni, scuole) {
-            // Qui inseriremo tutta la logica del form che abbiamo sviluppato:
-            // - popolamento dei menu a tendina
-            // - logica a cascata
-            // - logica di ricerca con fuse.js
-            // - logica di validazione e di invio (submit)
-            // ... etc.
-
-            // Esempio: Popoliamo la regione
-            const regioneSelect = document.getElementById('regione_scuola_input');
-            const regioni = [...new Set(scuole.map(s => s.REGIONE))].sort();
-            regioni.forEach(r => {
-                regioneSelect.add(new Option(r, r));
-            });
-            
-            // Aggiungi qui il resto di tutto il codice JavaScript che abbiamo scritto
-            // nelle risposte precedenti (gestione eventi, validazione, calcolo CF, etc.)
-            // Adattandolo per usare le variabili 'comuni' e 'scuole' caricate qui.
-
-            console.log("Dati caricati e logica del form pronta.");
-        }
-
         initializeApp();
     });
+
+    async function initializeApp() {
+        try {
+            const [comuniRes, scuoleRes] = await Promise.all([
+                fetch('comuni_semplificato.json'),
+                fetch('scuole_semplificato.json')
+            ]);
+            
+            if (!comuniRes.ok) throw new Error(`comuni_semplificato.json non trovato (errore ${comuniRes.status})`);
+            if (!scuoleRes.ok) throw new Error(`scuole_semplificato.json non trovato (errore ${scuoleRes.status})`);
+
+            const comuniData = await comuniRes.json();
+            const scuoleData = await scuoleRes.json();
+
+            setupFormLogic(comuniData, scuoleData);
+
+        } catch (error) {
+            console.error("Impossibile inizializzare:", error);
+            alert("Errore critico: impossibile caricare i dati dei comuni o delle scuole. Controlla che i file JSON siano presenti e scritti correttamente nel repository. Riprova più tardi.");
+        }
+    }
+
+    function setupFormLogic(comuni, scuole) {
+        // --- ELEMENTI DEL DOM ---
+        const regioneScuolaSelect = document.getElementById('regione_scuola_input');
+        const provinciaScuolaSelect = document.getElementById('provincia_scuola_input');
+        const comuneScuolaSelect = document.getElementById('comune_scuola_input');
+        const scuolaInput = document.getElementById('scuola_input');
+        const scuolaResults = document.getElementById('scuola-results');
+
+        // --- FUNZIONE AUSILIARIA ---
+        function populateSelect(selectElement, items, placeholder = "Seleziona...") {
+            selectElement.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
+            // new Set() rimuove i duplicati
+            [...new Set(items)].sort().forEach(item => {
+                selectElement.add(new Option(item, item));
+            });
+        }
+        
+        // --- INIZIALIZZAZIONE ---
+        // Popoliamo il primo menu delle regioni
+        const regioni = scuole.map(s => s.regione); // CORRETTO: usa 'regione' minuscolo
+        populateSelect(regioneScuolaSelect, regioni);
+
+        // --- LOGICA A CASCATA ---
+        regioneScuolaSelect.addEventListener('change', () => {
+            const selectedRegione = regioneScuolaSelect.value;
+            // Filtra le scuole per la regione selezionata e prendi le province
+            const province = scuole
+                .filter(s => s.regione === selectedRegione) // CORRETTO: usa 'regione'
+                .map(s => s.provincia); // CORRETTO: usa 'provincia'
+            
+            populateSelect(provinciaScuolaSelect, province);
+            provinciaScuolaSelect.disabled = false;
+            
+            // Resetta i menu successivi
+            comuneScuolaSelect.disabled = true;
+            comuneScuolaSelect.innerHTML = '<option value="">Prima scegli la provincia...</option>';
+            scuolaInput.disabled = true;
+            scuolaInput.value = '';
+        });
+
+        provinciaScuolaSelect.addEventListener('change', () => {
+            const selectedProvincia = provinciaScuolaSelect.value;
+            const comuniInProvincia = scuole
+                .filter(s => s.provincia === selectedProvincia) // CORRETTO: usa 'provincia'
+                .map(s => s.comune); // CORRETTO: usa 'comune'
+
+            populateSelect(comuneScuolaSelect, comuniInProvincia);
+            comuneScuolaSelect.disabled = false;
+            scuolaInput.disabled = true;
+            scuolaInput.value = '';
+        });
+
+        comuneScuolaSelect.addEventListener('change', () => {
+            scuolaInput.disabled = !(comuneScuolaSelect.value);
+            scuolaInput.value = '';
+        });
+
+        // --- LOGICA RICERCA SCUOLA CON FUSE.JS ---
+        scuolaInput.addEventListener('input', () => {
+            const query = scuolaInput.value;
+            const selectedComune = comuneScuolaSelect.value;
+            if (query.length < 2 || !selectedComune) {
+                scuolaResults.classList.add('hidden');
+                return;
+            }
+            
+            const scuoleNelComune = scuole.filter(s => s.comune === selectedComune); // CORRETTO: usa 'comune'
+            // Inizializza Fuse.js con la lista filtrata e cerca per 'nome'
+            const fuse = new Fuse(scuoleNelComune, { keys: ['nome'], threshold: 0.4 }); // CORRETTO: usa 'nome'
+            const results = fuse.search(query);
+            
+            scuolaResults.innerHTML = '';
+            if (results.length > 0) {
+                scuolaResults.classList.remove('hidden');
+                results.slice(0, 5).forEach(result => {
+                    const item = document.createElement('div');
+                    item.className = 'result-item';
+                    item.textContent = result.item.nome; // CORRETTO: usa 'nome'
+                    item.addEventListener('click', () => {
+                        scuolaInput.value = result.item.nome;
+                        scuolaResults.classList.add('hidden');
+                    });
+                    scuolaResults.appendChild(item);
+                });
+            } else {
+                scuolaResults.classList.add('hidden');
+            }
+        });
+        
+        // --- Qui va il resto del codice JavaScript per validazioni, submit, ecc. ---
+        // Assicurati che anche lì tutti i riferimenti ai campi dei file JSON siano in minuscolo.
+    }
     </script>
 </body>
 </html>
