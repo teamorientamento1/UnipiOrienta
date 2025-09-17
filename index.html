@@ -13,28 +13,62 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY"></script>
 
     <style>
-        :root { --colore-primario-unipi: #003366; --colore-sfondo: #f4f7f6; --colore-testo: #333; --colore-testo-secondario: #6c757d; --colore-bianco: #ffffff; --colore-ombra: rgba(0, 0, 0, 0.08); }
-        body { font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: var(--colore-sfondo); margin: 0; padding: 40px 20px; box-sizing: border-box; }
-        .container { background: #fff; padding: 40px 50px; border-radius: 12px; box-shadow: 0 10px 25px var(--colore-ombra); text-align: center; width: 100%; max-width: 800px; border-top: 5px solid var(--colore-primario-unipi); }
+        :root {
+            --colore-primario-unipi: #003366; --colore-sfondo: #f4f7f6;
+            --colore-testo: #333; --colore-testo-secondario: #6c757d;
+            --colore-bianco: #ffffff; --colore-ombra: rgba(0, 0, 0, 0.08);
+            --colore-errore: #d9534f;
+        }
+        body { 
+            font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; 
+            align-items: flex-start; min-height: 100vh; background-color: var(--colore-sfondo); 
+            margin: 0; padding: 40px 20px; box-sizing: border-box;
+        }
+        .container { 
+            background: var(--colore-bianco); padding: 40px 50px; border-radius: 12px;
+            box-shadow: 0 10px 25px var(--colore-ombra); text-align: center; 
+            width: 100%; max-width: 800px; border-top: 5px solid var(--colore-primario-unipi);
+        }
         .logo-unipi { max-width: 200px; margin-bottom: 25px; }
         h1, h2 { color: var(--colore-primario-unipi); }
         h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; text-align: left; font-size: 1.2em; }
-        p { color: #6c757d; margin-bottom: 30px; }
+        p { color: var(--colore-testo-secondario); margin-bottom: 30px; }
+        
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
         .form-grid .full-width { grid-column: 1 / -1; }
         .input-group { margin-bottom: 15px; position: relative; }
         label, .label-group { display: block; margin-bottom: 8px; font-weight: 700; color: #6c757d; text-align: left; }
-        input, select { font-family: 'Montserrat', sans-serif; font-size: 1em; width: 100%; padding: 10px; border: 2px solid #dee2e6; border-radius: 6px; box-sizing: border-box; }
-        input:focus, select:focus { border-color: var(--colore-primario-unipi); box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); outline: none; }
+        input, select {
+            font-family: 'Montserrat', sans-serif; font-size: 1em; width: 100%;
+            padding: 10px; border: 2px solid #dee2e6; border-radius: 6px;
+            box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: var(--colore-primario-unipi);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
+            outline: none;
+        }
         select:disabled { background-color: #e9ecef; cursor: not-allowed; }
         .hidden { display: none; }
+
         .autocomplete-results { position: absolute; background: white; border: 1px solid #ddd; max-height: 150px; overflow-y: auto; width: 100%; z-index: 1000; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 0 0 6px 6px; }
-        .result-item { padding: 10px; cursor: pointer; } .result-item:hover { background-color: #f0f0f0; }
-        #submit_button { background-color: var(--colore-primario-unipi); color: #fff; border: none; padding: 14px 40px; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; margin-top: 25px; transition: background-color 0.2s, transform 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        .result-item { padding: 10px; cursor: pointer; } 
+        .result-item:hover { background-color: #f0f0f0; }
+        
+        #submit_button { 
+            background-color: var(--colore-primario-unipi); color: #fff; border: none;
+            padding: 14px 40px; border-radius: 50px; font-size: 1.1em; font-weight: 700;
+            cursor: pointer; margin-top: 25px; transition: background-color 0.2s, transform 0.2s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
         #submit_button:disabled { background-color: #a1a1a1; cursor: not-allowed; }
+        
         .checkbox-label { display: flex; align-items: center; font-weight: normal; }
         .checkbox-label input { width: auto; margin-right: 10px; }
         .radio-group label { display: inline-block; margin-right: 20px; font-weight: 400; }
+        .cf-input-group { display: flex; justify-content: space-between; gap: 5px; }
+        .cf-input-group input { font-family: 'Courier New', Courier, monospace; font-size: 1.2em; width: 100%; text-transform: uppercase; }
+
         @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -46,131 +80,262 @@
         <p>Per procedere, compila tutti i campi richiesti. Molti campi offrono suggerimenti automatici per limitare gli errori.</p>
         
         <form id="main_form" novalidate>
-             </form>
+            <h2>Dati Anagrafici</h2>
+            <div class="form-grid">
+                <div class="input-group"><label for="nome_input">Nome</label><input type="text" id="nome_input" required pattern="[A-Za-z\s'À-ÖØ-öø-ÿ]+"></div>
+                <div class="input-group"><label for="cognome_input">Cognome</label><input type="text" id="cognome_input" required pattern="[A-Za-z\s'À-ÖØ-öø-ÿ]+"></div>
+                <div class="input-group"><label for="data_nascita_input">Data di Nascita</label><input type="date" id="data_nascita_input" required></div>
+                <div class="input-group"><label for="genere_input">Genere</label><select id="genere_input" required><option value="" disabled selected>Seleziona...</option><option value="M">Maschio</option><option value="F">Femmina</option></select></div>
+                <div class="input-group full-width"><label for="provincia_residenza_input">Provincia di Residenza</label><select id="provincia_residenza_input" required></select></div>
+                <div class="input-group full-width"><label class="checkbox-label"><input type="checkbox" id="nato_estero_check"> Sono nato/a all'Estero</label></div>
+
+                <div id="luogo_nascita_italia" class="form-grid full-width">
+                    <div class="input-group"><label for="provincia_nascita_input">Provincia di Nascita</label><select id="provincia_nascita_input" required></select></div>
+                    <div class="input-group"><label for="comune_nascita_input">Comune di Nascita</label><input type="text" id="comune_nascita_input" autocomplete="off" required><div id="comune-nascita-results" class="autocomplete-results hidden"></div></div>
+                </div>
+                <div id="luogo_nascita_estero" class="input-group full-width hidden"><label for="stato_nascita_input">Stato Estero di Nascita</label><input type="text" id="stato_nascita_input" autocomplete="off"><div id="stato-nascita-results" class="autocomplete-results hidden"></div></div>
+            </div>
+            
+            <h2>Scuola di Provenienza</h2>
+            <div class="form-grid">
+                <div class="input-group"><label for="regione_scuola_input">Regione</label><select id="regione_scuola_input" required></select></div>
+                <div class="input-group"><label for="provincia_scuola_input">Provincia</label><select id="provincia_scuola_input" required disabled></select></div>
+                <div class="input-group"><label for="comune_scuola_input">Comune</label><select id="comune_scuola_input" required disabled></select></div>
+                <div class="input-group"><label for="scuola_input">Cerca Plesso o Scuola</label><input type="text" id="scuola_input" autocomplete="off" required disabled><div id="scuola-results" class="autocomplete-results hidden"></div></div>
+            </div>
+
+            <h2>Codice Fiscale</h2>
+            <div class="input-group full-width"><p style="margin: 0 0 10px 0; text-align:left;">Inserisci qui sotto il tuo Codice Fiscale. Verrà controllato con i dati inseriti.</p><div class="cf-input-group" id="cf_container"></div></div>
+            
+            <h2>Altre Informazioni</h2>
+            <div class="input-group full-width"><label class="label-group">Hai una certificazione medica (disabilità/DSA)?</label><div class="radio-group" id="cert-medica-group"><label><input type="radio" name="cert_medica" value="Si" required> Sì</label><label><input type="radio" name="cert_medica" value="No" checked required> No</label><label><input type="radio" name="cert_medica" value="Altro"> Altro</label></div><input type="text" id="cert_medica_altro_input" class="hidden" placeholder="Specifica qui se necessario..."></div>
+
+            <button type="submit" id="submit_button" disabled>Verifica e Procedi</button>
+        </form>
     </div>
 
     <script>
     // --- CONFIGURAZIONE DA COMPLETARE ---
-    const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
+    const MS_FORM_URL = "INCOLLA_QUI_URL_DEL_TUO_MICROSOFT_FORM";
+    const CF_FIELD_ID = "INCOLLA_QUI_ID_DOMANDA_CODICE_FISCALE";
+    // Aggiungi qui gli altri ID delle domande del tuo form se vuoi pre-compilarle
+    const FIELD_IDS = { /* ... */ }; 
     const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
-    // ... e tutti i FIELD_IDS
+    const ETA_SOGLIA_DOCENTE = 26;
+
+    let comuniData = [];
+    let scuoleData = [];
+    let statiEsteriData = [];
+    let ultimoCodiceErrato = null;
+    let utenteHaModificato = false;
+    let luogoNascitaSelezionato = null; // Può essere un comune o uno stato
 
     document.addEventListener('DOMContentLoaded', () => {
+        const cfContainer = document.getElementById('cf_container');
+        const lengths = [3, 4, 2, 4, 3];
+        for (let i = 1; i <= 5; i++) {
+            const input = document.createElement('input');
+            input.type = 'text'; input.id = `part${i}`;
+            input.maxLength = lengths[i-1]; input.required = true;
+            if (i > 1) input.classList.add('hidden');
+            cfContainer.appendChild(input);
+        }
         initializeApp();
     });
 
     async function initializeApp() {
         try {
-            const [comuniRes, scuoleRes] = await Promise.all([
+            const [comuniRes, scuoleRes, statiRes] = await Promise.all([
                 fetch('comuni_semplificato.json'),
-                fetch('scuole_semplificato.json')
+                fetch('scuole_semplificato.json'),
+                fetch('stati_esteri_semplificato.json')
             ]);
             
-            if (!comuniRes.ok) throw new Error(`comuni_semplificato.json non trovato (errore ${comuniRes.status})`);
-            if (!scuoleRes.ok) throw new Error(`scuole_semplificato.json non trovato (errore ${scuoleRes.status})`);
+            if (!comuniRes.ok) throw new Error('comuni_semplificato.json');
+            if (!scuoleRes.ok) throw new Error('scuole_semplificato.json');
+            if (!statiRes.ok) throw new Error('stati_esteri_semplificato.json');
 
-            const comuniData = await comuniRes.json();
-            const scuoleData = await scuoleRes.json();
+            comuniData = await comuniRes.json();
+            scuoleData = await scuoleRes.json();
+            statiEsteriData = await statiRes.json();
 
-            setupFormLogic(comuniData, scuoleData);
+            setupFormLogic(comuniData, scuoleData, statiEsteriData);
 
         } catch (error) {
             console.error("Impossibile inizializzare:", error);
-            alert("Errore critico: impossibile caricare i dati dei comuni o delle scuole. Controlla che i file JSON siano presenti e scritti correttamente nel repository. Riprova più tardi.");
+            alert(`Errore critico: impossibile caricare il file ${error.message}. La pagina non può funzionare. Assicurati che il file sia presente nel repository GitHub e che il nome sia corretto.`);
         }
     }
 
-    function setupFormLogic(comuni, scuole) {
-        // --- ELEMENTI DEL DOM ---
-        const regioneScuolaSelect = document.getElementById('regione_scuola_input');
-        const provinciaScuolaSelect = document.getElementById('provincia_scuola_input');
-        const comuneScuolaSelect = document.getElementById('comune_scuola_input');
-        const scuolaInput = document.getElementById('scuola_input');
-        const scuolaResults = document.getElementById('scuola-results');
+    function setupFormLogic(comuni, scuole, stati) {
+        const form = document.getElementById('main_form');
+        const submitButton = document.getElementById('submit_button');
+        const allRequiredInputs = () => document.querySelectorAll('#main_form [required]');
 
-        // --- FUNZIONE AUSILIARIA ---
+        // --- FUNZIONI DI POPOLAMENTO E UTILITY ---
         function populateSelect(selectElement, items, placeholder = "Seleziona...") {
             selectElement.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
-            // new Set() rimuove i duplicati
             [...new Set(items)].sort().forEach(item => {
                 selectElement.add(new Option(item, item));
             });
         }
         
-        // --- INIZIALIZZAZIONE ---
-        // Popoliamo il primo menu delle regioni
-        const regioni = scuole.map(s => s.regione); // CORRETTO: usa 'regione' minuscolo
+        function setupAutocomplete(inputId, resultsId, dataList, onSelectCallback) {
+            const input = document.getElementById(inputId);
+            const resultsContainer = document.getElementById(resultsId);
+            const fuse = new Fuse(dataList, { keys: ['nome'], includeScore: true, threshold: 0.3 });
+
+            input.addEventListener('input', () => {
+                const query = input.value;
+                onSelectCallback(null);
+                if (query.length < 2) { resultsContainer.classList.add('hidden'); return; }
+                const results = fuse.search(query);
+                resultsContainer.innerHTML = '';
+                if (results.length > 0) {
+                    resultsContainer.classList.remove('hidden');
+                    results.slice(0, 5).forEach(result => {
+                        const item = document.createElement('div');
+                        item.className = 'result-item';
+                        item.textContent = result.item.nome;
+                        item.addEventListener('click', () => {
+                            input.value = result.item.nome;
+                            resultsContainer.classList.add('hidden');
+                            onSelectCallback(result.item);
+                            checkFormValidity();
+                        });
+                        resultsContainer.appendChild(item);
+                    });
+                } else {
+                    resultsContainer.classList.add('hidden');
+                }
+            });
+        }
+        
+        // --- POPOLAMENTO INIZIALE ---
+        const provinciaNascitaSelect = document.getElementById('provincia_nascita_input');
+        const provinciaResidenzaSelect = document.getElementById('provincia_residenza_input');
+        const regioneScuolaSelect = document.getElementById('regione_scuola_input');
+        
+        const province = comuni.map(c => c.provincia);
+        const regioni = scuole.map(s => s.regione);
+
+        populateSelect(provinciaNascitaSelect, province);
+        populateSelect(provinciaResidenzaSelect, province);
         populateSelect(regioneScuolaSelect, regioni);
 
-        // --- LOGICA A CASCATA ---
+        // --- SETUP AUTOCOMPLETE ---
+        setupAutocomplete('comune_nascita_input', 'comune-nascita-results', comuni, item => { luogoNascitaSelezionato = item; });
+        setupAutocomplete('citta_residenza_input', 'citta-residenza-results', comuni, () => {}); // Callback non necessario per residenza
+        setupAutocomplete('stato_nascita_input', 'stato-nascita-results', stati, item => { luogoNascitaSelezionato = item; });
+        
+        // --- LOGICA A CASCATA SCUOLE ---
+        const provinciaScuolaSelect = document.getElementById('provincia_scuola_input');
+        const comuneScuolaSelect = document.getElementById('comune_scuola_input');
+        const scuolaInput = document.getElementById('scuola_input');
+        const scuolaResults = document.getElementById('scuola-results');
+
         regioneScuolaSelect.addEventListener('change', () => {
-            const selectedRegione = regioneScuolaSelect.value;
-            // Filtra le scuole per la regione selezionata e prendi le province
-            const province = scuole
-                .filter(s => s.regione === selectedRegione) // CORRETTO: usa 'regione'
-                .map(s => s.provincia); // CORRETTO: usa 'provincia'
-            
+            const province = scuole.filter(s => s.regione === regioneScuolaSelect.value).map(s => s.provincia);
             populateSelect(provinciaScuolaSelect, province);
             provinciaScuolaSelect.disabled = false;
-            
-            // Resetta i menu successivi
-            comuneScuolaSelect.disabled = true;
-            comuneScuolaSelect.innerHTML = '<option value="">Prima scegli la provincia...</option>';
-            scuolaInput.disabled = true;
-            scuolaInput.value = '';
+            [comuneScuolaSelect, scuolaInput].forEach(el => { el.disabled = true; el.value = ''; });
         });
-
         provinciaScuolaSelect.addEventListener('change', () => {
-            const selectedProvincia = provinciaScuolaSelect.value;
-            const comuniInProvincia = scuole
-                .filter(s => s.provincia === selectedProvincia) // CORRETTO: usa 'provincia'
-                .map(s => s.comune); // CORRETTO: usa 'comune'
-
+            const comuniInProvincia = scuole.filter(s => s.provincia === provinciaScuolaSelect.value).map(s => s.comune);
             populateSelect(comuneScuolaSelect, comuniInProvincia);
             comuneScuolaSelect.disabled = false;
-            scuolaInput.disabled = true;
-            scuolaInput.value = '';
+            scuolaInput.disabled = true; scuolaInput.value = '';
         });
-
         comuneScuolaSelect.addEventListener('change', () => {
-            scuolaInput.disabled = !(comuneScuolaSelect.value);
+            scuolaInput.disabled = !comuneScuolaSelect.value;
             scuolaInput.value = '';
         });
-
-        // --- LOGICA RICERCA SCUOLA CON FUSE.JS ---
+        
         scuolaInput.addEventListener('input', () => {
             const query = scuolaInput.value;
-            const selectedComune = comuneScuolaSelect.value;
-            if (query.length < 2 || !selectedComune) {
-                scuolaResults.classList.add('hidden');
-                return;
-            }
-            
-            const scuoleNelComune = scuole.filter(s => s.comune === selectedComune); // CORRETTO: usa 'comune'
-            // Inizializza Fuse.js con la lista filtrata e cerca per 'nome'
-            const fuse = new Fuse(scuoleNelComune, { keys: ['nome'], threshold: 0.4 }); // CORRETTO: usa 'nome'
+            if (query.length < 2) { scuolaResults.classList.add('hidden'); return; }
+            const scuoleNelComune = scuole.filter(s => s.comune === comuneScuolaSelect.value);
+            const fuse = new Fuse(scuoleNelComune, { keys: ['nome'], threshold: 0.4 });
             const results = fuse.search(query);
-            
             scuolaResults.innerHTML = '';
             if (results.length > 0) {
                 scuolaResults.classList.remove('hidden');
-                results.slice(0, 5).forEach(result => {
+                results.slice(0, 5).forEach(res => {
                     const item = document.createElement('div');
-                    item.className = 'result-item';
-                    item.textContent = result.item.nome; // CORRETTO: usa 'nome'
+                    item.className = 'result-item'; item.textContent = res.item.nome;
                     item.addEventListener('click', () => {
-                        scuolaInput.value = result.item.nome;
+                        scuolaInput.value = res.item.nome;
                         scuolaResults.classList.add('hidden');
+                        checkFormValidity();
                     });
                     scuolaResults.appendChild(item);
                 });
-            } else {
-                scuolaResults.classList.add('hidden');
-            }
+            } else { scuolaResults.classList.add('hidden'); }
+        });
+        document.addEventListener('click', (e) => { if (!e.target.closest('.input-group')) { document.querySelectorAll('.autocomplete-results').forEach(r => r.classList.add('hidden')); } });
+
+        // --- LOGICA UI CONDIZIONALE ---
+        const natoEsteroCheck = document.getElementById('nato_estero_check');
+        natoEsteroCheck.addEventListener('change', () => {
+            const isEstero = natoEsteroCheck.checked;
+            document.getElementById('luogo_nascita_italia').classList.toggle('hidden', isEstero);
+            document.getElementById('luogo_nascita_estero').classList.toggle('hidden', !isEstero);
+            document.getElementById('provincia_nascita_input').required = !isEstero;
+            document.getElementById('comune_nascita_input').required = !isEstero;
+            document.getElementById('stato_nascita_input').required = isEstero;
+            luogoNascitaSelezionato = null;
+            form.dispatchEvent(new Event('input'));
         });
         
-        // --- Qui va il resto del codice JavaScript per validazioni, submit, ecc. ---
-        // Assicurati che anche lì tutti i riferimenti ai campi dei file JSON siano in minuscolo.
+        document.getElementById('cert-medica-group').addEventListener('change', (e) => {
+            const altroInput = document.getElementById('cert_medica_altro_input');
+            const isAltro = e.target.value === 'Altro';
+            altroInput.classList.toggle('hidden', !isAltro);
+            altroInput.required = isAltro;
+            if (!isAltro) altroInput.value = '';
+            checkFormValidity();
+        });
+
+        // --- VALIDAZIONE FORM ---
+        function checkFormValidity() {
+            let isValid = true;
+            allRequiredInputs().forEach(input => {
+                if (input.type === 'radio') {
+                    if (!document.querySelector(`input[name="${input.name}"]:checked`)) isValid = false;
+                } else if (!input.value.trim()) {
+                    isValid = false;
+                }
+            });
+            submitButton.disabled = !isValid;
+        }
+        form.addEventListener('input', checkFormValidity);
+
+        // --- GESTIONE INVIO (SUBMIT) ---
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitButton.disabled = true;
+
+            // ... (Qui va tutta la logica di validazione incrociata: età, genere vs cf, ecc.)
+            // ... e la logica di reCAPTCHA
+            // Se tutti i controlli passano, si esegue proceedToForm()
+
+            // Esempio semplificato
+            alert("Form inviato con successo (simulazione)!");
+            submitButton.disabled = false; // Riabilita per test
+
+            // Esempio chiamata
+            // function proceedToForm() {
+            //     const allData = { ... }; // Raccogli tutti i dati dai campi
+            //     let urlParams = new URLSearchParams();
+            //     for (const key in allData) {
+            //         if (FIELD_IDS[key]) {
+            //             urlParams.append(FIELD_IDS[key], allData[key]);
+            //         }
+            //     }
+            //     const finalUrl = `${MS_FORM_URL}&${urlParams.toString()}`;
+            //     window.location.href = finalUrl;
+            // }
+        });
     }
     </script>
 </body>
