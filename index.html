@@ -2,330 +2,395 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Maschera Iscrizione – Università di Pisa</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anagrafica & Codice Fiscale - Università di Pisa</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 
+  <!-- reCAPTCHA (tua chiave) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY"></script>
 
   <style>
-    :root {
-      --colore-primario-unipi:#003366; --colore-sfondo:#f4f7f6; --colore-testo-secondario:#6c757d;
-      --colore-bianco:#ffffff; --colore-ombra:rgba(0,0,0,.08); --errore-bg:#fdecea; --errore-bordo:#e57373;
+    :root{
+      --prim:#003366;
+      --prim2:#0a66c2;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --shadow:0 8px 20px rgba(0,0,0,.06);
     }
-    *{box-sizing:border-box}
-    body{font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;background:var(--colore-sfondo);margin:0;padding:20px}
-    .container{background:#fff;padding:32px 28px;border-radius:12px;box-shadow:0 10px 25px var(--colore-ombra);width:100%;max-width:780px;border-top:5px solid var(--colore-primario-unipi)}
-    .logo-unipi{max-width:200px;height:auto;margin-bottom:10px;display:block}
-    h1{color:var(--colore-primario-unipi);font-weight:700;margin:8px 0 12px}
-    p{color:var(--colore-testo-secondario);margin:0 0 20px}
-    .section{margin-top:28px;padding-top:20px;border-top:1px solid #e9ecef}
-    .section h2{margin:0 0 12px;color:var(--colore-primario-unipi);font-size:1.15rem}
-    .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-    .field{display:flex;flex-direction:column;gap:6px}
-    label{font-weight:700;color:#34495e;font-size:.95rem}
-    select,input[type="text"],input[type="date"],input[type="tel"],input[type="email"]{font-size:1rem;padding:10px 12px;border:2px solid #dee2e6;border-radius:8px;transition:border-color .2s,box-shadow .2s;background:#fff}
-    select:disabled{background:#f1f3f5;color:#8f9aa3;cursor:not-allowed}
-    select:focus,input:focus{border-color:var(--colore-primario-unipi);box-shadow:0 0 0 3px rgba(0,51,102,.2);outline:none}
-    .help{font-size:.9rem;color:var(--colore-testo-secondario);margin-top:6px}
-    .hidden{display:none}
-    .cf-input-group input{font-family:'Courier New',Courier,monospace;font-size:1.2em;padding:10px;border:2px solid #dee2e6;border-radius:6px;text-align:center;letter-spacing:2px;text-transform:uppercase;margin:5px;width:70px;transition:border-color .2s,box-shadow .2s}
-    .cf-input-group input:focus{border-color:var(--colore-primario-unipi);box-shadow:0 0 0 3px rgba(0,51,102,.2);outline:none}
-    #part1{width:60px} #part2{width:80px} #part3{width:40px} #part4{width:80px} #part5{width:60px}
-    #submit_button{background:var(--colore-primario-unipi);color:#fff;border:none;padding:12px 30px;border-radius:50px;font-size:1em;font-weight:700;cursor:pointer;margin-top:10px;transition:background-color .2s,transform .2s;text-transform:uppercase}
-    #submit_button:hover:not(:disabled){background:#004488;transform:translateY(-2px)}
-    #submit_button:disabled{background:#a1a1a1;cursor:not-allowed}
-    .invalid{background-color:var(--errore-bg)!important;border-color:var(--errore-bordo)!important}
-    @media (max-width:900px){.row{grid-template-columns:1fr}}
+    *{ box-sizing:border-box }
+    body{
+      font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      margin:0; padding:18px; background:var(--bg); color:var(--text);
+      display:flex; flex-direction:column; align-items:center; gap:16px; min-height:100vh;
+    }
+
+    .container{
+      width:100%; max-width:1120px; background:var(--card); border:1px solid var(--border);
+      border-top:5px solid var(--prim); border-radius:14px; box-shadow:var(--shadow); padding:18px 18px 12px;
+    }
+    .logo-unipi{ max-width:220px; height:auto; display:block; margin:0 auto 10px }
+    h1{ margin:6px 0 4px; color:var(--prim); font-weight:700; font-size:1.5rem }
+    p.subtitle{ margin:0 0 10px; color:var(--muted) }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .row-full{ grid-column:1 / -1; }
+
+    .box{
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      padding:12px;
+    }
+    .box h3{ margin:0 0 8px; font-size:1rem; color:var(--prim); text-align:center }
+
+    .field{ display:flex; flex-direction:column; gap:6px; align-items:center }
+    .field label{ font-weight:600; font-size:.95rem; text-align:center }
+    .field .hint{ color:var(--muted); font-size:.9rem; text-align:center }
+    .error-text{ color:#d94848; min-height:1.15em; font-size:.9rem; margin:2px 0 0; text-align:center }
+    .warning-text{ color:#b7791f; background:#fff7e6; padding:4px 6px; border-radius:8px; margin-top:4px; display:inline-block; font-size:.9rem; text-align:center }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select{
+      width:100%; max-width:520px;
+      padding:10px 12px; border:1px solid var(--border); border-radius:10px;
+      background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s;
+      font-size:1rem; text-align:center;
+    }
+    select{ text-align-last:center }
+    input:focus, select:focus{ border-color:var(--prim); box-shadow:0 0 0 3px rgba(4,71,123,.18) }
+    input.error{ border-color:#d94848; background:#fff }
+
+    .radio-group{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; width:100%;
+    }
+    .radio{ display:inline-flex; align-items:center; gap:6px; font-weight:500 }
+
+    /* CF: centrato, progressivo, grande */
+    .cf-wrapper{ display:flex; justify-content:center }
+    .cf-input-group{
+      display:flex; gap:10px; flex-wrap:nowrap; align-items:center; justify-content:center; padding:8px 0;
+    }
+    .cf-input-group input{
+      font-family:"Courier New",monospace; text-transform:uppercase; letter-spacing:1px;
+      height:56px; text-align:center; border:1px solid var(--border); border-radius:12px;
+      background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s;
+      padding:0 10px; font-size:1.25rem;
+    }
+    .cf-input-group input:focus{ border-color:var(--prim2); box-shadow:0 0 0 4px rgba(10,102,194,.18) }
+    .cf-input-group input[maxlength="2"]{ width: calc(2ch + 28px) }
+    .cf-input-group input[maxlength="3"]{ width: calc(3ch + 28px) }
+    .cf-input-group input[maxlength="4"]{ width: calc(4ch + 28px) }
+
+    .hidden{ display:none }
+
+    .footer-actions{ width:100%; max-width:1120px; display:flex; justify-content:flex-end; gap:10px; }
+    #globalProceed{
+      display:none; background:linear-gradient(135deg,var(--prim),var(--prim2)); color:#fff; border:none;
+      padding:12px 18px; border-radius:12px; cursor:pointer; font-weight:700;
+      box-shadow:0 8px 18px rgba(10,102,194,.22); transition:filter .2s, transform .08s;
+    }
+    #globalProceed:hover{ filter:brightness(1.05) }
+    #globalProceed:active{ transform:translateY(1px) }
+
+    @media (max-width:860px){ .grid{ grid-template-columns:1fr } }
   </style>
+
+  <link rel="stylesheet" href="assets/css/wizard.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="images/marchio_unipi_orizz_pant541.png" alt="Logo Università di Pisa" class="logo-unipi"/>
-    <h1>Validazione Codice Fiscale</h1>
-    <p>Per procedere, inserisci il tuo codice fiscale un pezzo alla volta.</p>
 
-    <!-- BLOCCO CF -->
-    <form id="cf_form" novalidate>
-      <div class="cf-input-group">
-        <input type="text" id="part1" maxlength="3" autocomplete="off"/>
-        <input type="text" id="part2" maxlength="4" class="hidden" autocomplete="off"/>
-        <input type="text" id="part3" maxlength="2" class="hidden" autocomplete="off"/>
-        <input type="text" id="part4" maxlength="4" class="hidden" autocomplete="off"/>
-        <input type="text" id="part5" maxlength="3" class="hidden" autocomplete="off"/>
-      </div>
-      <button type="submit" id="submit_button" disabled>Procedi</button>
-      <div class="help">DEV: apri con <code>?dev=1</code> per testare le sezioni successive senza reindirizzo.</div>
-    </form>
+  <div class="container" id="anagrafica">
+    <img src="img/marchio_unipi_orizz_pant541.png" alt="Logo Università di Pisa" class="logo-unipi" />
+    <h1>Anagrafica & Codice Fiscale</h1>
+    <p class="subtitle">Compila da sinistra a destra. I campi a destra compaiono quando il precedente è valido.</p>
 
-    <!-- RESIDENZA -->
-    <div id="sez-residenza" class="section hidden" aria-hidden="true">
-      <h2>Residenza</h2>
-      <div class="row">
-        <div class="field">
-          <label for="res_regione">Regione (residenza)</label>
-          <select id="res_regione" disabled>
-            <option value="">— Seleziona Regione —</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="res_provincia">Provincia</label>
-          <select id="res_provincia" disabled>
-            <option value="">— Seleziona Provincia —</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="res_comune">Comune</label>
-          <select id="res_comune" disabled>
-            <option value="">— Seleziona Comune —</option>
-          </select>
-        </div>
-      </div>
-      <div class="help">I menù sono a cascata: prima Regione, poi Provincia, poi Comune.</div>
+  <div class="grid">
 
-      <!-- Fallback loader per file:// -->
-      <div id="istat_loader" class="help hidden">
-        Non riesco a leggere <code>data/comuni_hierarchy.json</code>.  
-        Carica manualmente il file:
-        <input type="file" id="istat_file" accept="application/json">
-      </div>
+    <!-- RIGA 1: CODICE FISCALE -->
+    <div class="row-full box">
+      <h3>Codice Fiscale</h3>
+      <form id="cf_form" novalidate>
+        <div class="cf-wrapper">
+          <div class="cf-input-group">
+            <input type="text" id="part1" maxlength="3" autocomplete="off" aria-label="Primi 3 caratteri" />
+            <input type="text" id="part2" maxlength="4" autocomplete="off" aria-label="Caratteri 4-7" class="hidden" />
+            <input type="text" id="part3" maxlength="2" autocomplete="off" aria-label="Caratteri 8-9" class="hidden" />
+            <input type="text" id="part4" maxlength="4" autocomplete="off" aria-label="Caratteri 10-13" class="hidden" />
+            <input type="text" id="part5" maxlength="3" autocomplete="off" aria-label="Caratteri 14-16" class="hidden" />
+          </div>
+        </div>
+        <p id="cf-error" class="error-text"></p>
+        <button type="submit" id="submit_button" class="hidden">Procedi</button>
+      </form>
     </div>
+
+    <!-- RIGA 2: NOME | COGNOME -->
+    <section class="box hidden" id="wrapNome">
+      <div class="field">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" type="text" inputmode="text" autocomplete="given-name" autocapitalize="words" aria-describedby="nome-error" placeholder="Es. Maria" required />
+        <p id="nome-error" class="error-text" role="alert"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapCognome">
+      <div class="field">
+        <label for="cognome">Cognome</label>
+        <input id="cognome" name="cognome" type="text" inputmode="text" autocomplete="family-name" autocapitalize="words" aria-describedby="cognome-error" placeholder="Es. Rossi" required />
+        <p id="cognome-error" class="error-text" role="alert"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 3: GENERE | DATA DI NASCITA -->
+    <section class="box hidden" id="wrapGenere">
+      <div class="field">
+        <label>Genere</label>
+        <div class="radio-group" aria-describedby="genere-error">
+          <label class="radio"><input type="radio" name="genere" value="F" /> Femmina</label>
+          <label class="radio"><input type="radio" name="genere" value="M" /> Maschio</label>
+          <label class="radio"><input type="radio" name="genere" value="X" /> Non specificato</label>
+        </div>
+        <div class="field hidden" id="wrapSessoNascita" style="margin-top:6px">
+          <label for="sesso_nascita">Per favore inserire sesso di nascita</label>
+          <select id="sesso_nascita" aria-describedby="sesso_nascita-error">
+            <option value="">Seleziona…</option>
+            <option value="F">Femmina</option>
+            <option value="M">Maschio</option>
+          </select>
+          <p id="sesso_nascita-error" class="error-text"></p>
+        </div>
+        <p id="genere-error" class="error-text" role="alert"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapDob">
+      <div class="field">
+        <label for="data_nascita">Data di nascita</label>
+        <input id="data_nascita" name="data_nascita" type="date" inputmode="numeric" autocomplete="bday" aria-describedby="dob-error dob-warn" required />
+        <p id="dob-error" class="error-text" role="alert"></p>
+        <p id="dob-warn" class="warning-text" role="status"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 4: NATO ESTERO? -->
+    <section class="box hidden" id="wrapEstero">
+      <div class="field">
+        <label>Nato all’estero?</label>
+        <div class="radio-group" aria-describedby="estero-error">
+          <label class="radio"><input type="radio" name="nato_estero" value="no" /> No</label>
+          <label class="radio"><input type="radio" name="nato_estero" value="si" /> Sì</label>
+        </div>
+        <p id="estero-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 4B: PAESE (se estero) o REGIONE (Italia) -->
+    <section class="box hidden" id="wrapBirthRight">
+      <div class="field hidden" id="wrapPaeseNascita">
+        <label for="paese_nascita">Paese di nascita</label>
+        <input id="paese_nascita" type="text" list="dl-paesi" aria-describedby="paesenasc-error" placeholder="Inizia a digitare… (Es. Francia)" />
+        <datalist id="dl-paesi"></datalist>
+        <p id="paesenasc-error" class="error-text"></p>
+      </div>
+      <div class="field hidden" id="wrapRegioneNascita">
+        <label for="regione_nascita">Regione di nascita (Italia)</label>
+        <select id="regione_nascita" aria-describedby="regionenasc-error">
+          <option value="">Seleziona la regione…</option>
+        </select>
+        <p id="regionenasc-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 5 (solo IT): PROVINCIA NASCITA | COMUNE NASCITA -->
+    <section class="box hidden" id="wrapProvNasc">
+      <div class="field">
+        <label for="provincia_nascita">Provincia di nascita</label>
+        <select id="provincia_nascita" aria-describedby="provnasc-error">
+          <option value="">Seleziona la provincia…</option>
+        </select>
+        <p id="provnasc-error" class="error-text"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapComuneNasc">
+      <div class="field">
+        <label for="comune_nascita">Città di nascita</label>
+        <select id="comune_nascita" aria-describedby="comnasc-error">
+          <option value="">Seleziona il comune…</option>
+        </select>
+        <p id="comnasc-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 6: PROVINCIA RES | COMUNE RES -->
+    <section class="box hidden" id="wrapProvRes">
+      <div class="field">
+        <label for="provincia_res">Provincia di residenza</label>
+        <select id="provincia_res" aria-describedby="provres-error">
+          <option value="">Seleziona la provincia…</option>
+        </select>
+        <p id="provres-error" class="error-text"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapComuneRes">
+      <div class="field">
+        <label for="comune_res">Città di residenza</label>
+        <select id="comune_res" aria-describedby="comres-error">
+          <option value="">Seleziona il comune…</option>
+        </select>
+        <p id="comres-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 7: TELEFONO 1 | TELEFONO 2 -->
+    <section class="box hidden" id="wrapTel1">
+      <div class="field">
+        <label for="telefono1">Telefono 1</label>
+        <input id="telefono1" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel1-error tel1-hint" placeholder="Es. +393331234567" />
+        <p id="tel1-hint" class="hint">Ammessi “+” e trattini. <strong>Niente spazi</strong>. Da 9 a 15 cifre.</p>
+        <p id="tel1-error" class="error-text"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapTel2">
+      <div class="field">
+        <label for="telefono2">Telefono 2 (opzionale)</label>
+        <input id="telefono2" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel2-error tel2-hint" placeholder="Es. +39050123456" />
+        <p id="tel2-hint" class="hint">Ammessi “+” e trattini. <strong>Niente spazi</strong>. Da 9 a 15 cifre.</p>
+        <p id="tel2-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 8: EMAIL 1 | EMAIL 2 -->
+    <section class="box hidden" id="wrapEmail1">
+      <div class="field">
+        <label for="email1">Email 1</label>
+        <input id="email1" type="email" inputmode="email" autocomplete="email" aria-describedby="email1-error" placeholder="nome@dominio.it" />
+        <p id="email1-error" class="error-text"></p>
+      </div>
+    </section>
+    <section class="box hidden" id="wrapEmail2">
+      <div class="field">
+        <label for="email2">Email 2 (opzionale)</label>
+        <input id="email2" type="email" inputmode="email" autocomplete="email" aria-describedby="email2-error" placeholder="nome.altro@dominio.it" />
+        <p id="email2-error" class="error-text"></p>
+      </div>
+    </section>
+
+    <!-- RIGA 9: DSA -->
+    <section class="row-full box hidden" id="wrapDsa">
+      <h3>Certificazione/DSA</h3>
+      <div class="radio-group" aria-describedby="dsa-error">
+        <label class="radio"><input type="radio" name="dsa" value="no" /> No</label>
+        <label class="radio"><input type="radio" name="dsa" value="si" /> Sì</label>
+      </div>
+      <p id="dsa-error" class="error-text"></p>
+    </section>
+
+  </div><!-- /grid -->
+  </div><!-- /container -->
+
+  <div class="footer-actions">
+    <button id="globalProceed">Procedi</button>
   </div>
 
+  <!-- LOGICA CF ORIGINALE -->
   <script>
-  const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
-  const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
-  const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
-  const DEV_MODE = new URLSearchParams(location.search).get('dev') === '1';
+    const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
+    const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
+    const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
 
-  const risposte = {
-    cf: null,
-    residenza: { regione:null, provincia:null, provincia_sigla:null, comune:null, codice_catastale:null, codice_istat:null }
-  };
+    function validaCodiceFiscale(cf){ return true; } // reintrodurremo i controlli dopo
 
-  function validaCodiceFiscale(cf){
-    if(!cf||cf.length!==16) return false;
-    const x=cf.toUpperCase();
-    const rx=/^[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$/;
-    if(!rx.test(x)) return false;
-    let s=0;
-    const m={'0':1,'1':0,'2':5,'3':7,'4':9,'5':13,'6':15,'7':17,'8':19,'9':21,'A':1,'B':0,'C':5,'D':7,'E':9,'F':13,'G':15,'H':17,'I':19,'J':21,'K':2,'L':4,'M':18,'N':20,'O':11,'P':3,'Q':6,'R':8,'S':12,'T':14,'U':16,'V':10,'W':22,'X':25,'Y':24,'Z':23};
-    for(let i=0;i<15;i++){const c=x[i]; if((i+1)%2===0){s+=isNaN(parseInt(c,10))? c.charCodeAt(0)-'A'.charCodeAt(0):parseInt(c,10);} else {s+=m[c];}}
-    return x[15]===String.fromCharCode('A'.charCodeAt(0)+(s%26));
-  }
-  function setInvalid(el,b){ if(!el) return; if(b) el.classList.add('invalid'); else el.classList.remove('invalid'); }
-  function sortAlpha(arr){ return arr.slice().sort((a,b)=>a.localeCompare(b,'it',{sensitivity:'base'})); }
+    const cfInputs = [ 'part1','part2','part3','part4','part5' ].map(id=>document.getElementById(id));
+    const cfForm = document.getElementById('cf_form');
 
-  const inputs=[...document.querySelectorAll('.cf-input-group input')];
-  const submitButton=document.getElementById('submit_button');
-  const form=document.getElementById('cf_form');
-
-  let ultimoCodiceErrato=null, utenteHaModificato=false;
-
-  inputs.forEach((input,idx)=>{
-    input.addEventListener('paste',e=>e.preventDefault());
-    input.addEventListener('input',()=>{
-      utenteHaModificato=true;
-      input.value=input.value.toUpperCase();
-      if(input.value.length>input.maxLength){input.value=input.value.slice(0,input.maxLength);}
-      if(input.value.length===input.maxLength && idx<inputs.length-1){inputs[idx+1].classList.remove('hidden');}
-      submitButton.disabled=!inputs.every(i=>i.value.length===i.maxLength);
-    });
-  });
-
-  form.addEventListener('submit', (event)=>{
-    event.preventDefault();
-    submitButton.disabled=true;
-
-    const fullCF=inputs.map(i=>i.value).join('');
-    const ok=validaCodiceFiscale(fullCF);
-    risposte.cf=fullCF;
-
-    if(DEV_MODE){
-      if(!ok){ const go=confirm("Il Codice Fiscale inserito non sembra valido. Procedere comunque in DEV?"); if(!go){ submitButton.disabled=false; return; } }
-      document.getElementById('sez-residenza').classList.remove('hidden');
-      document.getElementById('sez-residenza').setAttribute('aria-hidden','false');
-      inizializzaResidenza();
-      submitButton.disabled=false;
-      return;
+    function cfValue(){ return cfInputs.map(i => i.value).join('').toUpperCase(); }
+    function toggleHidden(el, hide){ el.classList.toggle('hidden', !!hide); }
+    function updateCFReveal(){
+      const len1 = cfInputs[0].value.length;
+      toggleHidden(cfInputs[1], !(len1 === cfInputs[0].maxLength));
+      const len2 = cfInputs[1].classList.contains('hidden') ? 0 : cfInputs[1].value.length;
+      toggleHidden(cfInputs[2], !(len2 === cfInputs[1].maxLength));
+      const len3 = cfInputs[2].classList.contains('hidden') ? 0 : cfInputs[2].value.length;
+      toggleHidden(cfInputs[3], !(len3 === cfInputs[2].maxLength));
+      const len4 = cfInputs[3].classList.contains('hidden') ? 0 : cfInputs[3].value.length;
+      toggleHidden(cfInputs[4], !(len4 === cfInputs[3].maxLength));
     }
-
-    grecaptcha.ready(function(){
-      grecaptcha.execute(RECAPTCHA_SITE_KEY,{action:'submit'}).then(function(token){
-        function go(){ const finalUrl=`${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`; window.location.href=finalUrl; }
-        if(ok){ go(); }
-        else{
-          if(fullCF===ultimoCodiceErrato && utenteHaModificato){ if(confirm("Il Codice Fiscale inserito non sembra valido. Sei sicuro che sia corretto?")) go(); }
-          else { alert("Il Codice Fiscale inserito non è valido. Si prega di controllare."); ultimoCodiceErrato=fullCF; }
-        }
-        submitButton.disabled=false; utenteHaModificato=false;
+    function cfIsComplete(){ return cfValue().length === 16; }
+    function reflectCF(){ if(cfIsComplete()) showWizardStart(); else hideWizardStart(); if(window.MASKERA_CHECK_PROCEED) window.MASKERA_CHECK_PROCEED(); }
+    function showWizardStart(){ document.getElementById('wrapNome').classList.remove('hidden'); }
+    function hideWizardStart(){
+      ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapTel1','wrapTel2','wrapEmail1','wrapEmail2','wrapDsa'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
+      window.MASKERA_WIZARD_COMPLETE = false;
+    }
+    cfInputs.forEach((input) => {
+      input.addEventListener('paste', e => e.preventDefault());
+      input.addEventListener('input', () => {
+        input.value = input.value.toUpperCase();
+        if (input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+        updateCFReveal(); reflectCF();
       });
     });
-  });
 
-  // ------------------- RESIDENZA -------------------
-  const selReg=document.getElementById('res_regione');
-  const selProv=document.getElementById('res_provincia');
-  const selCom=document.getElementById('res_comune');
-  let ISTAT_DATA=null;
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && e.target && e.target.tagName === 'INPUT' && e.target.type !== 'textarea'){
+        e.preventDefault();
+      }
+    }, true);
+    cfForm.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); } }, true);
 
-  function resetSelect(select, placeholder, disabled=true){
-    select.innerHTML='';
-    const opt=document.createElement('option');
-    opt.value=''; opt.textContent=placeholder;
-    select.appendChild(opt);
-    select.disabled=disabled;
-    setInvalid(select,false);
-  }
-  function popolaSelect(select, values, mapText, mapValue){
-    resetSelect(select, select===selProv?'— Seleziona Provincia —':select===selCom?'— Seleziona Comune —':'— Seleziona —', false);
-    for(const v of values){
-      const opt=document.createElement('option');
-      opt.value=mapValue?mapValue(v):v;
-      opt.textContent=mapText?mapText(v):v;
-      select.appendChild(opt);
+    cfForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      grecaptcha.ready(function() {
+        grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token) {
+          const fullCF = cfValue();
+          const finalUrl = `${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`;
+          window.location.href = finalUrl;
+        });
+      });
+    });
+  </script>
+
+  <!-- ASSET -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/datasets.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/wizard.js"></script>
+
+  <!-- Bottone globale -->
+  <script>
+    const globalProceed = document.getElementById('globalProceed');
+    function isCFReady(){
+      return (
+        document.getElementById('part1').value.length === 3 &&
+        document.getElementById('part2').value.length === 4 &&
+        document.getElementById('part3').value.length === 2 &&
+        document.getElementById('part4').value.length === 4 &&
+        document.getElementById('part5').value.length === 3
+      );
     }
-  }
-
-  async function tryFetchSequential(paths){
-    for(const p of paths){
-      try{
-        const res = await fetch(p,{cache:'no-store'});
-        if(res.ok){
-          console.info('Caricato comuni da:', p);
-          return await res.json();
-        }
-      }catch(e){ /* passa al prossimo */ }
-    }
-    throw new Error('Fetch fallita su tutti i percorsi: '+paths.join(', '));
-  }
-
-  async function caricaComuni(){
-    if(ISTAT_DATA) return ISTAT_DATA;
-    const PATHS = [
-      './data/comuni_hierarchy.json',
-      'data/comuni_hierarchy.json',
-      '../data/comuni_hierarchy.json',
-      '/data/comuni_hierarchy.json'
-    ];
-    try{
-      ISTAT_DATA = await tryFetchSequential(PATHS);
-      return ISTAT_DATA;
-    }catch(err){
-      console.warn('Fetch comuni fallita:', err);
-      const loader=document.getElementById('istat_loader');
-      const fileInput=document.getElementById('istat_file');
-      if(loader && fileInput){
-        loader.classList.remove('hidden');
-        fileInput.addEventListener('change', async (e)=>{
-          const file=e.target.files?.[0];
-          if(!file) return;
-          try{
-            const text=await file.text();
-            ISTAT_DATA=JSON.parse(text);
-            loader.classList.add('hidden');
-            inizializzaResidenza(true); // ripopola subito
-          }catch(e2){
-            alert('Il file selezionato non è un JSON valido.');
-          }
-        }, {once:true});
-      }else{
-        alert('Impossibile caricare i dati dei comuni. Verifica il percorso ./data/comuni_hierarchy.json');
-      }
-      return null;
-    }
-  }
-
-  async function inizializzaResidenza(forceRepopulate=false){
-    const data = await caricaComuni();
-    if(!data) return;
-
-    // REGIONI
-    const regioni = sortAlpha(Object.keys(data));
-    if(forceRepopulate || selReg.options.length<=1){
-      resetSelect(selReg,'— Seleziona Regione —', false);
-      popolaSelect(selReg, regioni, r=>r, r=>r);
-      resetSelect(selProv,'— Seleziona Provincia —', true);
-      resetSelect(selCom,'— Seleziona Comune —', true);
-    }
-
-    selReg.onchange = () => {
-      const regione = selReg.value || null;
-      risposte.residenza.regione = regione;
-      risposte.residenza.provincia = null;
-      risposte.residenza.provincia_sigla = null;
-      risposte.residenza.comune = null;
-      risposte.residenza.codice_catastale = null;
-      risposte.residenza.codice_istat = null;
-
-      if(!regione || !data[regione]){
-        resetSelect(selProv,'— Seleziona Provincia —', true);
-        resetSelect(selCom,'— Seleziona Comune —', true);
-        setInvalid(selReg,true);
-        return;
-      }
-      setInvalid(selReg,false);
-
-      const province = sortAlpha(Object.keys(data[regione]));
-      popolaSelect(selProv, province, p=>{
-        const sigla = data[regione][p]?.sigla ? ` (${data[regione][p].sigla})` : '';
-        return `${p}${sigla}`;
-      }, p=>p);
-      resetSelect(selCom,'— Seleziona Comune —', true);
-    };
-
-    selProv.onchange = () => {
-      const regione = selReg.value;
-      const prov = selProv.value || null;
-
-      risposte.residenza.provincia = prov;
-      risposte.residenza.provincia_sigla = prov && data[regione][prov] ? data[regione][prov].sigla || null : null;
-      risposte.residenza.comune = null;
-      risposte.residenza.codice_catastale = null;
-      risposte.residenza.codice_istat = null;
-
-      if(!prov || !data[regione] || !data[regione][prov]){
-        resetSelect(selCom,'— Seleziona Comune —', true);
-        setInvalid(selProv,true);
-        return;
-      }
-      setInvalid(selProv,false);
-
-      const comuni = sortAlpha((data[regione][prov].comuni || []).map(c=>c.nome));
-      popolaSelect(selCom, comuni, c=>c, c=>c);
-    };
-
-    selCom.onchange = () => {
-      const regione = selReg.value;
-      const prov = selProv.value;
-      const comuneNome = selCom.value || null;
-
-      if(!comuneNome || !data[regione] || !data[regione][prov]){
-        setInvalid(selCom,true);
-        risposte.residenza.comune = null;
-        risposte.residenza.codice_catastale = null;
-        risposte.residenza.codice_istat = null;
-        return;
-      }
-      const rec = (data[regione][prov].comuni || []).find(c=>c.nome===comuneNome);
-      if(!rec){
-        setInvalid(selCom,true);
-        risposte.residenza.comune = null;
-        risposte.residenza.codice_catastale = null;
-        risposte.residenza.codice_istat = null;
-        return;
-      }
-      setInvalid(selCom,false);
-      risposte.residenza.comune = comuneNome;
-      risposte.residenza.codice_catastale = rec.codice_catastale || null;
-      risposte.residenza.codice_istat = rec.codice_istat || null;
-    };
-
-    selReg.disabled=false;
-  }
+    function isWizardComplete(){ return !!window.MASKERA_WIZARD_COMPLETE; }
+    function checkGlobalProceedVisibility(){ globalProceed.style.display = (isCFReady() && isWizardComplete()) ? 'inline-flex' : 'none'; }
+    window.MASKERA_CHECK_PROCEED = checkGlobalProceedVisibility;
+    globalProceed.addEventListener('click', () => { document.getElementById('cf_form').requestSubmit(); });
+    (function initCF(){
+      document.getElementById('part2').classList.add('hidden');
+      document.getElementById('part3').classList.add('hidden');
+      document.getElementById('part4').classList.add('hidden');
+      document.getElementById('part5').classList.add('hidden');
+    })();
+    checkGlobalProceedVisibility();
   </script>
 </body>
 </html>
