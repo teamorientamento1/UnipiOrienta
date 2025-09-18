@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Iscrizione — Maschera Wizard (ANAGRAFICA)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="assets/css/wizard.css" />
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="container">
+      <h1>Iscrizione — Anagrafica</h1>
+      <p class="subtitle">Compila un campo alla volta: quando è valido appare il successivo.</p>
+    </div>
+  </header>
+
+  <main class="container" id="main">
+    <!-- Indicatore di avanzamento -->
+    <div class="step-indicator" aria-live="polite" aria-atomic="true">
+      <span id="stepCount">Passo 1</span> di <span id="stepTotal">10</span>
+    </div>
+
+    <form id="wizardForm" novalidate>
+      <!-- 1) Codice Fiscale (facoltativo in Step 1) -->
+      <section class="field-step" data-field="codice_fiscale">
+        <fieldset>
+          <legend>Codice Fiscale (facoltativo)</legend>
+          <label for="codice_fiscale">Codice Fiscale</label>
+          <input
+            id="codice_fiscale"
+            name="codice_fiscale"
+            type="text"
+            inputmode="latin"
+            autocomplete="off"
+            autocapitalize="characters"
+            maxlength="16"
+            aria-describedby="cf-hint cf-error cf-warn"
+            placeholder="ES. RSSMRA85M01H501Z (16 caratteri)"
+          />
+          <p id="cf-hint" class="hint">Se lo inserisci, deve avere 16 caratteri alfanumerici. Nessun calcolo in questa fase.</p>
+          <p id="cf-error" class="error-text" role="alert"></p>
+          <p id="cf-warn" class="warning-text" role="status"></p>
+        </fieldset>
+      </section>
+
+      <!-- 2) Nome -->
+      <section class="field-step hidden" data-field="nome">
+        <fieldset>
+          <legend>Nome</legend>
+          <label for="nome">Nome</label>
+          <input
+            id="nome"
+            name="nome"
+            type="text"
+            inputmode="text"
+            autocomplete="given-name"
+            autocapitalize="words"
+            aria-describedby="nome-error"
+            placeholder="Es. Maria"
+            required
+          />
+          <p id="nome-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 3) Cognome -->
+      <section class="field-step hidden" data-field="cognome">
+        <fieldset>
+          <legend>Cognome</legend>
+          <label for="cognome">Cognome</label>
+          <input
+            id="cognome"
+            name="cognome"
+            type="text"
+            inputmode="text"
+            autocomplete="family-name"
+            autocapitalize="words"
+            aria-describedby="cognome-error"
+            placeholder="Es. Rossi"
+            required
+          />
+          <p id="cognome-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 4) Genere -->
+      <section class="field-step hidden" data-field="genere">
+        <fieldset>
+          <legend>Genere</legend>
+          <div class="radio-group" role="radiogroup" aria-describedby="genere-error">
+            <label class="radio"><input type="radio" name="genere" value="F" /> Femmina</label>
+            <label class="radio"><input type="radio" name="genere" value="M" /> Maschio</label>
+            <label class="radio"><input type="radio" name="genere" value="X" /> Altro/Non specificato</label>
+          </div>
+          <p id="genere-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 5) Data di nascita -->
+      <section class="field-step hidden" data-field="data_nascita">
+        <fieldset>
+          <legend>Data di nascita</legend>
+          <label for="data_nascita">Data di nascita</label>
+          <input
+            id="data_nascita"
+            name="data_nascita"
+            type="date"
+            inputmode="numeric"
+            autocomplete="bday"
+            aria-describedby="dob-error dob-warn"
+            required
+          />
+          <p id="dob-error" class="error-text" role="alert"></p>
+          <p id="dob-warn" class="warning-text" role="status"></p>
+        </fieldset>
+      </section>
+
+      <!-- 6) Nato all'estero? -->
+      <section class="field-step hidden" data-field="nato_estero">
+        <fieldset>
+          <legend>Nato all’estero?</legend>
+          <div class="radio-group" role="radiogroup" aria-describedby="estero-error">
+            <label class="radio"><input type="radio" name="nato_estero" value="no" /> No</label>
+            <label class="radio"><input type="radio" name="nato_estero" value="si" /> Sì</label>
+          </div>
+          <p id="estero-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 7a) Nascita in Italia (provincia/comune — testo provvisorio in Step 1) -->
+      <section class="field-step hidden" data-field="nascita_it">
+        <fieldset>
+          <legend>Luogo di nascita (Italia)</legend>
+          <label for="provincia_nascita">Provincia di nascita</label>
+          <input
+            id="provincia_nascita"
+            name="provincia_nascita"
+            type="text"
+            inputmode="text"
+            aria-describedby="provnasc-error"
+            placeholder="Es. Pisa"
+            required
+          />
+          <p id="provnasc-error" class="error-text" role="alert"></p>
+
+          <label for="comune_nascita">Comune di nascita</label>
+          <input
+            id="comune_nascita"
+            name="comune_nascita"
+            type="text"
+            inputmode="text"
+            aria-describedby="comnasc-error"
+            placeholder="Es. Cascina"
+            required
+          />
+          <p id="comnasc-error" class="error-text" role="alert"></p>
+
+          <p class="inline-hint">Nota: in Step 3 questi campi diventeranno menu a cascata con dati ISTAT.</p>
+        </fieldset>
+      </section>
+
+      <!-- 7b) Nascita all’estero -->
+      <section class="field-step hidden" data-field="nascita_estero">
+        <fieldset>
+          <legend>Luogo di nascita (estero)</legend>
+          <label for="paese_nascita">Paese di nascita</label>
+          <input
+            id="paese_nascita"
+            name="paese_nascita"
+            type="text"
+            inputmode="text"
+            aria-describedby="paesenasc-error"
+            placeholder="Es. Francia"
+            required
+          />
+          <p id="paesenasc-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 8) Residenza (provvisorio, Step 3 diventa cascata ISTAT) -->
+      <section class="field-step hidden" data-field="residenza">
+        <fieldset>
+          <legend>Residenza</legend>
+          <label for="provincia_res">Provincia di residenza</label>
+          <input
+            id="provincia_res"
+            name="provincia_res"
+            type="text"
+            inputmode="text"
+            aria-describedby="provres-error"
+            placeholder="Es. Livorno"
+            required
+          />
+          <p id="provres-error" class="error-text" role="alert"></p>
+
+          <label for="comune_res">Comune di residenza</label>
+          <input
+            id="comune_res"
+            name="comune_res"
+            type="text"
+            inputmode="text"
+            aria-describedby="comres-error"
+            placeholder="Es. Piombino"
+            required
+          />
+          <p id="comres-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 9) Certificazione/DSA -->
+      <section class="field-step hidden" data-field="dsa">
+        <fieldset>
+          <legend>Certificazione/DSA</legend>
+          <div class="radio-group" role="radiogroup" aria-describedby="dsa-error">
+            <label class="radio"><input type="radio" name="dsa" value="no" /> No</label>
+            <label class="radio"><input type="radio" name="dsa" value="si" /> Sì</label>
+          </div>
+          <p id="dsa-error" class="error-text" role="alert"></p>
+
+          <div id="dsa_details_wrap" class="hidden">
+            <label for="dsa_details">Dettagli (opzionale)</label>
+            <input
+              id="dsa_details"
+              name="dsa_details"
+              type="text"
+              inputmode="text"
+              placeholder="Es. DSA — Dislessia"
+            />
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 10) Telefono -->
+      <section class="field-step hidden" data-field="telefono">
+        <fieldset>
+          <legend>Telefono</legend>
+          <label for="telefono">Numero di telefono</label>
+          <input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            aria-describedby="tel-error tel-hint"
+            placeholder="Es. +39 333 123 4567"
+            required
+          />
+          <p id="tel-hint" class="hint">Prefisso +39 facoltativo; sono ammessi spazi e trattini.</p>
+          <p id="tel-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 11) Email primaria -->
+      <section class="field-step hidden" data-field="email1">
+        <fieldset>
+          <legend>Email primaria</legend>
+          <label for="email1">Email primaria</label>
+          <input
+            id="email1"
+            name="email1"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            autocapitalize="off"
+            aria-describedby="email1-error"
+            placeholder="esempio@dominio.it"
+            required
+          />
+          <p id="email1-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- 12) Email secondaria (opzionale) -->
+      <section class="field-step hidden" data-field="email2">
+        <fieldset>
+          <legend>Email secondaria (opzionale)</legend>
+          <label for="email2">Email secondaria</label>
+          <input
+            id="email2"
+            name="email2"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            autocapitalize="off"
+            aria-describedby="email2-error"
+            placeholder="esempio@dominio.it"
+          />
+          <p id="email2-error" class="error-text" role="alert"></p>
+        </fieldset>
+      </section>
+
+      <!-- Riepilogo (solo visuale per Step 1) -->
+      <section class="field-step hidden" data-field="riepilogo">
+        <fieldset>
+          <legend>Riepilogo Anagrafica</legend>
+          <div id="review" class="review-box" aria-live="polite" aria-atomic="true"></div>
+          <p class="inline-hint">Nel prossimo step attiveremo geo-cascata ISTAT, scuole/plessi e prefill Microsoft Forms.</p>
+        </fieldset>
+      </section>
+
+      <!-- Pulsantiera (solo utility) -->
+      <div class="toolbar">
+        <button type="button" id="btnReset" class="btn ghost">Svuota tutto</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container small">
+      <p>Step 0–1 • Wizard anagrafica (solo validazioni base). Accessibile, mobile-first.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/datasets.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/wizard.js"></script>
+</body>
+</html>
