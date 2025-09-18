@@ -491,7 +491,7 @@
   }
   setTelHint();
 
-  function attachPhone(input, required=true, nextField=null){
+  function attachPhone(input, required=true){
     if(!input) return;
     // blocco spazi in tempo reale
     input.addEventListener("keydown", (e)=>{ if(e.key===" ") e.preventDefault(); });
@@ -511,12 +511,6 @@
       const errId = input.getAttribute("aria-describedby")?.split(" ").find(x=>x.includes("tel") && x.includes("error"));
       const errNode = errId ? document.getElementById(errId) : null;
       if(errNode) errNode.textContent = res.ok ? "" : (res.msg || CFG.COPY.telInvalid);
-      
-      // Se valido e c'è un campo successivo, mostralo
-      if(res.ok && nextField){
-        show(nextField);
-      }
-      
       checkProceed();
     });
   }
@@ -524,9 +518,24 @@
   // Attach per telefono singolo (wizard.html)
   attachPhone(el.telefono, true);
   
-  // Attach per telefono1 e telefono2 (index.html)
-  attachPhone(el.telefono1, true, 'wrapTel2');
-  attachPhone(el.telefono2, false, 'wrapEmail1'); // telefono2 è opzionale
+  // Attach per telefono1 (index.html)
+  if(el.telefono1){
+    attachPhone(el.telefono1, true);
+    el.telefono1.addEventListener('blur', ()=>{
+      const res = VAL.validatePhone ? VAL.validatePhone(el.telefono1.value, true)
+                                    : { ok: /^\+?\d[\d-]{8,14}$/.test(el.telefono1.value) };
+      if(res.ok){
+        show('wrapTel2'); // Mostra telefono2 (opzionale)
+        show('wrapEmail1'); // Mostra anche email1 visto che tel2 è opzionale
+      }
+    });
+  }
+  
+  // Attach per telefono2 (index.html) - opzionale
+  if(el.telefono2){
+    attachPhone(el.telefono2, false);
+    // Telefono2 è opzionale, quindi email1 è già visibile
+  }
   
   // Handler per email1 -> email2
   if(el.email1){
