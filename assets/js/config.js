@@ -22,12 +22,5 @@ window.MASKERA_CONFIG = {
     dobFuture: "La data non può essere nel futuro.",
     ageWarnYoung: "Età molto bassa per questo form.",
     ageWarnOld: "Età più alta del previsto (spesso i docenti si iscrivono qui per errore).",
-  },
-
-  // Forzo il JSON delle scuole da GitHub Pages (assoluto).
-  // Se in futuro cambi repo o percorso, aggiorna solo questa riga.
-  SCHOOLS_URL: "https://teamorientamento1.github.io/MASCHERA-CODICE-FISCALE/data/scuole_min.json",
-
-  // Percorsi extra per i dataset (opzionale). Lascio null: usa i default interni.
-  DATA_BASES: null
+  }
 };
