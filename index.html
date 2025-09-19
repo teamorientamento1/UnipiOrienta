@@ -10,102 +10,43 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- reCAPTCHA (tua chiave) -->
+  <!-- reCAPTCHA (placeholder) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY"></script>
 
   <style>
-    :root{
-      --prim:#003366;
-      --prim2:#0a66c2;
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#6b7280;
-      --border:#e5e7eb;
-      --shadow:0 8px 20px rgba(0,0,0,.06);
-    }
+    :root{ --prim:#003366; --prim2:#0a66c2; --bg:#f6f8fb; --card:#ffffff; --text:#0f172a; --muted:#6b7280; --border:#e5e7eb; --shadow:0 8px 20px rgba(0,0,0,.06); }
     *{ box-sizing:border-box }
-    body{
-      font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      margin:0; padding:18px; background:var(--bg); color:var(--text);
-      display:flex; flex-direction:column; align-items:center; gap:16px; min-height:100vh;
-    }
-
-    .container{
-      width:100%; max-width:1120px; background:var(--card); border:1px solid var(--border);
-      border-top:5px solid var(--prim); border-radius:14px; box-shadow:var(--shadow); padding:18px 18px 12px;
-    }
+    body{ font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial; margin:0; padding:18px; background:var(--bg); color:var(--text); display:flex; flex-direction:column; align-items:center; gap:16px; min-height:100vh; }
+    .container{ width:100%; max-width:1120px; background:var(--card); border:1px solid var(--border); border-top:5px solid var(--prim); border-radius:14px; box-shadow:var(--shadow); padding:18px 18px 12px; }
     .logo-unipi{ max-width:220px; height:auto; display:block; margin:0 auto 10px }
     h1{ margin:6px 0 4px; color:var(--prim); font-weight:700; font-size:1.5rem }
     p.subtitle{ margin:0 0 10px; color:var(--muted) }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     .row-full{ grid-column:1 / -1; }
-
-    .box{
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:#fff;
-      padding:12px;
-    }
+    .box{ border:1px solid var(--border); border-radius:12px; background:#fff; padding:12px; }
     .box h3{ margin:0 0 8px; font-size:1rem; color:var(--prim); text-align:center }
-
     .field{ display:flex; flex-direction:column; gap:6px; align-items:center }
     .field label{ font-weight:600; font-size:.95rem; text-align:center }
     .field .hint{ color:var(--muted); font-size:.9rem; text-align:center }
     .error-text{ color:#d94848; min-height:1.15em; font-size:.9rem; margin:2px 0 0; text-align:center }
     .warning-text{ color:#b7791f; background:#fff7e6; padding:4px 6px; border-radius:8px; margin-top:4px; display:inline-block; font-size:.9rem; text-align:center }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="date"],
-    select{
-      width:100%; max-width:520px;
-      padding:10px 12px; border:1px solid var(--border); border-radius:10px;
-      background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s;
-      font-size:1rem; text-align:center;
-    }
+    input[type="text"],input[type="date"],select{ width:100%; max-width:520px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s; font-size:1rem; text-align:center; }
     select{ text-align-last:center }
     input:focus, select:focus{ border-color:var(--prim); box-shadow:0 0 0 3px rgba(4,71,123,.18) }
     input.error{ border-color:#d94848; background:#fff }
-
-    .radio-group{
-      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; width:100%;
-    }
+    .radio-group{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; width:100%; }
     .radio{ display:inline-flex; align-items:center; gap:6px; font-weight:500 }
-
-    /* CF: centrato, progressivo, grande */
     .cf-wrapper{ display:flex; justify-content:center }
-    .cf-input-group{
-      display:flex; gap:10px; flex-wrap:nowrap; align-items:center; justify-content:center; padding:8px 0;
-    }
-    .cf-input-group input{
-      font-family:"Courier New",monospace; text-transform:uppercase; letter-spacing:1px;
-      height:56px; text-align:center; border:1px solid var(--border); border-radius:12px;
-      background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s;
-      padding:0 10px; font-size:1.25rem;
-    }
+    .cf-input-group{ display:flex; gap:10px; flex-wrap:nowrap; align-items:center; justify-content:center; padding:8px 0; }
+    .cf-input-group input{ font-family:"Courier New",monospace; text-transform:uppercase; letter-spacing:1px; height:56px; text-align:center; border:1px solid var(--border); border-radius:12px; background:#fff; color:#111; outline:none; transition:border-color .16s, box-shadow .16s; padding:0 10px; font-size:1.25rem; }
     .cf-input-group input:focus{ border-color:var(--prim2); box-shadow:0 0 0 4px rgba(10,102,194,.18) }
     .cf-input-group input[maxlength="2"]{ width: calc(2ch + 28px) }
     .cf-input-group input[maxlength="3"]{ width: calc(3ch + 28px) }
     .cf-input-group input[maxlength="4"]{ width: calc(4ch + 28px) }
-
     .hidden{ display:none }
-
     .footer-actions{ width:100%; max-width:1120px; display:flex; justify-content:flex-end; gap:10px; }
-    #globalProceed{
-      display:none; background:linear-gradient(135deg,var(--prim),var(--prim2)); color:#fff; border:none;
-      padding:12px 18px; border-radius:12px; cursor:pointer; font-weight:700;
-      box-shadow:0 8px 18px rgba(10,102,194,.22); transition:filter .2s, transform .08s;
-    }
-    #globalProceed:hover{ filter:brightness(1.05) }
-    #globalProceed:active{ transform:translateY(1px) }
-
+    #globalProceed{ display:none; background:linear-gradient(135deg,var(--prim),var(--prim2)); color:#fff; border:none; padding:12px 18px; border-radius:12px; cursor:pointer; font-weight:700; box-shadow:0 8px 18px rgba(10,102,194,.22); transition:filter .2s, transform .08s; }
+    #globalProceed:hover{ filter:brightness(1.05) }  #globalProceed:active{ transform:translateY(1px) }
     @media (max-width:860px){ .grid{ grid-template-columns:1fr } }
   </style>
 
@@ -118,203 +59,194 @@
     <h1>Anagrafica & Codice Fiscale</h1>
     <p class="subtitle">Compila da sinistra a destra. I campi a destra compaiono quando il precedente è valido.</p>
 
-  <div class="grid">
-
-    <!-- RIGA 1: CODICE FISCALE -->
-    <div class="row-full box">
-      <h3>Codice Fiscale</h3>
-      <form id="cf_form" novalidate>
-        <div class="cf-wrapper">
-          <div class="cf-input-group">
-            <input type="text" id="part1" maxlength="3" autocomplete="off" aria-label="Primi 3 caratteri" />
-            <input type="text" id="part2" maxlength="4" autocomplete="off" aria-label="Caratteri 4-7" class="hidden" />
-            <input type="text" id="part3" maxlength="2" autocomplete="off" aria-label="Caratteri 8-9" class="hidden" />
-            <input type="text" id="part4" maxlength="4" autocomplete="off" aria-label="Caratteri 10-13" class="hidden" />
-            <input type="text" id="part5" maxlength="3" autocomplete="off" aria-label="Caratteri 14-16" class="hidden" />
+    <div class="grid">
+      <!-- CF -->
+      <div class="row-full box">
+        <h3>Codice Fiscale</h3>
+        <form id="cf_form" novalidate>
+          <div class="cf-wrapper">
+            <div class="cf-input-group">
+              <input type="text" id="part1" maxlength="3" autocomplete="off" aria-label="Primi 3 caratteri" />
+              <input type="text" id="part2" maxlength="4" autocomplete="off" aria-label="Caratteri 4-7" class="hidden" />
+              <input type="text" id="part3" maxlength="2" autocomplete="off" aria-label="Caratteri 8-9" class="hidden" />
+              <input type="text" id="part4" maxlength="4" autocomplete="off" aria-label="Caratteri 10-13" class="hidden" />
+              <input type="text" id="part5" maxlength="3" autocomplete="off" aria-label="Caratteri 14-16" class="hidden" />
+            </div>
           </div>
+          <p id="cf-error" class="error-text"></p>
+          <button type="submit" id="submit_button" class="hidden">Procedi</button>
+        </form>
+      </div>
+
+      <!-- Nome | Cognome -->
+      <section class="box hidden" id="wrapNome">
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" inputmode="text" autocomplete="given-name" autocapitalize="words" placeholder="Es. Maria" required />
+          <p id="nome-error" class="error-text"></p>
         </div>
-        <p id="cf-error" class="error-text"></p>
-        <button type="submit" id="submit_button" class="hidden">Procedi</button>
-      </form>
+      </section>
+      <section class="box hidden" id="wrapCognome">
+        <div class="field">
+          <label for="cognome">Cognome</label>
+          <input id="cognome" name="cognome" type="text" inputmode="text" autocomplete="family-name" autocapitalize="words" placeholder="Es. Rossi" required />
+          <p id="cognome-error" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- Genere | Data di nascita -->
+      <section class="box hidden" id="wrapGenere">
+        <div class="field">
+          <label>Genere</label>
+          <div class="radio-group" aria-describedby="genere-error">
+            <label class="radio"><input type="radio" name="genere" value="F" /> Femmina</label>
+            <label class="radio"><input type="radio" name="genere" value="M" /> Maschio</label>
+            <label class="radio"><input type="radio" name="genere" value="X" /> Non specificato</label>
+          </div>
+          <div class="field hidden" id="wrapSessoNascita" style="margin-top:6px">
+            <label for="sesso_nascita">Per favore inserire sesso di nascita</label>
+            <select id="sesso_nascita">
+              <option value="">Seleziona…</option>
+              <option value="F">Femmina</option>
+              <option value="M">Maschio</option>
+            </select>
+            <p id="sesso_nascita-error" class="error-text"></p>
+          </div>
+          <p id="genere-error" class="error-text"></p>
+        </div>
+      </section>
+      <section class="box hidden" id="wrapDob">
+        <div class="field">
+          <label for="data_nascita">Data di nascita</label>
+          <input id="data_nascita" name="data_nascita" type="date" inputmode="numeric" autocomplete="bday" required />
+          <p id="dob-error" class="error-text"></p>
+          <p id="dob-warn" class="warning-text"></p>
+        </div>
+      </section>
+
+      <!-- Nato estero? -->
+      <section class="box hidden" id="wrapEstero">
+        <div class="field">
+          <label>Nato all’estero?</label>
+          <div class="radio-group" aria-describedby="estero-error">
+            <label class="radio"><input type="radio" name="nato_estero" value="no" /> No</label>
+            <label class="radio"><input type="radio" name="nato_estero" value="si" /> Sì</label>
+          </div>
+          <p id="estero-error" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- Nascita IT/Estero -->
+      <section class="box hidden" id="wrapBirthRight">
+        <div class="field hidden" id="wrapPaeseNascita">
+          <label for="paese_nascita">Paese di nascita</label>
+          <input id="paese_nascita" type="text" list="dl-paesi" placeholder="Inizia a digitare… (Es. Francia)" />
+          <datalist id="dl-paesi"></datalist>
+          <p id="paesenasc-error" class="error-text"></p>
+        </div>
+        <div class="field hidden" id="wrapRegioneNascita">
+          <label for="regione_nascita">Regione di nascita (Italia)</label>
+          <select id="regione_nascita"><option value="">Seleziona la regione…</option></select>
+          <p id="regionenasc-error" class="error-text"></p>
+        </div>
+      </section>
+
+      <section class="box hidden" id="wrapProvNasc">
+        <div class="field">
+          <label for="provincia_nascita">Provincia di nascita</label>
+          <select id="provincia_nascita"><option value="">Seleziona la provincia…</option></select>
+          <p id="provnasc-error" class="error-text"></p>
+        </div>
+      </section>
+      <section class="box hidden" id="wrapComuneNasc">
+        <div class="field">
+          <label for="comune_nascita">Città di nascita</label>
+          <select id="comune_nascita"><option value="">Seleziona il comune…</option></select>
+          <p id="comnasc-error" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- Residenza -->
+      <section class="box hidden" id="wrapProvRes">
+        <div class="field">
+          <label for="provincia_res">Provincia di residenza</label>
+          <select id="provincia_res"><option value="">Seleziona la provincia…</option></select>
+          <p id="provres-error" class="error-text"></p>
+        </div>
+      </section>
+      <section class="box hidden" id="wrapComuneRes">
+        <div class="field">
+          <label for="comune_res">Città di residenza</label>
+          <select id="comune_res"><option value="">Seleziona il comune…</option></select>
+          <p id="comres-error" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- DSA -->
+      <section class="row-full box hidden" id="wrapDsa">
+        <h3>Certificazione/DSA</h3>
+        <div class="radio-group" aria-describedby="dsa-error">
+          <label class="radio"><input type="radio" name="dsa" value="no" /> No</label>
+          <label class="radio"><input type="radio" name="dsa" value="si" /> Sì</label>
+        </div>
+        <p id="dsa-error" class="error-text"></p>
+      </section>
+
+      <!-- SCUOLE: REGIONE | PROVINCIA -->
+      <section class="box hidden" id="wrapScuolaReg">
+        <div class="field">
+          <label for="scuola_regione">Regione della scuola</label>
+          <select id="scuola_regione"><option value="">Seleziona la regione…</option></select>
+          <p id="scuola-regione-err" class="error-text"></p>
+        </div>
+      </section>
+      <section class="box hidden" id="wrapScuolaProv">
+        <div class="field">
+          <label for="scuola_provincia">Provincia della scuola</label>
+          <select id="scuola_provincia"><option value="">Seleziona la provincia…</option></select>
+          <p id="scuola-prov-err" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- SCUOLE: CITTÀ | ISTITUTO -->
+      <section class="box hidden" id="wrapScuolaCom">
+        <div class="field">
+          <label for="scuola_citta">Città della scuola</label>
+          <select id="scuola_citta"><option value="">Seleziona la città…</option></select>
+          <p id="scuola-citta-err" class="error-text"></p>
+        </div>
+      </section>
+      <section class="box hidden" id="wrapScuolaIst">
+        <div class="field">
+          <label for="scuola_istituto">Istituto principale</label>
+          <select id="scuola_istituto"><option value="">Seleziona l’istituto…</option></select>
+          <p id="scuola-ist-err" class="error-text"></p>
+        </div>
+      </section>
+
+      <!-- SCUOLE: PLESSO -->
+      <section class="row-full box hidden" id="wrapScuolaPlesso">
+        <div class="field">
+          <label for="scuola_plesso">Plesso</label>
+          <select id="scuola_plesso"><option value="">Seleziona il plesso…</option></select>
+          <p id="scuola-plesso-err" class="error-text"></p>
+        </div>
+      </section>
     </div>
-
-    <!-- RIGA 2: NOME | COGNOME -->
-    <section class="box hidden" id="wrapNome">
-      <div class="field">
-        <label for="nome">Nome</label>
-        <input id="nome" name="nome" type="text" inputmode="text" autocomplete="given-name" autocapitalize="words" aria-describedby="nome-error" placeholder="Es. Maria" required />
-        <p id="nome-error" class="error-text" role="alert"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapCognome">
-      <div class="field">
-        <label for="cognome">Cognome</label>
-        <input id="cognome" name="cognome" type="text" inputmode="text" autocomplete="family-name" autocapitalize="words" aria-describedby="cognome-error" placeholder="Es. Rossi" required />
-        <p id="cognome-error" class="error-text" role="alert"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 3: GENERE | DATA DI NASCITA -->
-    <section class="box hidden" id="wrapGenere">
-      <div class="field">
-        <label>Genere</label>
-        <div class="radio-group" aria-describedby="genere-error">
-          <label class="radio"><input type="radio" name="genere" value="F" /> Femmina</label>
-          <label class="radio"><input type="radio" name="genere" value="M" /> Maschio</label>
-          <label class="radio"><input type="radio" name="genere" value="X" /> Non specificato</label>
-        </div>
-        <div class="field hidden" id="wrapSessoNascita" style="margin-top:6px">
-          <label for="sesso_nascita">Per favore inserire sesso di nascita</label>
-          <select id="sesso_nascita" aria-describedby="sesso_nascita-error">
-            <option value="">Seleziona…</option>
-            <option value="F">Femmina</option>
-            <option value="M">Maschio</option>
-          </select>
-          <p id="sesso_nascita-error" class="error-text"></p>
-        </div>
-        <p id="genere-error" class="error-text" role="alert"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapDob">
-      <div class="field">
-        <label for="data_nascita">Data di nascita</label>
-        <input id="data_nascita" name="data_nascita" type="date" inputmode="numeric" autocomplete="bday" aria-describedby="dob-error dob-warn" required />
-        <p id="dob-error" class="error-text" role="alert"></p>
-        <p id="dob-warn" class="warning-text" role="status"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 4: NATO ESTERO? -->
-    <section class="box hidden" id="wrapEstero">
-      <div class="field">
-        <label>Nato all’estero?</label>
-        <div class="radio-group" aria-describedby="estero-error">
-          <label class="radio"><input type="radio" name="nato_estero" value="no" /> No</label>
-          <label class="radio"><input type="radio" name="nato_estero" value="si" /> Sì</label>
-        </div>
-        <p id="estero-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 4B: PAESE (se estero) o REGIONE (Italia) -->
-    <section class="box hidden" id="wrapBirthRight">
-      <div class="field hidden" id="wrapPaeseNascita">
-        <label for="paese_nascita">Paese di nascita</label>
-        <input id="paese_nascita" type="text" list="dl-paesi" aria-describedby="paesenasc-error" placeholder="Inizia a digitare… (Es. Francia)" />
-        <datalist id="dl-paesi"></datalist>
-        <p id="paesenasc-error" class="error-text"></p>
-      </div>
-      <div class="field hidden" id="wrapRegioneNascita">
-        <label for="regione_nascita">Regione di nascita (Italia)</label>
-        <select id="regione_nascita" aria-describedby="regionenasc-error">
-          <option value="">Seleziona la regione…</option>
-        </select>
-        <p id="regionenasc-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 5 (solo IT): PROVINCIA NASCITA | COMUNE NASCITA -->
-    <section class="box hidden" id="wrapProvNasc">
-      <div class="field">
-        <label for="provincia_nascita">Provincia di nascita</label>
-        <select id="provincia_nascita" aria-describedby="provnasc-error">
-          <option value="">Seleziona la provincia…</option>
-        </select>
-        <p id="provnasc-error" class="error-text"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapComuneNasc">
-      <div class="field">
-        <label for="comune_nascita">Città di nascita</label>
-        <select id="comune_nascita" aria-describedby="comnasc-error">
-          <option value="">Seleziona il comune…</option>
-        </select>
-        <p id="comnasc-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 6: PROVINCIA RES | COMUNE RES -->
-    <section class="box hidden" id="wrapProvRes">
-      <div class="field">
-        <label for="provincia_res">Provincia di residenza</label>
-        <select id="provincia_res" aria-describedby="provres-error">
-          <option value="">Seleziona la provincia…</option>
-        </select>
-        <p id="provres-error" class="error-text"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapComuneRes">
-      <div class="field">
-        <label for="comune_res">Città di residenza</label>
-        <select id="comune_res" aria-describedby="comres-error">
-          <option value="">Seleziona il comune…</option>
-        </select>
-        <p id="comres-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 7: TELEFONO 1 | TELEFONO 2 -->
-    <section class="box hidden" id="wrapTel1">
-      <div class="field">
-        <label for="telefono1">Telefono 1</label>
-        <input id="telefono1" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel1-error tel1-hint" placeholder="Es. +393331234567" />
-        <p id="tel1-hint" class="hint">Ammessi “+” e trattini. <strong>Niente spazi</strong>. Da 9 a 15 cifre.</p>
-        <p id="tel1-error" class="error-text"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapTel2">
-      <div class="field">
-        <label for="telefono2">Telefono 2 (opzionale)</label>
-        <input id="telefono2" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel2-error tel2-hint" placeholder="Es. +39050123456" />
-        <p id="tel2-hint" class="hint">Ammessi “+” e trattini. <strong>Niente spazi</strong>. Da 9 a 15 cifre.</p>
-        <p id="tel2-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 8: EMAIL 1 | EMAIL 2 -->
-    <section class="box hidden" id="wrapEmail1">
-      <div class="field">
-        <label for="email1">Email 1</label>
-        <input id="email1" type="email" inputmode="email" autocomplete="email" aria-describedby="email1-error" placeholder="nome@dominio.it" />
-        <p id="email1-error" class="error-text"></p>
-      </div>
-    </section>
-    <section class="box hidden" id="wrapEmail2">
-      <div class="field">
-        <label for="email2">Email 2 (opzionale)</label>
-        <input id="email2" type="email" inputmode="email" autocomplete="email" aria-describedby="email2-error" placeholder="nome.altro@dominio.it" />
-        <p id="email2-error" class="error-text"></p>
-      </div>
-    </section>
-
-    <!-- RIGA 9: DSA -->
-    <section class="row-full box hidden" id="wrapDsa">
-      <h3>Certificazione/DSA</h3>
-      <div class="radio-group" aria-describedby="dsa-error">
-        <label class="radio"><input type="radio" name="dsa" value="no" /> No</label>
-        <label class="radio"><input type="radio" name="dsa" value="si" /> Sì</label>
-      </div>
-      <p id="dsa-error" class="error-text"></p>
-    </section>
-
-  </div><!-- /grid -->
-  </div><!-- /container -->
+  </div>
 
   <div class="footer-actions">
     <button id="globalProceed">Procedi</button>
   </div>
 
-  <!-- LOGICA CF ORIGINALE -->
   <script>
     const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
     const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
     const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
-
-    function validaCodiceFiscale(cf){ return true; } // reintrodurremo i controlli dopo
+    function validaCodiceFiscale(cf){ return true; }
 
     const cfInputs = [ 'part1','part2','part3','part4','part5' ].map(id=>document.getElementById(id));
     const cfForm = document.getElementById('cf_form');
-
     function cfValue(){ return cfInputs.map(i => i.value).join('').toUpperCase(); }
     function toggleHidden(el, hide){ el.classList.toggle('hidden', !!hide); }
     function updateCFReveal(){
@@ -331,7 +263,7 @@
     function reflectCF(){ if(cfIsComplete()) showWizardStart(); else hideWizardStart(); if(window.MASKERA_CHECK_PROCEED) window.MASKERA_CHECK_PROCEED(); }
     function showWizardStart(){ document.getElementById('wrapNome').classList.remove('hidden'); }
     function hideWizardStart(){
-      ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapTel1','wrapTel2','wrapEmail1','wrapEmail2','wrapDsa'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
+      ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapDsa','wrapScuolaReg','wrapScuolaProv','wrapScuolaCom','wrapScuolaIst','wrapScuolaPlesso'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
       window.MASKERA_WIZARD_COMPLETE = false;
     }
     cfInputs.forEach((input) => {
@@ -344,16 +276,14 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' && e.target && e.target.tagName === 'INPUT' && e.target.type !== 'textarea'){
-        e.preventDefault();
-      }
+      if(e.key === 'Enter' && e.target && e.target.tagName === 'INPUT' && e.target.type !== 'textarea'){ e.preventDefault(); }
     }, true);
     cfForm.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); } }, true);
 
     cfForm.addEventListener('submit', function(event) {
       event.preventDefault();
       grecaptcha.ready(function() {
-        grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token) {
+        grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function() {
           const fullCF = cfValue();
           const finalUrl = `${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`;
           window.location.href = finalUrl;
@@ -362,13 +292,11 @@
     });
   </script>
 
-  <!-- ASSET -->
   <script src="assets/js/config.js"></script>
   <script src="assets/js/datasets.js"></script>
   <script src="assets/js/validation.js"></script>
   <script src="assets/js/wizard.js"></script>
 
-  <!-- Bottone globale -->
   <script>
     const globalProceed = document.getElementById('globalProceed');
     function isCFReady(){
