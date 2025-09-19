@@ -1,4 +1,4 @@
-/* Bootstrap app (progressive reveal 1-alla-volta) */
+/* Bootstrap app (progressive reveal 1-alla-volta, FIX residenza init) */
 (function(){
   // Versione (su GitHub Pages funziona)
   fetch("version.json").then(r => r.json()).then(data=>{
@@ -56,7 +56,6 @@
       show(grpNascita);
       show(fldProvNascita);
       hide(fldComNas);
-      // Disabilita input di ricerca Comune finché la Provincia non è scelta
       if (comNasSearch) { comNasSearch.disabled = true; comNasSearch.value = ""; }
       if (comNasSel)    { comNasSel.value = ""; comNasSel.disabled = true; }
     }
@@ -76,11 +75,12 @@
         show(fldComNas);
         if (comNasSearch) comNasSearch.disabled = false;
       }
-      // Se scelto anche il comune → sblocca Residenza (solo Provincia)
+      // Se scelto anche il comune → sblocca Residenza (solo Provincia) E INIZIALIZZA la catena residenza
       if (provincia && comune) {
         resetResidenzaStep();
+        if (!resAPI) ensureResidenzaLoaded(); // <<< FIX: prima mancava questa init
       }
-      // Se la provincia è stata deselezionata → nascondi di nuovo il comune
+      // Se la provincia è stata deselezionata → nascondi di nuovo il comune e la residenza
       if (!provincia) {
         hide(fldComNas);
         hide(grpRes);
@@ -104,13 +104,14 @@
         show(grpPaeseEstero);
         hide(grpNascita);
         hide(grpRes);
-        // Se i paesi non sono pronti, caricali
         if (!esteroAPI) ensureCountriesLoaded();
-        // Se già presente una scelta Paese, prepara Residenza (solo Provincia)
-        if (paeseSel?.value) resetResidenzaStep();
+        if (paeseSel?.value) {
+          resetResidenzaStep();
+          if (!resAPI) ensureResidenzaLoaded();
+        }
       } else if (esteroNo?.checked){
         // Flusso ITALIA:
-        // 1) Mostra Nascita solo Provincia; 2) dopo scelta Provincia -> mostra Comune; 3) dopo Comune -> Residenza (solo Provincia)
+        // 1) Mostra Nascita solo Provincia; 2) dopo Provincia -> Comune; 3) dopo Comune -> Residenza (solo Provincia)
         hide(grpPaeseEstero);
         hide(grpRes);
         resetNascitaStep();
@@ -127,7 +128,7 @@
     esteroNo?.addEventListener("change", onEsteroChange);
     paeseSel?.addEventListener("change", () => {
       if (esteroSi?.checked && paeseSel.value) {
-        resetResidenzaStep(); // Paese scelto: sblocca Residenza (solo Provincia)
+        resetResidenzaStep();
         if (!resAPI) ensureResidenzaLoaded();
       }
     });
@@ -182,14 +183,14 @@
           comuneSelect: comResSel,
           comuneSearch: comResSearch
         });
-        // Subito dopo init, la logica di reveal la governiamo noi: mostriamo solo la Provincia
+        // Appena pronta, mostriamo solo la Provincia
         show(grpRes);
         show(fldProvRes);
         hide(fldComRes);
         if (comResSearch) { comResSearch.disabled = true; comResSearch.value = ""; }
         if (comResSel)    { comResSel.value = ""; comResSel.disabled = true; }
 
-        // Ogni cambiamento su Provincia/Comune residenza
+        // Cambiamenti su Provincia/Comune residenza
         resAPI.onChange(({provincia, comune}) => {
           maybeShowComuneResidenza(provincia, comune);
         });
@@ -198,17 +199,16 @@
       }
     }
 
-    // Avvia pre-caricamenti in background
+    // Pre-carico leggero (paesi) in background
     (async () => {
       if (!window.SelectCascade) {
         console.warn("SelectCascade.js non caricato — verifica percorso js/components/SelectCascade.js");
       } else {
-        // Non inizializziamo subito nascita/residenza: lo facciamo quando servono.
-        ensureCountriesLoaded(); // è leggero; ok farlo subito
+        ensureCountriesLoaded();
       }
     })();
 
-    // Stato iniziale: nascosti finché non scelta opzione estero (Step 2 decide quando mostrare "#group-estero")
+    // Stato iniziale
     hide(grpPaeseEstero);
     hide(grpNascita);
     hide(grpRes);
