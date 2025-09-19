@@ -132,7 +132,7 @@
 
   // ---- caricamento completo ----
   async function loadAll(){
-    // 1) countries (facoltativo) — qui non li usiamo davvero, ma li teniamo per estensioni future
+    // 1) countries (facoltativo)
     const countries = await loadFirstJsonFromNames(["countries.cleaned.json","countries.json"]);
 
     // 2) geo (regioni/province/comuni)

@@ -24,12 +24,10 @@ window.MASKERA_CONFIG = {
     ageWarnOld: "Età più alta del previsto (spesso i docenti si iscrivono qui per errore).",
   },
 
-  // (opzionale) URL assoluto del JSON scuole. Se valorizzato, bypassa la ricerca nei percorsi locali.
-  // Esempio GitHub Pages:
-  // SCHOOLS_URL: "https://<utente>.github.io/<repo>/data/scuole_min.json",
-  SCHOOLS_URL: null,
+  // Forzo il JSON delle scuole da GitHub Pages (assoluto).
+  // Se in futuro cambi repo o percorso, aggiorna solo questa riga.
+  SCHOOLS_URL: "https://teamorientamento1.github.io/MASCHERA-CODICE-FISCALE/data/scuole_min.json",
 
-  // (opzionale) Percorsi aggiuntivi, relativi alla pagina, in cui cercare i dataset.
-  // Esempio: ["assets/data/","data/"] — se null usa i percorsi di default.
+  // Percorsi extra per i dataset (opzionale). Lascio null: usa i default interni.
   DATA_BASES: null
 };
