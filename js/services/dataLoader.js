@@ -1,8 +1,3 @@
-/**
- * dataLoader.js
- * Carica i JSON reali se presenti; in caso di 404 usa i demo.
- * Pensato per GitHub Pages: path relativi alla root del sito.
- */
 (function(){
   const cacheBust = () => `?v=${Date.now()}`;
 
@@ -21,15 +16,13 @@
     }
   }
 
-  // File “reali” attesi (tu li caricherai in /data)
   const REAL = {
-    GEO: 'data/geo_hierarchy_min.cleaned.json', // regioni -> province -> comuni[]
-    COMUNI: 'data/comuni_min.cleaned.json',     // [{comune, provincia, regione, codice_catastale}]
-    SCUOLE: 'data/scuole_min.json',             // [{regione, provincia, citta, ist_princ_nome, plesso_nome}]
-    COUNTRIES: 'data/paesi_esteri.json'         // ["Albania","Francia",...]
+    GEO: 'data/geo_hierarchy_min.cleaned.json',
+    COMUNI: 'data/comuni_min.cleaned.json',
+    SCUOLE: 'data/scuole_min.json',
+    COUNTRIES: 'data/paesi_esteri.json'
   };
 
-  // Demo (inclusi in repo per test iniziali)
   const DEMO = {
     GEO: 'data/demo/demo_geo_hierarchy.json',
     COMUNI: 'data/demo/demo_comuni_min.json',

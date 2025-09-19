@@ -21,7 +21,7 @@ const SelectCascade = (() => {
   }
 
   function setOptions(selectEl, values, {placeholder="Seleziona…", prefix=[]}={}){
-    selectEl.innerHTML = ""; // reset
+    selectEl.innerHTML = "";
     const ph = document.createElement("option");
     ph.value = "";
     ph.textContent = placeholder;
@@ -88,7 +88,6 @@ const SelectCascade = (() => {
       comuneSelect.disabled = filtered.length === 0;
     }
 
-    // Eventi Provincia
     provinciaSelect.addEventListener("change", () => {
       const prov = provinciaSelect.value;
       comuneSearch.value = "";
@@ -96,13 +95,11 @@ const SelectCascade = (() => {
       if (prov) comuneSearch.disabled = false; else { comuneSearch.disabled = true; comuneSelect.disabled = true; }
     });
 
-    // Ricerca Provincia
     if (provinciaSearch){
       provinciaSearch.addEventListener("input", () => {
         const filteredProv = filterList(allProv, provinciaSearch.value);
         const current = provinciaSelect.value;
         setOptions(provinciaSelect, filteredProv, { placeholder: "Seleziona…" });
-        // prova a mantenere selezione se ancora presente
         if (filteredProv.includes(current)) provinciaSelect.value = current;
       });
     }
