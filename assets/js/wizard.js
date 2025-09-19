@@ -48,6 +48,7 @@
         'residenza': 'wrapProvRes',
         'comune_res': 'wrapComuneRes',
         'telefono': 'wrapTel1',
+        'telefono2': 'wrapTel2',  // AGGIUNTO: mappatura mancante per telefono2
         'email1': 'wrapEmail1',
         'email2': 'wrapEmail2',
         'dsa': 'wrapDsa'
@@ -101,12 +102,12 @@
 
   // ----- Riferimenti generali (tutti opzionali: codice safe se mancano) -----
   const el = {
-    // Identità
+    // Identità 
     nome: $("#nome"),
     cognome: $("#cognome"),
     // Nascita & residenza
     genere: $$('input[name="genere"]'),
-    sessoNascita: $("#sessoNascita"),
+    sessoNascita: $("#sesso_nascita"),
     dataNascita: $("#data_nascita"),
     estero: $$('input[name="nato_estero"]'),
     paeseNascita: $("#paese_nascita"),
@@ -562,8 +563,8 @@
     });
   }
   
-  // Handler per DSA
-  const dsaRadios = $('input[name="dsa"]');
+  // Handler per DSA - CORREZIONE: usa $$ invece di $
+  const dsaRadios = $$('input[name="dsa"]');  // FIX: Cambiato da $ a $$
   if(dsaRadios && dsaRadios.length > 0){
     dsaRadios.forEach(r => r.addEventListener('change', ()=>{
       const v = radioValue(dsaRadios);
@@ -572,15 +573,16 @@
       if(detailsWrap){
         detailsWrap.classList.toggle('hidden', v !== 'si');
       }
-      checkProceed();
       
-      // Attiva il bottone globale "Procedi" se tutto è completo
-      if(window.MASKERA_WIZARD_COMPLETE === undefined){
+      // FIX: Verifica che DSA abbia un valore prima di segnare completo
+      if(v){  // Solo se DSA ha un valore selezionato
         window.MASKERA_WIZARD_COMPLETE = true;
+        if(window.MASKERA_CHECK_PROCEED){
+          window.MASKERA_CHECK_PROCEED();
+        }
       }
-      if(window.MASKERA_CHECK_PROCEED){
-        window.MASKERA_CHECK_PROCEED();
-      }
+      
+      checkProceed();
     }));
   }
 
