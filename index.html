@@ -13,34 +13,6 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="./" aria-label="Università di Pisa">
-        <img src="assets/logo-unipi.svg" alt="Logo Università di Pisa" class="brand__logo">
-        <span class="brand__title">Università di Pisa</span>
-      </a>
-      <h1 class="page-title">Maschera — Iscrizione evento</h1>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="card">
-      <h2 class="section-title">Anagrafica</h2>
-      <p class="muted">Scheletro pronto. I campi compariranno progressivamente negli step successivi.</p>
-    </section>
-
-    <section class="card"><!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Maschera — Iscrizione Evento • Università di Pisa</title>
-  <link rel="preload" href="styles/variables.css" as="style">
-  <link rel="stylesheet" href="styles/variables.css">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/form.css">
-</head>
-<body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="./" aria-label="Università di Pisa">
         <img src="assets/unipi-logo.png" alt="Logo Università di Pisa" class="brand__logo">
         <span class="brand__title">Università di Pisa</span>
       </a>
@@ -49,16 +21,75 @@
   </header>
 
   <main class="container">
-    <section class="card">
-      <h2 class="section-title">Anagrafica</h2>
-      <p class="muted">Le etichette dei campi saranno **sopra e centrate**; mobile-first. I campi verranno aggiunti negli step successivi.</p>
+    <!-- ANAGRAFICA -->
+    <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
+      <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
+
+      <!-- CF -->
+      <div class="field" id="field-cf">
+        <label for="cf">Codice fiscale</label>
+        <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
+        <div class="hint" id="hint-cf" aria-live="polite"></div>
+      </div>
+
+      <!-- Nome + Cognome -->
+      <div id="group-nomecognome" hidden>
+        <div class="form-row">
+          <div class="field" id="field-nome">
+            <label for="nome">Nome</label>
+            <input id="nome" class="input" type="text" autocomplete="given-name" placeholder="Nome">
+            <div class="hint" id="hint-nome" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="field-cognome">
+            <label for="cognome">Cognome</label>
+            <input id="cognome" class="input" type="text" autocomplete="family-name" placeholder="Cognome">
+            <div class="hint" id="hint-cognome" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data di nascita + Genere -->
+      <div id="group-datagenere" hidden>
+        <div class="form-row">
+          <div class="field" id="field-datanascita">
+            <label for="dataNascita">Data di nascita</label>
+            <input id="dataNascita" class="input" type="date" min="1900-01-01">
+            <div class="hint" id="hint-datanascita" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="field-genere">
+            <label for="genere">Genere</label>
+            <select id="genere" class="select">
+              <option value="">Seleziona…</option>
+              <option value="M">Maschio (M)</option>
+              <option value="F">Femmina (F)</option>
+            </select>
+            <div class="hint" id="hint-genere" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nato all'estero -->
+      <div id="group-estero" hidden>
+        <div class="field" id="field-estero">
+          <label>Sei nato all'estero?</label>
+          <div style="display:flex; gap:1rem; justify-content:center; align-items:center;">
+            <label><input type="radio" name="estero" id="esteroNo" value="no"> No</label>
+            <label><input type="radio" name="estero" id="esteroSi" value="si"> Sì</label>
+          </div>
+          <div class="hint" id="hint-estero" aria-live="polite"></div>
+        </div>
+      </div>
     </section>
 
+    <!-- SCUOLA (placeholder, Step 3) -->
     <section class="card">
       <h2 class="section-title">Informazioni sulla scuola</h2>
-      <p class="muted">Menù a cascata regione→provincia→città→sede principale→plesso (con ricerca tollerante) negli step successivi.</p>
+      <p class="muted">Menù a cascata regione→provincia→città→sede principale→plesso saranno attivati nello Step 3.</p>
     </section>
 
+    <!-- INVIO (placeholder) -->
     <section class="card">
       <h2 class="section-title">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
@@ -72,30 +103,13 @@
     </div>
   </footer>
 
+  <!-- JS: ordine importante -->
   <script src="js/config.js" defer></script>
+  <script src="js/utils/dom.js" defer></script>
+  <script src="js/utils/validators.js" defer></script>
+  <script src="js/utils/events.js" defer></script>
+  <script src="js/components/FieldHandlers.js" defer></script>
   <script src="js/services/dataLoader.js" defer></script>
-  <script src="js/app.js" defer></script>
-</body>
-</html>
-
-      <h2 class="section-title">Informazioni sulla scuola</h2>
-      <p class="muted">Menù a cascata regione→provincia→città→sede principale→plesso saranno attivati negli step successivi.</p>
-    </section>
-
-    <section class="card">
-      <h2 class="section-title">Invio su Microsoft Forms</h2>
-      <p class="muted">Il prefilling verrà collegato più avanti (mappa ID domanda ⇄ parametri).</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <small>© Università di Pisa — Progetto “Maschera”.</small>
-      <small id="app-version" class="muted"></small>
-    </div>
-  </footer>
-
-  <script src="js/config.js" defer></script>
   <script src="js/app.js" defer></script>
 </body>
 </html>
