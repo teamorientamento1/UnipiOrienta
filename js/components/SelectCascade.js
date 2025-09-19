@@ -1,64 +1,48 @@
 /**
  * SelectCascade.js
- * - Province → Comuni (da geo_hierarchy)
- * - Paesi esteri (da paesi_esteri.json) con voce “ALTRO” in cima
- * - Ricerca base: filtra per sottostringa (case-insensitive)
+ * - Province → Comuni: costruito da geo o, in mancanza, dai record dei comuni (nomi).
+ * - Paesi esteri: array puro o {nazioni:[...]} con "ALTRO" in testa.
+ * - Ricerca base: filtro per sottostringa (case-insensitive).
  */
 const SelectCascade = (() => {
-  // Utility
-  const byText = (a,b) => a.localeCompare(b, 'it', {sensitivity:'base'});
+  const collator = new Intl.Collator("it", { sensitivity: "base" });
+  const byText = (a,b) => collator.compare(a,b);
 
-  async function buildProvinceMap(){
-    const geo = await window.DataLoader.loadGeoHierarchy();
-    // geo: { Regione: { Provincia: [Comuni...] } }
-    const provinceMap = new Map();
-    Object.values(geo).forEach(regionObj => {
-      Object.entries(regionObj).forEach(([provincia, comuni]) => {
-        provinceMap.set(provincia, Array.from(new Set(comuni)).sort(byText));
-      });
-    });
-    return provinceMap; // Map<Provincia, [Comuni]>
-  }
-
-  function setOptions(selectEl, values, {placeholder="Seleziona…", prefix=[]}={}){
+  function setOptions(selectEl, values, { placeholder="Seleziona…", prefix=[] }={}){
     selectEl.innerHTML = "";
     const ph = document.createElement("option");
-    ph.value = "";
-    ph.textContent = placeholder;
+    ph.value = ""; ph.textContent = placeholder;
     selectEl.appendChild(ph);
 
-    prefix.forEach(pv => {
+    prefix.forEach(p => {
       const op = document.createElement("option");
-      op.value = pv.value;
-      op.textContent = pv.label;
+      op.value = p.value; op.textContent = p.label;
       selectEl.appendChild(op);
     });
 
     values.forEach(v => {
       const op = document.createElement("option");
-      op.value = v;
-      op.textContent = v;
+      op.value = v; op.textContent = v;
       selectEl.appendChild(op);
     });
   }
 
-  function filterList(fullList, query){
+  function filterList(full, query){
     const q = (query || "").trim().toLowerCase();
-    if(!q) return fullList;
-    return fullList.filter(x => x.toLowerCase().includes(q));
+    if (!q) return full;
+    return full.filter(x => x.toLowerCase().includes(q));
   }
 
-  // ---- Paesi esteri ----
+  // ---------- Paesi esteri ----------
   async function initPaesi({ selectEl, searchEl }){
-    const countries = await window.DataLoader.loadCountries();
-    const uniq = Array.from(new Set(countries)).sort(byText);
+    const raw = await window.DataLoader.loadPaesi();
+    const list = window.DataLoader.normalizeCountries(raw);
+    const uniq = Array.from(new Set(list.filter(Boolean))).sort(byText);
     const PREFIX = [{ value: "__ALTRO__", label: "ALTRO" }];
 
-    // iniziale
     selectEl.disabled = false;
     setOptions(selectEl, uniq, { placeholder: "Seleziona…", prefix: PREFIX });
 
-    // ricerca
     if (searchEl){
       searchEl.addEventListener("input", () => {
         const filtered = filterList(uniq, searchEl.value);
@@ -72,27 +56,32 @@ const SelectCascade = (() => {
     };
   }
 
-  // ---- Provincia → Comune ----
+  // ---------- Provincia → Comune ----------
   async function initProvinceComune({ provinciaSelect, provinciaSearch, comuneSelect, comuneSearch }){
-    const provinceMap = await buildProvinceMap();
-    const allProv = Array.from(provinceMap.keys()).sort(byText);
+    // Carica entrambi e costruisci la mappa più coerente possibile
+    const [geo, comuni] = await Promise.all([
+      window.DataLoader.loadGeo().catch(()=>null),
+      window.DataLoader.loadComuni().catch(()=>[])
+    ]);
 
-    // Provincia
+    const provMap = window.DataLoader.buildProvinceMap({ geo, comuni });
+    const allProv = window.DataLoader.provincesFromMap(provMap);
+
     provinciaSelect.disabled = false;
     setOptions(provinciaSelect, allProv, { placeholder: "Seleziona…" });
 
     function renderComuniFor(prov, query=""){
-      const comuni = provinceMap.get(prov) || [];
+      const comuni = provMap.get(prov) || [];
       const filtered = filterList(comuni, query);
       setOptions(comuneSelect, filtered, { placeholder: "Seleziona…" });
       comuneSelect.disabled = filtered.length === 0;
     }
 
+    // Eventi
     provinciaSelect.addEventListener("change", () => {
       const prov = provinciaSelect.value;
-      comuneSearch.value = "";
-      renderComuniFor(prov);
-      if (prov) comuneSearch.disabled = false; else { comuneSearch.disabled = true; comuneSelect.disabled = true; }
+      if (comuneSearch) { comuneSearch.value = ""; comuneSearch.disabled = !prov; }
+      if (prov) { renderComuniFor(prov); } else { comuneSelect.disabled = true; setOptions(comuneSelect, [], { placeholder: "Seleziona…" }); }
     });
 
     if (provinciaSearch){
@@ -104,8 +93,6 @@ const SelectCascade = (() => {
       });
     }
 
-    // Comune
-    comuneSelect.disabled = true;
     if (comuneSearch){
       comuneSearch.disabled = true;
       comuneSearch.addEventListener("input", () => {

@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- BASE: imposta la root dei percorsi relativi su GitHub Pages -->
+  <!-- ATTENZIONE: usa ESATTAMENTE il nome della tua repo e mantieni lo slash finale -->
+  <base href="/MASCHERA-CODICE-FISCALE/">
+
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
-  <link rel="preload" href="styles/variables.css?v=4" as="style">
-  <link rel="stylesheet" href="styles/variables.css?v=4">
-  <link rel="stylesheet" href="styles/base.css?v=4">
-  <link rel="stylesheet" href="styles/form.css?v=4">
+
+  <!-- CSS (cache-busting v=8) -->
+  <link rel="preload" href="styles/variables.css?v=8" as="style">
+  <link rel="stylesheet" href="styles/variables.css?v=8">
+  <link rel="stylesheet" href="styles/base.css?v=8">
+  <link rel="stylesheet" href="styles/form.css?v=8">
 </head>
 <body>
   <header class="site-header">
@@ -95,7 +102,7 @@
         </div>
       </div>
 
-      <!-- Nascita in Italia: Provincia → Comune -->
+      <!-- Nascita in Italia: Provincia -> Comune (uno alla volta) -->
       <div id="group-nascita" hidden>
         <div class="form-row">
           <div class="field" id="field-prov-nascita">
@@ -107,7 +114,7 @@
             <div class="hint" id="hint-prov-nascita" aria-live="polite"></div>
           </div>
 
-          <div class="field" id="field-comune-nascita">
+          <div class="field" id="field-comune-nascita" hidden>
             <label for="comuneNascita">Comune di nascita</label>
             <input id="searchComuneNascita" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
             <select id="comuneNascita" class="select" disabled>
@@ -118,7 +125,7 @@
         </div>
       </div>
 
-      <!-- Residenza: Provincia → Comune -->
+      <!-- Residenza: Provincia -> Comune (uno alla volta) -->
       <div id="group-residenza" hidden>
         <div class="form-row">
           <div class="field" id="field-prov-res">
@@ -130,7 +137,7 @@
             <div class="hint" id="hint-prov-res" aria-live="polite"></div>
           </div>
 
-          <div class="field" id="field-comune-res">
+          <div class="field" id="field-comune-res" hidden>
             <label for="comuneResidenza">Comune di residenza</label>
             <input id="searchComuneResidenza" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
             <select id="comuneResidenza" class="select" disabled>
@@ -142,12 +149,13 @@
       </div>
     </section>
 
-    <!-- SCUOLA (arriva step 3B/4) -->
+    <!-- SCUOLA (arriva step successivi) -->
     <section class="card">
       <h2 class="section-title">Informazioni sulla scuola</h2>
       <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso (nei prossimi step).</p>
     </section>
 
+    <!-- INVIO -->
     <section class="card">
       <h2 class="section-title">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
@@ -161,14 +169,14 @@
     </div>
   </footer>
 
-  <!-- JS: ordine importante -->
-  <script src="js/config.js?v=4" defer></script>
-  <script src="js/utils/dom.js?v=4" defer></script>
-  <script src="js/utils/validators.js?v=4" defer></script>
-  <script src="js/utils/events.js?v=4" defer></script>
-  <script src="js/components/FieldHandlers.js?v=4" defer></script>
-  <script src="js/services/dataLoader.js?v=4" defer></script>
-  <script src="js/components/SelectCascade.js?v=4" defer></script>
-  <script src="js/app.js?v=4" defer></script>
+  <!-- JS: ordine importante (cache-busting v=8) -->
+  <script src="js/config.js?v=8" defer></script>
+  <script src="js/utils/dom.js?v=8" defer></script>
+  <script src="js/utils/validators.js?v=8" defer></script>
+  <script src="js/utils/events.js?v=8" defer></script>
+  <script src="js/components/FieldHandlers.js?v=8" defer></script>
+  <script src="js/services/dataLoader.js?v=8" defer></script>
+  <script src="js/components/SelectCascade.js?v=8" defer></script>
+  <script src="js/app.js?v=8" defer></script>
 </body>
 </html>
