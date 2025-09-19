@@ -52,7 +52,7 @@
 }
 .field--error .hint{ color: var(--error); }
 
-/* Bottoni (se/quando servono) */
+/* Bottoni */
 .btn{
   display:inline-block;
   padding:.8rem 1.1rem;
@@ -64,3 +64,16 @@
 }
 .btn:disabled{ opacity:.6; cursor:default; }
 .btn--ghost{ background:#fff; color:var(--unipi-blue); }
+
+/* --- SAFETY: rendi sempre visibili gli input in caso di cache/conflitti CSS --- */
+input, select {
+  background:#fff;
+  border:1px solid #cbd5e1;
+}
+.input, .select {
+  display:block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width:100%;
+  min-height:44px;
+}

@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
-  <link rel="preload" href="styles/variables.css" as="style">
-  <link rel="stylesheet" href="styles/variables.css">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/form.css">
+  <!-- cache-busting con ?v=2 per evitare vecchie versioni -->
+  <link rel="preload" href="styles/variables.css?v=2" as="style">
+  <link rel="stylesheet" href="styles/variables.css?v=2">
+  <link rel="stylesheet" href="styles/base.css?v=2">
+  <link rel="stylesheet" href="styles/form.css?v=2">
 </head>
 <body>
   <header class="site-header">
@@ -25,10 +26,12 @@
     <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
       <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
 
-      <!-- CF -->
+      <!-- CF (sempre visibile) -->
       <div class="field" id="field-cf">
         <label for="cf">Codice fiscale</label>
-        <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
+        <input id="cf" class="input" type="text" inputmode="latin"
+               maxlength="16" autocomplete="off" spellcheck="false"
+               placeholder="Inserisci il tuo codice fiscale">
         <div class="hint" id="hint-cf" aria-live="polite"></div>
       </div>
 
@@ -83,13 +86,13 @@
       </div>
     </section>
 
-    <!-- SCUOLA (placeholder, Step 3) -->
+    <!-- SCUOLA -->
     <section class="card">
       <h2 class="section-title">Informazioni sulla scuola</h2>
       <p class="muted">Menù a cascata regione→provincia→città→sede principale→plesso saranno attivati nello Step 3.</p>
     </section>
 
-    <!-- INVIO (placeholder) -->
+    <!-- INVIO -->
     <section class="card">
       <h2 class="section-title">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
@@ -103,13 +106,13 @@
     </div>
   </footer>
 
-  <!-- JS: ordine importante -->
-  <script src="js/config.js" defer></script>
-  <script src="js/utils/dom.js" defer></script>
-  <script src="js/utils/validators.js" defer></script>
-  <script src="js/utils/events.js" defer></script>
-  <script src="js/components/FieldHandlers.js" defer></script>
-  <script src="js/services/dataLoader.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <!-- JS: ordine importante (cache-busting) -->
+  <script src="js/config.js?v=2" defer></script>
+  <script src="js/utils/dom.js?v=2" defer></script>
+  <script src="js/utils/validators.js?v=2" defer></script>
+  <script src="js/utils/events.js?v=2" defer></script>
+  <script src="js/components/FieldHandlers.js?v=2" defer></script>
+  <script src="js/services/dataLoader.js?v=2" defer></script>
+  <script src="js/app.js?v=2" defer></script>
 </body>
 </html>
