@@ -1,0 +1,5 @@
+[
+  { "comune": "Roma",      "provincia": "RM", "regione": "Lazio", "codice_catastale": "H501" },
+  { "comune": "Fiumicino", "provincia": "RM", "regione": "Lazio", "codice_catastale": "M297" },
+  { "comune": "Tivoli",    "provincia": "RM", "regione": "Lazio", "codice_catastale": "L188" }
+]

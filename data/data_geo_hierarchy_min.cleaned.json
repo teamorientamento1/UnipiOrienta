@@ -1,0 +1,728 @@
+{
+  "regioni": [
+    {
+      "id": "13",
+      "label": "Abruzzo"
+    },
+    {
+      "id": "17",
+      "label": "Basilicata"
+    },
+    {
+      "id": "18",
+      "label": "Calabria"
+    },
+    {
+      "id": "15",
+      "label": "Campania"
+    },
+    {
+      "id": "08",
+      "label": "Emilia-Romagna"
+    },
+    {
+      "id": "06",
+      "label": "Friuli-Venezia Giulia"
+    },
+    {
+      "id": "12",
+      "label": "Lazio"
+    },
+    {
+      "id": "07",
+      "label": "Liguria"
+    },
+    {
+      "id": "03",
+      "label": "Lombardia"
+    },
+    {
+      "id": "11",
+      "label": "Marche"
+    },
+    {
+      "id": "14",
+      "label": "Molise"
+    },
+    {
+      "id": "01",
+      "label": "Piemonte"
+    },
+    {
+      "id": "16",
+      "label": "Puglia"
+    },
+    {
+      "id": "20",
+      "label": "Sardegna"
+    },
+    {
+      "id": "19",
+      "label": "Sicilia"
+    },
+    {
+      "id": "09",
+      "label": "Toscana"
+    },
+    {
+      "id": "04",
+      "label": "Trentino-Alto Adige/Südtirol"
+    },
+    {
+      "id": "10",
+      "label": "Umbria"
+    },
+    {
+      "id": "02",
+      "label": "Valle d'Aosta/Vallée d'Aoste"
+    },
+    {
+      "id": "05",
+      "label": "Veneto"
+    }
+  ],
+  "province": [
+    {
+      "id": "069",
+      "label": "Chieti (CH)",
+      "sigla": "CH",
+      "reg_id": "13"
+    },
+    {
+      "id": "066",
+      "label": "L'Aquila (AQ)",
+      "sigla": "AQ",
+      "reg_id": "13"
+    },
+    {
+      "id": "068",
+      "label": "Pescara (PE)",
+      "sigla": "PE",
+      "reg_id": "13"
+    },
+    {
+      "id": "067",
+      "label": "Teramo (TE)",
+      "sigla": "TE",
+      "reg_id": "13"
+    },
+    {
+      "id": "077",
+      "label": "Matera (MT)",
+      "sigla": "MT",
+      "reg_id": "17"
+    },
+    {
+      "id": "076",
+      "label": "Potenza (PZ)",
+      "sigla": "PZ",
+      "reg_id": "17"
+    },
+    {
+      "id": "079",
+      "label": "Catanzaro (CZ)",
+      "sigla": "CZ",
+      "reg_id": "18"
+    },
+    {
+      "id": "078",
+      "label": "Cosenza (CS)",
+      "sigla": "CS",
+      "reg_id": "18"
+    },
+    {
+      "id": "101",
+      "label": "Crotone (KR)",
+      "sigla": "KR",
+      "reg_id": "18"
+    },
+    {
+      "id": "280",
+      "label": "Reggio Calabria (RC)",
+      "sigla": "RC",
+      "reg_id": "18"
+    },
+    {
+      "id": "102",
+      "label": "Vibo Valentia (VV)",
+      "sigla": "VV",
+      "reg_id": "18"
+    },
+    {
+      "id": "064",
+      "label": "Avellino (AV)",
+      "sigla": "AV",
+      "reg_id": "15"
+    },
+    {
+      "id": "062",
+      "label": "Benevento (BN)",
+      "sigla": "BN",
+      "reg_id": "15"
+    },
+    {
+      "id": "061",
+      "label": "Caserta (CE)",
+      "sigla": "CE",
+      "reg_id": "15"
+    },
+    {
+      "id": "263",
+      "label": "Napoli (NA)",
+      "sigla": "NA",
+      "reg_id": "15"
+    },
+    {
+      "id": "065",
+      "label": "Salerno (SA)",
+      "sigla": "SA",
+      "reg_id": "15"
+    },
+    {
+      "id": "237",
+      "label": "Bologna (BO)",
+      "sigla": "BO",
+      "reg_id": "08"
+    },
+    {
+      "id": "038",
+      "label": "Ferrara (FE)",
+      "sigla": "FE",
+      "reg_id": "08"
+    },
+    {
+      "id": "040",
+      "label": "Forlì-Cesena (FC)",
+      "sigla": "FC",
+      "reg_id": "08"
+    },
+    {
+      "id": "036",
+      "label": "Modena (MO)",
+      "sigla": "MO",
+      "reg_id": "08"
+    },
+    {
+      "id": "034",
+      "label": "Parma (PR)",
+      "sigla": "PR",
+      "reg_id": "08"
+    },
+    {
+      "id": "033",
+      "label": "Piacenza (PC)",
+      "sigla": "PC",
+      "reg_id": "08"
+    },
+    {
+      "id": "039",
+      "label": "Ravenna (RA)",
+      "sigla": "RA",
+      "reg_id": "08"
+    },
+    {
+      "id": "035",
+      "label": "Reggio nell'Emilia (RE)",
+      "sigla": "RE",
+      "reg_id": "08"
+    },
+    {
+      "id": "099",
+      "label": "Rimini (RN)",
+      "sigla": "RN",
+      "reg_id": "08"
+    },
+    {
+      "id": "031",
+      "label": "Gorizia (GO)",
+      "sigla": "GO",
+      "reg_id": "06"
+    },
+    {
+      "id": "093",
+      "label": "Pordenone (PN)",
+      "sigla": "PN",
+      "reg_id": "06"
+    },
+    {
+      "id": "032",
+      "label": "Trieste (TS)",
+      "sigla": "TS",
+      "reg_id": "06"
+    },
+    {
+      "id": "030",
+      "label": "Udine (UD)",
+      "sigla": "UD",
+      "reg_id": "06"
+    },
+    {
+      "id": "060",
+      "label": "Frosinone (FR)",
+      "sigla": "FR",
+      "reg_id": "12"
+    },
+    {
+      "id": "059",
+      "label": "Latina (LT)",
+      "sigla": "LT",
+      "reg_id": "12"
+    },
+    {
+      "id": "057",
+      "label": "Rieti (RI)",
+      "sigla": "RI",
+      "reg_id": "12"
+    },
+    {
+      "id": "258",
+      "label": "Roma (RM)",
+      "sigla": "RM",
+      "reg_id": "12"
+    },
+    {
+      "id": "056",
+      "label": "Viterbo (VT)",
+      "sigla": "VT",
+      "reg_id": "12"
+    },
+    {
+      "id": "210",
+      "label": "Genova (GE)",
+      "sigla": "GE",
+      "reg_id": "07"
+    },
+    {
+      "id": "008",
+      "label": "Imperia (IM)",
+      "sigla": "IM",
+      "reg_id": "07"
+    },
+    {
+      "id": "011",
+      "label": "La Spezia (SP)",
+      "sigla": "SP",
+      "reg_id": "07"
+    },
+    {
+      "id": "009",
+      "label": "Savona (SV)",
+      "sigla": "SV",
+      "reg_id": "07"
+    },
+    {
+      "id": "016",
+      "label": "Bergamo (BG)",
+      "sigla": "BG",
+      "reg_id": "03"
+    },
+    {
+      "id": "017",
+      "label": "Brescia (BS)",
+      "sigla": "BS",
+      "reg_id": "03"
+    },
+    {
+      "id": "013",
+      "label": "Como (CO)",
+      "sigla": "CO",
+      "reg_id": "03"
+    },
+    {
+      "id": "019",
+      "label": "Cremona (CR)",
+      "sigla": "CR",
+      "reg_id": "03"
+    },
+    {
+      "id": "097",
+      "label": "Lecco (LC)",
+      "sigla": "LC",
+      "reg_id": "03"
+    },
+    {
+      "id": "098",
+      "label": "Lodi (LO)",
+      "sigla": "LO",
+      "reg_id": "03"
+    },
+    {
+      "id": "020",
+      "label": "Mantova (MN)",
+      "sigla": "MN",
+      "reg_id": "03"
+    },
+    {
+      "id": "215",
+      "label": "Milano (MI)",
+      "sigla": "MI",
+      "reg_id": "03"
+    },
+    {
+      "id": "108",
+      "label": "Monza e della Brianza (MB)",
+      "sigla": "MB",
+      "reg_id": "03"
+    },
+    {
+      "id": "018",
+      "label": "Pavia (PV)",
+      "sigla": "PV",
+      "reg_id": "03"
+    },
+    {
+      "id": "014",
+      "label": "Sondrio (SO)",
+      "sigla": "SO",
+      "reg_id": "03"
+    },
+    {
+      "id": "012",
+      "label": "Varese (VA)",
+      "sigla": "VA",
+      "reg_id": "03"
+    },
+    {
+      "id": "042",
+      "label": "Ancona (AN)",
+      "sigla": "AN",
+      "reg_id": "11"
+    },
+    {
+      "id": "044",
+      "label": "Ascoli Piceno (AP)",
+      "sigla": "AP",
+      "reg_id": "11"
+    },
+    {
+      "id": "109",
+      "label": "Fermo (FM)",
+      "sigla": "FM",
+      "reg_id": "11"
+    },
+    {
+      "id": "043",
+      "label": "Macerata (MC)",
+      "sigla": "MC",
+      "reg_id": "11"
+    },
+    {
+      "id": "041",
+      "label": "Pesaro e Urbino (PU)",
+      "sigla": "PU",
+      "reg_id": "11"
+    },
+    {
+      "id": "070",
+      "label": "Campobasso (CB)",
+      "sigla": "CB",
+      "reg_id": "14"
+    },
+    {
+      "id": "094",
+      "label": "Isernia (IS)",
+      "sigla": "IS",
+      "reg_id": "14"
+    },
+    {
+      "id": "006",
+      "label": "Alessandria (AL)",
+      "sigla": "AL",
+      "reg_id": "01"
+    },
+    {
+      "id": "005",
+      "label": "Asti (AT)",
+      "sigla": "AT",
+      "reg_id": "01"
+    },
+    {
+      "id": "096",
+      "label": "Biella (BI)",
+      "sigla": "BI",
+      "reg_id": "01"
+    },
+    {
+      "id": "004",
+      "label": "Cuneo (CN)",
+      "sigla": "CN",
+      "reg_id": "01"
+    },
+    {
+      "id": "003",
+      "label": "Novara (NO)",
+      "sigla": "NO",
+      "reg_id": "01"
+    },
+    {
+      "id": "201",
+      "label": "Torino (TO)",
+      "sigla": "TO",
+      "reg_id": "01"
+    },
+    {
+      "id": "103",
+      "label": "Verbano-Cusio-Ossola (VB)",
+      "sigla": "VB",
+      "reg_id": "01"
+    },
+    {
+      "id": "002",
+      "label": "Vercelli (VC)",
+      "sigla": "VC",
+      "reg_id": "01"
+    },
+    {
+      "id": "272",
+      "label": "Bari (BA)",
+      "sigla": "BA",
+      "reg_id": "16"
+    },
+    {
+      "id": "110",
+      "label": "Barletta-Andria-Trani (BT)",
+      "sigla": "BT",
+      "reg_id": "16"
+    },
+    {
+      "id": "074",
+      "label": "Brindisi (BR)",
+      "sigla": "BR",
+      "reg_id": "16"
+    },
+    {
+      "id": "071",
+      "label": "Foggia (FG)",
+      "sigla": "FG",
+      "reg_id": "16"
+    },
+    {
+      "id": "075",
+      "label": "Lecce (LE)",
+      "sigla": "LE",
+      "reg_id": "16"
+    },
+    {
+      "id": "073",
+      "label": "Taranto (TA)",
+      "sigla": "TA",
+      "reg_id": "16"
+    },
+    {
+      "id": "292",
+      "label": "Cagliari (CA)",
+      "sigla": "CA",
+      "reg_id": "20"
+    },
+    {
+      "id": "091",
+      "label": "Nuoro (NU)",
+      "sigla": "NU",
+      "reg_id": "20"
+    },
+    {
+      "id": "095",
+      "label": "Oristano (OR)",
+      "sigla": "OR",
+      "reg_id": "20"
+    },
+    {
+      "id": "090",
+      "label": "Sassari (SS)",
+      "sigla": "SS",
+      "reg_id": "20"
+    },
+    {
+      "id": "111",
+      "label": "Sud Sardegna (SU)",
+      "sigla": "SU",
+      "reg_id": "20"
+    },
+    {
+      "id": "084",
+      "label": "Agrigento (AG)",
+      "sigla": "AG",
+      "reg_id": "19"
+    },
+    {
+      "id": "085",
+      "label": "Caltanissetta (CL)",
+      "sigla": "CL",
+      "reg_id": "19"
+    },
+    {
+      "id": "287",
+      "label": "Catania (CT)",
+      "sigla": "CT",
+      "reg_id": "19"
+    },
+    {
+      "id": "086",
+      "label": "Enna (EN)",
+      "sigla": "EN",
+      "reg_id": "19"
+    },
+    {
+      "id": "283",
+      "label": "Messina (ME)",
+      "sigla": "ME",
+      "reg_id": "19"
+    },
+    {
+      "id": "282",
+      "label": "Palermo (PA)",
+      "sigla": "PA",
+      "reg_id": "19"
+    },
+    {
+      "id": "088",
+      "label": "Ragusa (RG)",
+      "sigla": "RG",
+      "reg_id": "19"
+    },
+    {
+      "id": "089",
+      "label": "Siracusa (SR)",
+      "sigla": "SR",
+      "reg_id": "19"
+    },
+    {
+      "id": "081",
+      "label": "Trapani (TP)",
+      "sigla": "TP",
+      "reg_id": "19"
+    },
+    {
+      "id": "051",
+      "label": "Arezzo (AR)",
+      "sigla": "AR",
+      "reg_id": "09"
+    },
+    {
+      "id": "248",
+      "label": "Firenze (FI)",
+      "sigla": "FI",
+      "reg_id": "09"
+    },
+    {
+      "id": "053",
+      "label": "Grosseto (GR)",
+      "sigla": "GR",
+      "reg_id": "09"
+    },
+    {
+      "id": "049",
+      "label": "Livorno (LI)",
+      "sigla": "LI",
+      "reg_id": "09"
+    },
+    {
+      "id": "046",
+      "label": "Lucca (LU)",
+      "sigla": "LU",
+      "reg_id": "09"
+    },
+    {
+      "id": "045",
+      "label": "Massa-Carrara (MS)",
+      "sigla": "MS",
+      "reg_id": "09"
+    },
+    {
+      "id": "050",
+      "label": "Pisa (PI)",
+      "sigla": "PI",
+      "reg_id": "09"
+    },
+    {
+      "id": "047",
+      "label": "Pistoia (PT)",
+      "sigla": "PT",
+      "reg_id": "09"
+    },
+    {
+      "id": "100",
+      "label": "Prato (PO)",
+      "sigla": "PO",
+      "reg_id": "09"
+    },
+    {
+      "id": "052",
+      "label": "Siena (SI)",
+      "sigla": "SI",
+      "reg_id": "09"
+    },
+    {
+      "id": "021",
+      "label": "Bolzano/Bozen (BZ)",
+      "sigla": "BZ",
+      "reg_id": "04"
+    },
+    {
+      "id": "022",
+      "label": "Trento (TN)",
+      "sigla": "TN",
+      "reg_id": "04"
+    },
+    {
+      "id": "054",
+      "label": "Perugia (PG)",
+      "sigla": "PG",
+      "reg_id": "10"
+    },
+    {
+      "id": "055",
+      "label": "Terni (TR)",
+      "sigla": "TR",
+      "reg_id": "10"
+    },
+    {
+      "id": "007",
+      "label": "Valle d'Aosta/Vallée d'Aoste (AO)",
+      "sigla": "AO",
+      "reg_id": "02"
+    },
+    {
+      "id": "025",
+      "label": "Belluno (BL)",
+      "sigla": "BL",
+      "reg_id": "05"
+    },
+    {
+      "id": "028",
+      "label": "Padova (PD)",
+      "sigla": "PD",
+      "reg_id": "05"
+    },
+    {
+      "id": "029",
+      "label": "Rovigo (RO)",
+      "sigla": "RO",
+      "reg_id": "05"
+    },
+    {
+      "id": "026",
+      "label": "Treviso (TV)",
+      "sigla": "TV",
+      "reg_id": "05"
+    },
+    {
+      "id": "227",
+      "label": "Venezia (VE)",
+      "sigla": "VE",
+      "reg_id": "05"
+    },
+    {
+      "id": "023",
+      "label": "Verona (VR)",
+      "sigla": "VR",
+      "reg_id": "05"
+    },
+    {
+      "id": "024",
+      "label": "Vicenza (VI)",
+      "sigla": "VI",
+      "reg_id": "05"
+    }
+  ]
+}
