@@ -22,5 +22,14 @@ window.MASKERA_CONFIG = {
     dobFuture: "La data non può essere nel futuro.",
     ageWarnYoung: "Età molto bassa per questo form.",
     ageWarnOld: "Età più alta del previsto (spesso i docenti si iscrivono qui per errore).",
-  }
+  },
+
+  // (opzionale) URL assoluto del JSON scuole. Se valorizzato, bypassa la ricerca nei percorsi locali.
+  // Esempio GitHub Pages:
+  // SCHOOLS_URL: "https://<utente>.github.io/<repo>/data/scuole_min.json",
+  SCHOOLS_URL: null,
+
+  // (opzionale) Percorsi aggiuntivi, relativi alla pagina, in cui cercare i dataset.
+  // Esempio: ["assets/data/","data/"] — se null usa i percorsi di default.
+  DATA_BASES: null
 };
