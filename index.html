@@ -217,14 +217,52 @@
   </div>
 
   <script>
-    const MS_FORM_URL = "https://forms.office.com/Pages/ResponsePage.aspx?id=TUA_LUNGA_STRINGA_QUI";
-    const CF_FIELD_ID = "r0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5";
+    // === CONFIGURAZIONE ===
+    const PREFILLED_URL = `https://forms.office.com/Pages/ResponsePage.aspx?id=MWtFxyCi9Ue-Ukc4KGcKoRBcQtrLxDxHtGeSc5uVjjlUNDFMUTAxWEQzS1RURThRSU4zQTlCWDA2Sy4u&r5842976b5e5a4f6b9e3435c178b1c765=__CODICEFISCALE__&r48d682a7b0d744cfbabb7572081d78b5=__NOME__&r2d6b72bc32594275a160381b5f7b4d79=__COGNOME__&r453643fb35c3462fb3d93328660e3848=__SESSO__&r19568e35324442aa9fb7cc18e22c121e=__DATA_NASCITA__&r4fd5fc09897147dcaad7ec0bc80441c6=__PROVINCIA_NASCITA__&rf7ae5bfcb3524e2eb9f859453bf9a595=__CITTA_NASCITA__&r0e253625761a45bf934834ed222704b8=__CITTA_RESIDENZA__&r9bc9569e68e6450d8ba9871088265c67=__IST_PRINC_NOME__&r9c23fc61656240968ed2f97a86138a72=__PLESSO_NOME__`;
     const RECAPTCHA_SITE_KEY = "6LfMlcorAAAAAMYoMQ5ACAKP0B3XhfKHfv8zuDTY";
-    function validaCodiceFiscale(cf){ return true; }
 
+    // === UTILS ===
+    function encode(v){ return encodeURIComponent((v ?? "").toString().trim()); }
+    function getVal(id){ const el = document.getElementById(id); return el ? el.value.trim() : ""; }
+    function getSelectedText(sel){
+      const el = document.querySelector(sel);
+      if(!el) return "";
+      if(el.tagName === "SELECT"){
+        const opt = el.options[el.selectedIndex];
+        return opt ? opt.text.trim() : "";
+      }
+      return el.value.trim();
+    }
+    function normalizeDateToISO(s){
+      s = (s ?? "").toString().trim();
+      if(!s) return "";
+      if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+      const m1 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+      if(m1){ const [,dd,mm,yyyy]=m1; return `${yyyy}-${mm.padStart(2,"0")}-${dd.padStart(2,"0")}`; }
+      const m2 = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+      if(m2){ const [,yyyy,mm,dd]=m2; return `${yyyy}-${mm.padStart(2,"0")}-${dd.padStart(2,"0")}`; }
+      return s;
+    }
+    function buildCF(){
+      const ids = ["part1","part2","part3","part4","part5"];
+      return ids.map(id => getVal(id)).join("").toUpperCase().replace(/\s+/g,"");
+    }
+    function mapSesso(){
+      const v = (document.querySelector('input[name="genere"]:checked')?.value || "").toUpperCase();
+      const map = { "M":"Maschio", "F":"Femmina", "X":"Non specificato" };
+      return map[v] ?? v;
+    }
+    function replaceTokens(url, dict){
+      let out = url;
+      for(const [token,val] of Object.entries(dict)){
+        out = out.split(token).join(encode(val));
+      }
+      return out;
+    }
+
+    // === LOGICA CF: rivelazione progressiva, nessun auto-focus ===
     const cfInputs = [ 'part1','part2','part3','part4','part5' ].map(id=>document.getElementById(id));
     const cfForm = document.getElementById('cf_form');
-    function cfValue(){ return cfInputs.map(i => i.value).join('').toUpperCase(); }
     function toggleHidden(el, hide){ el.classList.toggle('hidden', !!hide); }
     function updateCFReveal(){
       const len1 = cfInputs[0].value.length;
@@ -236,45 +274,65 @@
       const len4 = cfInputs[3].classList.contains('hidden') ? 0 : cfInputs[3].value.length;
       toggleHidden(cfInputs[4], !(len4 === cfInputs[3].maxLength));
     }
-    function cfIsComplete(){ return cfValue().length === 16; }
-    function reflectCF(){ if(cfIsComplete()) showWizardStart(); else hideWizardStart(); if(window.MASKERA_CHECK_PROCEED) window.MASKERA_CHECK_PROCEED(); }
+    function cfIsComplete(){ return buildCF().length === 16; }
     function showWizardStart(){ document.getElementById('wrapNome').classList.remove('hidden'); }
     function hideWizardStart(){
       ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapScuolaReg','wrapScuolaProv','wrapScuolaCom','wrapScuolaIst','wrapScuolaPlesso'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
       window.MASKERA_WIZARD_COMPLETE = false;
     }
+    function reflectCF(){ if(cfIsComplete()) showWizardStart(); else hideWizardStart(); if(window.MASKERA_CHECK_PROCEED) window.MASKERA_CHECK_PROCEED(); }
+
     cfInputs.forEach((input) => {
       input.addEventListener('paste', e => e.preventDefault());
       input.addEventListener('input', () => {
-        input.value = input.value.toUpperCase();
+        input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g,"");
         if (input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
         updateCFReveal(); reflectCF();
       });
     });
-
     document.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' && e.target && e.target.tagName === 'INPUT' && e.target.type !== 'textarea'){ e.preventDefault(); }
     }, true);
     cfForm.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); } }, true);
 
+    // === COSTRUZIONE LINK PREFILLED E REDIRECT ===
+    function buildFinalPrefilledUrl(){
+      const dict = {
+        "__CODICEFISCALE__": buildCF(),
+        "__NOME__": getVal("nome"),
+        "__COGNOME__": getVal("cognome"),
+        "__SESSO__": mapSesso(),
+        "__DATA_NASCITA__": normalizeDateToISO(getVal("data_nascita")),
+        "__PROVINCIA_NASCITA__": getSelectedText("#provincia_nascita"),
+        "__CITTA_NASCITA__": getSelectedText("#comune_nascita"),
+        "__CITTA_RESIDENZA__": getSelectedText("#comune_res"),
+        "__IST_PRINC_NOME__": getSelectedText("#scuola_istituto"),
+        "__PLESSO_NOME__": getSelectedText("#scuola_plesso"),
+      };
+      return replaceTokens(PREFILLED_URL, dict);
+    }
+
+    // Submit del form CF -> esegui reCAPTCHA -> redirect al Forms precompilato
     cfForm.addEventListener('submit', function(event) {
       event.preventDefault();
       grecaptcha.ready(function() {
         grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function() {
-          const fullCF = cfValue();
-          const finalUrl = `${MS_FORM_URL}&${CF_FIELD_ID}=${encodeURIComponent(fullCF)}`;
+          const finalUrl = buildFinalPrefilledUrl();
+          // Redirect nella stessa scheda (evita popup blocker)
           window.location.href = finalUrl;
         });
       });
     });
   </script>
 
+  <!-- Script progetto -->
   <script src="assets/js/config.js"></script>
   <script src="assets/js/datasets.js"></script>
   <script src="assets/js/validation.js"></script>
   <script src="assets/js/wizard.js"></script>
 
   <script>
+    // Bottone globale: appare solo quando CF completo + wizard completo
     const globalProceed = document.getElementById('globalProceed');
     function isCFReady(){
       return (
