@@ -1,4 +1,4 @@
-/* Bootstrap app (robusta) */
+/* Bootstrap app (progressive reveal 1-alla-volta) */
 (function(){
   // Versione (su GitHub Pages funziona)
   fetch("version.json").then(r => r.json()).then(data=>{
@@ -20,44 +20,100 @@
     const esteroSi  = qs("#esteroSi");
     const esteroNo  = qs("#esteroNo");
 
+    // Paese estero
     const grpPaeseEstero = qs("#group-paese-estero");
-    const paeseSel = qs("#paeseEstero");
-    const paeseSearch = qs("#searchPaeseEstero");
-    const hintPaese = qs("#hint-paese-estero");
+    const fldPaeseEstero = qs("#field-paese-estero");
+    const paeseSel       = qs("#paeseEstero");
+    const paeseSearch    = qs("#searchPaeseEstero");
+    const hintPaese      = qs("#hint-paese-estero");
 
-    const grpNascita = qs("#group-nascita");
-    const provNasSel = qs("#provinciaNascita");
-    const provNasSearch = qs("#searchProvinciaNascita");
-    const comNasSel = qs("#comuneNascita");
-    const comNasSearch = qs("#searchComuneNascita");
+    // Nascita IT: Provincia -> Comune
+    const grpNascita      = qs("#group-nascita");
+    const fldProvNascita  = qs("#field-prov-nascita");
+    const provNasSel      = qs("#provinciaNascita");
+    const provNasSearch   = qs("#searchProvinciaNascita");
+    const fldComNas       = qs("#field-comune-nascita");
+    const comNasSel       = qs("#comuneNascita");
+    const comNasSearch    = qs("#searchComuneNascita");
 
-    const grpRes = qs("#group-residenza");
-    const provResSel = qs("#provinciaResidenza");
-    const provResSearch = qs("#searchProvinciaResidenza");
-    const comResSel = qs("#comuneResidenza");
-    const comResSearch = qs("#searchComuneResidenza");
+    // Residenza: Provincia -> Comune
+    const grpRes          = qs("#group-residenza");
+    const fldProvRes      = qs("#field-prov-res");
+    const provResSel      = qs("#provinciaResidenza");
+    const provResSearch   = qs("#searchProvinciaResidenza");
+    const fldComRes       = qs("#field-comune-res");
+    const comResSel       = qs("#comuneResidenza");
+    const comResSearch    = qs("#searchComuneResidenza");
 
-    // Stati
+    // Stati componenti
     let esteroAPI = null;
     let nascitaAPI = null;
     let resAPI = null;
 
-    // Attacca SUBITO gli eventi, senza attendere i dati
+    // ---- Helper reveal "uno per volta" ----
+    function resetNascitaStep() {
+      // Mostra solo la Provincia di nascita
+      show(grpNascita);
+      show(fldProvNascita);
+      hide(fldComNas);
+      // Disabilita input di ricerca Comune finché la Provincia non è scelta
+      if (comNasSearch) { comNasSearch.disabled = true; comNasSearch.value = ""; }
+      if (comNasSel)    { comNasSel.value = ""; comNasSel.disabled = true; }
+    }
+
+    function resetResidenzaStep() {
+      // Mostra solo la Provincia di residenza
+      show(grpRes);
+      show(fldProvRes);
+      hide(fldComRes);
+      if (comResSearch) { comResSearch.disabled = true; comResSearch.value = ""; }
+      if (comResSel)    { comResSel.value = ""; comResSel.disabled = true; }
+    }
+
+    function maybeShowComuneNascita(provincia, comune) {
+      // Se c'è una provincia selezionata ma il comune è vuoto → mostra solo il campo Comune nascita
+      if (provincia && !comune) {
+        show(fldComNas);
+        if (comNasSearch) comNasSearch.disabled = false;
+      }
+      // Se scelto anche il comune → sblocca Residenza (solo Provincia)
+      if (provincia && comune) {
+        resetResidenzaStep();
+      }
+      // Se la provincia è stata deselezionata → nascondi di nuovo il comune
+      if (!provincia) {
+        hide(fldComNas);
+        hide(grpRes);
+      }
+    }
+
+    function maybeShowComuneResidenza(provincia, comune) {
+      if (provincia && !comune) {
+        show(fldComRes);
+        if (comResSearch) comResSearch.disabled = false;
+      }
+      if (!provincia) {
+        hide(fldComRes);
+      }
+    }
+
     function onEsteroChange(){
       if (esteroSi?.checked){
+        // Flusso ESTERO:
+        // 1) Mostra Paese; 2) dopo scelta Paese -> mostra Residenza (solo Provincia)
         show(grpPaeseEstero);
         hide(grpNascita);
-        // mostra residenza solo quando c'è una scelta nel paese (anche ALTRO)
-        if (paeseSel?.value) show(grpRes); else hide(grpRes);
-
-        // se i paesi non sono pronti, prova a (re)init
+        hide(grpRes);
+        // Se i paesi non sono pronti, caricali
         if (!esteroAPI) ensureCountriesLoaded();
+        // Se già presente una scelta Paese, prepara Residenza (solo Provincia)
+        if (paeseSel?.value) resetResidenzaStep();
       } else if (esteroNo?.checked){
+        // Flusso ITALIA:
+        // 1) Mostra Nascita solo Provincia; 2) dopo scelta Provincia -> mostra Comune; 3) dopo Comune -> Residenza (solo Provincia)
         hide(grpPaeseEstero);
-        show(grpNascita);
-        // residenza solo quando ho prov+comune nascita (o forza se già pronto)
-        if (nascitaAPI && nascitaAPI.comune) show(grpRes); else hide(grpRes);
-
+        hide(grpRes);
+        resetNascitaStep();
         if (!nascitaAPI) ensureNascitaLoaded();
       } else {
         hide(grpPaeseEstero);
@@ -66,19 +122,17 @@
       }
     }
 
+    // Attacca SUBITO gli eventi, senza attendere i dati
     esteroSi?.addEventListener("change", onEsteroChange);
     esteroNo?.addEventListener("change", onEsteroChange);
-    paeseSel?.addEventListener("change", () => { if (esteroSi?.checked && paeseSel.value) show(grpRes); });
+    paeseSel?.addEventListener("change", () => {
+      if (esteroSi?.checked && paeseSel.value) {
+        resetResidenzaStep(); // Paese scelto: sblocca Residenza (solo Provincia)
+        if (!resAPI) ensureResidenzaLoaded();
+      }
+    });
 
-    // Nascita IT: quando cambia provincia/comune → valuta residenza
-    function wireNascitaResidenza(){
-      if (!nascitaAPI) return;
-      nascitaAPI.onChange(({provincia, comune}) => {
-        if (esteroNo?.checked && provincia && comune) show(grpRes);
-      });
-    }
-
-    // Lazy init dei componenti (con try/catch)
+    // ---- Lazy init dei componenti (con try/catch) ----
     async function ensureCountriesLoaded(){
       if (esteroAPI || !window.SelectCascade) return;
       try{
@@ -86,10 +140,15 @@
           selectEl: paeseSel,
           searchEl: paeseSearch
         });
-        esteroAPI.onChange(() => { if (esteroSi?.checked && paeseSel.value) show(grpRes); });
+        esteroAPI.onChange(() => {
+          if (esteroSi?.checked && paeseSel.value) {
+            resetResidenzaStep();
+            if (!resAPI) ensureResidenzaLoaded();
+          }
+        });
       }catch(e){
         console.error("Errore caricamento paesi:", e);
-        if (hintPaese) hintPaese.textContent = "Impossibile caricare la lista dei paesi. Controlla che data/paesi_esteri.json o data/demo/demo_paesi_esteri.json esista.";
+        if (hintPaese) hintPaese.textContent = "Impossibile caricare la lista dei paesi. Controlla data/paesi_esteri.json o data/demo/demo_paesi_esteri.json.";
       }
     }
 
@@ -102,7 +161,13 @@
           comuneSelect: comNasSel,
           comuneSearch: comNasSearch
         });
-        wireNascitaResidenza();
+        // Subito dopo init: mostra solo la Provincia di nascita
+        resetNascitaStep();
+
+        // Ogni cambiamento su Provincia/Comune nascita
+        nascitaAPI.onChange(({provincia, comune}) => {
+          maybeShowComuneNascita(provincia, comune);
+        });
       }catch(e){
         console.error("Errore caricamento province/comuni (nascita):", e);
       }
@@ -117,28 +182,37 @@
           comuneSelect: comResSel,
           comuneSearch: comResSearch
         });
+        // Subito dopo init, la logica di reveal la governiamo noi: mostriamo solo la Provincia
+        show(grpRes);
+        show(fldProvRes);
+        hide(fldComRes);
+        if (comResSearch) { comResSearch.disabled = true; comResSearch.value = ""; }
+        if (comResSel)    { comResSel.value = ""; comResSel.disabled = true; }
+
+        // Ogni cambiamento su Provincia/Comune residenza
+        resAPI.onChange(({provincia, comune}) => {
+          maybeShowComuneResidenza(provincia, comune);
+        });
       }catch(e){
         console.error("Errore caricamento province/comuni (residenza):", e);
       }
     }
 
-    // Avvia in background (senza bloccare gli eventi)
+    // Avvia pre-caricamenti in background
     (async () => {
       if (!window.SelectCascade) {
         console.warn("SelectCascade.js non caricato — verifica percorso js/components/SelectCascade.js");
       } else {
-        ensureCountriesLoaded();
-        ensureNascitaLoaded();
-        ensureResidenzaLoaded();
+        // Non inizializziamo subito nascita/residenza: lo facciamo quando servono.
+        ensureCountriesLoaded(); // è leggero; ok farlo subito
       }
     })();
 
-    // All’avvio lascio nascosti finché non scelto estero
+    // Stato iniziale: nascosti finché non scelta opzione estero (Step 2 decide quando mostrare "#group-estero")
     hide(grpPaeseEstero);
     hide(grpNascita);
     hide(grpRes);
-
-    // NB: il gruppo "estero" viene già mostrato da Step 2 quando data+genere sono validi.
-    // Se vuoi forzare per test, togli hidden manualmente dal DOM.
+    hide(fldComNas);
+    hide(fldComRes);
   });
 })();
