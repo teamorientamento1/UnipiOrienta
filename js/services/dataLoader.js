@@ -25,22 +25,24 @@
   const REAL = {
     GEO: 'data/geo_hierarchy_min.cleaned.json', // regioni -> province -> comuni[]
     COMUNI: 'data/comuni_min.cleaned.json',     // [{comune, provincia, regione, codice_catastale}]
-    SCUOLE: 'data/scuole_min.json'              // [{regione, provincia, citta, ist_princ_nome, plesso_nome}]
+    SCUOLE: 'data/scuole_min.json',             // [{regione, provincia, citta, ist_princ_nome, plesso_nome}]
+    COUNTRIES: 'data/paesi_esteri.json'         // ["Albania","Francia",...]
   };
 
-  // Demo (inclusi in repo per test offline/iniziali)
+  // Demo (inclusi in repo per test iniziali)
   const DEMO = {
     GEO: 'data/demo/demo_geo_hierarchy.json',
     COMUNI: 'data/demo/demo_comuni_min.json',
-    SCUOLE: 'data/demo/demo_scuole_roma.json'
+    SCUOLE: 'data/demo/demo_scuole_roma.json',
+    COUNTRIES: 'data/demo/demo_paesi_esteri.json'
   };
 
   const DataLoader = {
     loadGeoHierarchy(){ return loadJSON(REAL.GEO, DEMO.GEO); },
     loadComuniMin(){    return loadJSON(REAL.COMUNI, DEMO.COMUNI); },
-    loadScuole(){       return loadJSON(REAL.SCUOLE, DEMO.SCUOLE); }
+    loadScuole(){       return loadJSON(REAL.SCUOLE, DEMO.SCUOLE); },
+    loadCountries(){    return loadJSON(REAL.COUNTRIES, DEMO.COUNTRIES); }
   };
 
-  // Esponi in global
   window.DataLoader = DataLoader;
 })();

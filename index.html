@@ -4,11 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
-  <!-- cache-busting con ?v=2 per evitare vecchie versioni -->
-  <link rel="preload" href="styles/variables.css?v=2" as="style">
-  <link rel="stylesheet" href="styles/variables.css?v=2">
-  <link rel="stylesheet" href="styles/base.css?v=2">
-  <link rel="stylesheet" href="styles/form.css?v=2">
+  <link rel="preload" href="styles/variables.css?v=3" as="style">
+  <link rel="stylesheet" href="styles/variables.css?v=3">
+  <link rel="stylesheet" href="styles/base.css?v=3">
+  <link rel="stylesheet" href="styles/form.css?v=3">
 </head>
 <body>
   <header class="site-header">
@@ -26,12 +25,10 @@
     <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
       <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
 
-      <!-- CF (sempre visibile) -->
+      <!-- CF -->
       <div class="field" id="field-cf">
         <label for="cf">Codice fiscale</label>
-        <input id="cf" class="input" type="text" inputmode="latin"
-               maxlength="16" autocomplete="off" spellcheck="false"
-               placeholder="Inserisci il tuo codice fiscale">
+        <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
         <div class="hint" id="hint-cf" aria-live="polite"></div>
       </div>
 
@@ -84,15 +81,73 @@
           <div class="hint" id="hint-estero" aria-live="polite"></div>
         </div>
       </div>
+
+      <!-- Paese di nascita (estero) -->
+      <div id="group-paese-estero" hidden>
+        <div class="field" id="field-paese-estero">
+          <label for="paeseEstero">Paese di nascita (estero)</label>
+          <input id="searchPaeseEstero" class="input" type="text" placeholder="Cerca paese… (opzionale)">
+          <select id="paeseEstero" class="select" disabled>
+            <option value="">Seleziona…</option>
+            <!-- ALTRO + paesi da JSON -->
+          </select>
+          <div class="hint" id="hint-paese-estero" aria-live="polite">Se non trovi il tuo paese, scegli “ALTRO”.</div>
+        </div>
+      </div>
+
+      <!-- Nascita in Italia: Provincia → Comune -->
+      <div id="group-nascita" hidden>
+        <div class="form-row">
+          <div class="field" id="field-prov-nascita">
+            <label for="provinciaNascita">Provincia di nascita</label>
+            <input id="searchProvinciaNascita" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
+            <select id="provinciaNascita" class="select" disabled>
+              <option value="">Seleziona…</option>
+            </select>
+            <div class="hint" id="hint-prov-nascita" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="field-comune-nascita">
+            <label for="comuneNascita">Comune di nascita</label>
+            <input id="searchComuneNascita" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
+            <select id="comuneNascita" class="select" disabled>
+              <option value="">Seleziona…</option>
+            </select>
+            <div class="hint" id="hint-comune-nascita" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Residenza: Provincia → Comune -->
+      <div id="group-residenza" hidden>
+        <div class="form-row">
+          <div class="field" id="field-prov-res">
+            <label for="provinciaResidenza">Provincia di residenza</label>
+            <input id="searchProvinciaResidenza" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
+            <select id="provinciaResidenza" class="select" disabled>
+              <option value="">Seleziona…</option>
+            </select>
+            <div class="hint" id="hint-prov-res" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="field-comune-res">
+            <label for="comuneResidenza">Comune di residenza</label>
+            <input id="searchComuneResidenza" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
+            <select id="comuneResidenza" class="select" disabled>
+              <option value="">Seleziona…</option>
+            </select>
+            <div class="hint" id="hint-comune-res" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- SCUOLA -->
+    <!-- SCUOLA (arriva step 3B/4) -->
     <section class="card">
       <h2 class="section-title">Informazioni sulla scuola</h2>
-      <p class="muted">Menù a cascata regione→provincia→città→sede principale→plesso saranno attivati nello Step 3.</p>
+      <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso (nei prossimi step).</p>
     </section>
 
-    <!-- INVIO -->
     <section class="card">
       <h2 class="section-title">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
@@ -106,13 +161,14 @@
     </div>
   </footer>
 
-  <!-- JS: ordine importante (cache-busting) -->
-  <script src="js/config.js?v=2" defer></script>
-  <script src="js/utils/dom.js?v=2" defer></script>
-  <script src="js/utils/validators.js?v=2" defer></script>
-  <script src="js/utils/events.js?v=2" defer></script>
-  <script src="js/components/FieldHandlers.js?v=2" defer></script>
-  <script src="js/services/dataLoader.js?v=2" defer></script>
-  <script src="js/app.js?v=2" defer></script>
+  <!-- JS: ordine importante -->
+  <script src="js/config.js?v=3" defer></script>
+  <script src="js/utils/dom.js?v=3" defer></script>
+  <script src="js/utils/validators.js?v=3" defer></script>
+  <script src="js/utils/events.js?v=3" defer></script>
+  <script src="js/components/FieldHandlers.js?v=3" defer></script>
+  <script src="js/services/dataLoader.js?v=3" defer></script>
+  <script src="js/components/SelectCascade.js?v=3" defer></script>
+  <script src="js/app.js?v=3" defer></script>
 </body>
 </html>
