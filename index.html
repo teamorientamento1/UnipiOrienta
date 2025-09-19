@@ -103,15 +103,6 @@
             <label class="radio"><input type="radio" name="genere" value="M" /> Maschio</label>
             <label class="radio"><input type="radio" name="genere" value="X" /> Non specificato</label>
           </div>
-          <div class="field hidden" id="wrapSessoNascita" style="margin-top:6px">
-            <label for="sesso_nascita">Per favore inserire sesso di nascita</label>
-            <select id="sesso_nascita">
-              <option value="">Seleziona…</option>
-              <option value="F">Femmina</option>
-              <option value="M">Maschio</option>
-            </select>
-            <p id="sesso_nascita-error" class="error-text"></p>
-          </div>
           <p id="genere-error" class="error-text"></p>
         </div>
       </section>
@@ -182,17 +173,7 @@
         </div>
       </section>
 
-      <!-- DSA -->
-      <section class="row-full box hidden" id="wrapDsa">
-        <h3>Certificazione/DSA</h3>
-        <div class="radio-group" aria-describedby="dsa-error">
-          <label class="radio"><input type="radio" name="dsa" value="no" /> No</label>
-          <label class="radio"><input type="radio" name="dsa" value="si" /> Sì</label>
-        </div>
-        <p id="dsa-error" class="error-text"></p>
-      </section>
-
-      <!-- SCUOLE: REGIONE | PROVINCIA -->
+      <!-- SCUOLE -->
       <section class="box hidden" id="wrapScuolaReg">
         <div class="field">
           <label for="scuola_regione">Regione della scuola</label>
@@ -207,8 +188,6 @@
           <p id="scuola-prov-err" class="error-text"></p>
         </div>
       </section>
-
-      <!-- SCUOLE: CITTÀ | ISTITUTO -->
       <section class="box hidden" id="wrapScuolaCom">
         <div class="field">
           <label for="scuola_citta">Città della scuola</label>
@@ -223,8 +202,6 @@
           <p id="scuola-ist-err" class="error-text"></p>
         </div>
       </section>
-
-      <!-- SCUOLE: PLESSO -->
       <section class="row-full box hidden" id="wrapScuolaPlesso">
         <div class="field">
           <label for="scuola_plesso">Plesso</label>
@@ -263,7 +240,7 @@
     function reflectCF(){ if(cfIsComplete()) showWizardStart(); else hideWizardStart(); if(window.MASKERA_CHECK_PROCEED) window.MASKERA_CHECK_PROCEED(); }
     function showWizardStart(){ document.getElementById('wrapNome').classList.remove('hidden'); }
     function hideWizardStart(){
-      ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapDsa','wrapScuolaReg','wrapScuolaProv','wrapScuolaCom','wrapScuolaIst','wrapScuolaPlesso'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
+      ['wrapNome','wrapCognome','wrapGenere','wrapDob','wrapEstero','wrapBirthRight','wrapPaeseNascita','wrapRegioneNascita','wrapProvNasc','wrapComuneNasc','wrapProvRes','wrapComuneRes','wrapScuolaReg','wrapScuolaProv','wrapScuolaCom','wrapScuolaIst','wrapScuolaPlesso'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
       window.MASKERA_WIZARD_COMPLETE = false;
     }
     cfInputs.forEach((input) => {
