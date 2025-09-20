@@ -1,195 +1,136 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Maschera — Iscrizione evento • Università di Pisa</title>
 
-  <!-- BASE DINAMICO: si attiva SOLO su GitHub Pages -->
-  <script>
-    (function () {
-      try {
-        var host = location.hostname.toLowerCase();
-        var isGH = host.endsWith('github.io');
-        if (isGH) {
-          // Per project pages: /<repo>/index.html -> prendi il primo segmento come repo
-          var segs = location.pathname.split('/').filter(Boolean);
-          var repo = segs.length ? ('/' + segs[0] + '/') : '/';
-          var base = document.createElement('base');
-          base.href = repo;
-          document.head.appendChild(base);
-        }
-      } catch (e) { /* offline: nessun <base> */ }
-    })();
-  </script>
+  <!-- Base per GitHub Pages -->
+  <base href="/MASCHERA-CODICE-FISCALE/">
 
-  <title>Maschera — Iscrizione Evento • Università di Pisa</title>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/form.css?v=8">
+  <link rel="stylesheet" href="styles/main.css?v=8">
 
-  <!-- CSS (cache-busting v=12) -->
-  <link rel="preload" href="styles/variables.css?v=12" as="style">
-  <link rel="stylesheet" href="styles/variables.css?v=12">
-  <link rel="stylesheet" href="styles/base.css?v=12">
-  <link rel="stylesheet" href="styles/form.css?v=12">
+  <!-- Favicons (opzionale) -->
+  <link rel="icon" href="assets/favicon.png">
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="./" aria-label="Università di Pisa">
-        <img src="assets/unipi-logo.png" alt="Logo Università di Pisa" class="brand__logo">
-        <span class="brand__title">Università di Pisa</span>
-      </a>
-      <h1 class="page-title">Maschera — Iscrizione evento</h1>
+    <div class="brand">
+      <img src="assets/unipi-logo.png" alt="Logo Università di Pisa" class="brand__logo">
+      <div class="brand__titles">
+        <h1>Maschera — Iscrizione evento</h1>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <!-- ANAGRAFICA -->
-    <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
-      <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
+    <!-- ==================== ANAGRAFICA ==================== -->
+    <section aria-labelledby="section-anagrafica">
+      <h2 id="section-anagrafica">Anagrafica</h2>
 
-      <!-- CF -->
-      <div class="field" id="field-cf">
+      <!-- Codice fiscale -->
+      <div class="form-row">
         <label for="cf">Codice fiscale</label>
-        <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
-        <div class="hint" id="hint-cf" aria-live="polite"></div>
+        <input id="cf" name="cf" type="text" inputmode="latin" autocomplete="off" maxlength="16" placeholder="RSSMRA75C22H501I">
+        <small class="hint">Inserisci 16 caratteri senza spazi.</small>
       </div>
 
-      <!-- Nome + Cognome -->
-      <div id="group-nomecognome" hidden>
-        <div class="form-row">
-          <div class="field" id="field-nome">
-            <label for="nome">Nome</label>
-            <input id="nome" class="input" type="text" autocomplete="given-name" placeholder="Nome">
-            <div class="hint" id="hint-nome" aria-live="polite"></div>
-          </div>
+      <!-- Nome -->
+      <div class="form-row">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" type="text" autocomplete="given-name" placeholder="Mario">
+      </div>
 
-          <div class="field" id="field-cognome">
-            <label for="cognome">Cognome</label>
-            <input id="cognome" class="input" type="text" autocomplete="family-name" placeholder="Cognome">
-            <div class="hint" id="hint-cognome" aria-live="polite"></div>
-          </div>
+      <!-- Cognome -->
+      <div class="form-row">
+        <label for="cognome">Cognome</label>
+        <input id="cognome" name="cognome" type="text" autocomplete="family-name" placeholder="Rossi">
+      </div>
+
+      <!-- Data di nascita -->
+      <div class="form-row">
+        <label for="dob">Data di nascita</label>
+        <input id="dob" name="dob" type="date" inputmode="numeric">
+      </div>
+
+      <!-- Genere -->
+      <div class="form-row">
+        <label for="genere">Genere</label>
+        <select id="genere" name="genere">
+          <option value="" selected>Seleziona…</option>
+          <option value="M">Maschio (M)</option>
+          <option value="F">Femmina (F)</option>
+        </select>
+      </div>
+
+      <!-- Nato all'estero? -->
+      <fieldset class="form-row">
+        <legend>Sei nato all'estero?</legend>
+        <div class="radio-group">
+          <label><input type="radio" name="nato_estero" value="no" checked> No</label>
+          <label><input type="radio" name="nato_estero" value="si"> Sì</label>
         </div>
-      </div>
-
-      <!-- Data di nascita + Genere -->
-      <div id="group-datagenere" hidden>
-        <div class="form-row">
-          <div class="field" id="field-datanascita">
-            <label for="dataNascita">Data di nascita</label>
-            <input id="dataNascita" class="input" type="date" min="1900-01-01">
-            <div class="hint" id="hint-datanascita" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-genere">
-            <label for="genere">Genere</label>
-            <select id="genere" class="select">
-              <option value="">Seleziona…</option>
-              <option value="M">Maschio (M)</option>
-              <option value="F">Femmina (F)</option>
-            </select>
-            <div class="hint" id="hint-genere" aria-live="polite"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nato all'estero -->
-      <div id="group-estero" hidden>
-        <div class="field" id="field-estero">
-          <label>Sei nato all'estero?</label>
-          <div style="display:flex; gap:1rem; justify-content:center; align-items:center;">
-            <label><input type="radio" name="estero" id="esteroNo" value="no"> No</label>
-            <label><input type="radio" name="estero" id="esteroSi" value="si"> Sì</label>
-          </div>
-          <div class="hint" id="hint-estero" aria-live="polite"></div>
-        </div>
-      </div>
+      </fieldset>
 
       <!-- Paese di nascita (estero) -->
-      <div id="group-paese-estero" hidden>
-        <div class="field" id="field-paese-estero">
-          <label for="paeseEstero">Paese di nascita (estero)</label>
-          <input id="searchPaeseEstero" class="input" type="text" placeholder="Cerca paese… (opzionale)">
-          <select id="paeseEstero" class="select" disabled>
-            <option value="">Seleziona…</option>
-          </select>
-          <div class="hint" id="hint-paese-estero" aria-live="polite">Se non trovi il tuo paese, scegli “ALTRO”.</div>
-        </div>
+      <div class="form-row" id="row-paese-estero">
+        <label for="paese_estero">Paese di nascita (estero)</label>
+        <div id="select-paese-estero" class="select-host" aria-live="polite"></div>
+        <small class="hint">Se non trovi il tuo paese, scegli “ALTRO”.</small>
       </div>
 
-      <!-- Nascita in Italia: Provincia -> Comune (uno alla volta) -->
-      <div id="group-nascita" hidden>
-        <div class="form-row">
-          <div class="field" id="field-prov-nascita">
-            <label for="provinciaNascita">Provincia di nascita</label>
-            <input id="searchProvinciaNascita" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
-            <select id="provinciaNascita" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-prov-nascita" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-comune-nascita" hidden>
-            <label for="comuneNascita">Comune di nascita</label>
-            <input id="searchComuneNascita" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
-            <select id="comuneNascita" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-comune-nascita" aria-live="polite"></div>
-          </div>
-        </div>
+      <!-- Provincia/Comune di nascita -->
+      <div class="form-row">
+        <label for="prov_nascita">Provincia di nascita</label>
+        <div id="select-prov-nascita" class="select-host" aria-live="polite"></div>
+      </div>
+      <div class="form-row">
+        <label for="comune_nascita">Comune di nascita</label>
+        <div id="select-comune-nascita" class="select-host" aria-live="polite"></div>
       </div>
 
-      <!-- Residenza: Provincia -> Comune (uno alla volta) -->
-      <div id="group-residenza" hidden>
-        <div class="form-row">
-          <div class="field" id="field-prov-res">
-            <label for="provinciaResidenza">Provincia di residenza</label>
-            <input id="searchProvinciaResidenza" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
-            <select id="provinciaResidenza" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-prov-res" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-comune-res" hidden>
-            <label for="comuneResidenza">Comune di residenza</label>
-            <input id="searchComuneResidenza" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
-            <select id="comuneResidenza" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-comune-res" aria-live="polite"></div>
-          </div>
-        </div>
+      <!-- Provincia/Comune di residenza -->
+      <div class="form-row">
+        <label for="prov_residenza">Provincia di residenza</label>
+        <div id="select-prov-residenza" class="select-host" aria-live="polite"></div>
+      </div>
+      <div class="form-row">
+        <label for="comune_residenza">Comune di residenza</label>
+        <div id="select-comune-residenza" class="select-host" aria-live="polite"></div>
       </div>
     </section>
 
-    <!-- SCUOLA (arriva step successivi) -->
-    <section class="card">
-      <h2 class="section-title">Informazioni sulla scuola</h2>
+    <!-- ==================== SCUOLA ==================== -->
+    <section aria-labelledby="section-scuola">
+      <h2 id="section-scuola">Informazioni sulla scuola</h2>
       <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso (nei prossimi step).</p>
+      <!-- La cascata scuola verrà iniettata automaticamente sotto questo titolo
+           dallo script SchoolCascade.js -->
+      <div id="school-cascade"></div>
     </section>
 
-    <!-- INVIO -->
-    <section class="card">
-      <h2 class="section-title">Invio su Microsoft Forms</h2>
+    <!-- ==================== INVIO FORMS ==================== -->
+    <section aria-labelledby="section-forms">
+      <h2 id="section-forms">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
+      <div class="actions">
+        <button type="button" id="btn-continua-forms" disabled>Continua su Forms</button>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <small>© Università di Pisa — Progetto “Maschera”.</small>
-      <small id="app-version" class="muted"></small>
-    </div>
+    <p>© Università di Pisa — Progetto “Maschera”.</p>
   </footer>
 
-  <!-- JS (cache-busting v=12) -->
-  <script src="js/config.js?v=12" defer></script>
-  <script src="js/utils/dom.js?v=12" defer></script>
-  <script src="js/utils/validators.js?v=12" defer></script>
-  <script src="js/utils/events.js?v=12" defer></script>
-  <script src="js/components/FieldHandlers.js?v=12" defer></script>
-  <script src="js/services/dataLoader.js?v=12" defer></script>
-  <script src="js/components/SelectCascade.js?v=12" defer></script>
-  <script src="js/app.js?v=12" defer></script>
+  <!-- ==================== SCRIPT ==================== -->
+  <script src="js/utils/events.js?v=8"></script>
+  <script src="js/services/dataLoader.js?v=8"></script>
+  <script src="js/app.js?v=8"></script>
+
+  <!-- School cascade (Regione → Provincia → Città → Istituto → Plesso) -->
+  <script src="js/components/SchoolCascade.js?v=1"></script>
 </body>
 </html>
