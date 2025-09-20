@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <!-- BASE DINAMICO: si attiva SOLO su GitHub Pages -->
   <script>
     (function () {
       try {
@@ -24,7 +23,6 @@
 
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
 
-  <!-- CSS (cache-busting v=12) -->
   <link rel="preload" href="styles/variables.css?v=12" as="style">
   <link rel="stylesheet" href="styles/variables.css?v=12">
   <link rel="stylesheet" href="styles/base.css?v=12">
@@ -42,18 +40,15 @@
   </header>
 
   <main class="container">
-    <!-- ANAGRAFICA -->
     <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
       <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
 
-      <!-- CF -->
       <div class="field" id="field-cf">
         <label for="cf">Codice fiscale</label>
         <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
         <div class="hint" id="hint-cf" aria-live="polite"></div>
       </div>
 
-      <!-- Nome + Cognome -->
       <div id="group-nomecognome" hidden>
         <div class="form-row">
           <div class="field" id="field-nome">
@@ -70,7 +65,6 @@
         </div>
       </div>
 
-      <!-- Data di nascita + Genere -->
       <div id="group-datagenere" hidden>
         <div class="form-row">
           <div class="field" id="field-datanascita">
@@ -91,7 +85,6 @@
         </div>
       </div>
 
-      <!-- Nato all'estero -->
       <div id="group-estero" hidden>
         <div class="field" id="field-estero">
           <label>Sei nato all'estero?</label>
@@ -103,7 +96,6 @@
         </div>
       </div>
 
-      <!-- Paese di nascita (estero) -->
       <div id="group-paese-estero" hidden>
         <div class="field" id="field-paese-estero">
           <label for="paeseEstero">Paese di nascita (estero)</label>
@@ -115,7 +107,6 @@
         </div>
       </div>
 
-      <!-- Nascita in Italia: Provincia -> Comune (uno alla volta) -->
       <div id="group-nascita" hidden>
         <div class="form-row">
           <div class="field" id="field-prov-nascita">
@@ -138,7 +129,6 @@
         </div>
       </div>
 
-      <!-- Residenza: Provincia -> Comune (uno alla volta) -->
       <div id="group-residenza" hidden>
         <div class="form-row">
           <div class="field" id="field-prov-res">
@@ -162,13 +152,50 @@
       </div>
     </section>
 
-    <!-- SCUOLA (arriva step successivi) -->
-    <section class="card">
-      <h2 class="section-title">Informazioni sulla scuola</h2>
-      <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso (nei prossimi step).</p>
+    <section class="card" id="section-scuola" aria-labelledby="h2-scuola" hidden>
+      <h2 class="section-title" id="h2-scuola">Informazioni sulla scuola</h2>
+
+      <div class="field" id="field-regione-scuola">
+        <label for="regioneScuola">Regione</label>
+        <select id="regioneScuola" class="select">
+          <option value="">Seleziona…</option>
+        </select>
+        <div class="hint" id="hint-regione-scuola" aria-live="polite"></div>
+      </div>
+
+      <div class="field" id="field-prov-scuola" hidden>
+        <label for="provinciaScuola">Provincia</label>
+        <select id="provinciaScuola" class="select" disabled>
+          <option value="">Seleziona…</option>
+        </select>
+        <div class="hint" id="hint-prov-scuola" aria-live="polite"></div>
+      </div>
+
+      <div class="field" id="field-comune-scuola" hidden>
+        <label for="comuneScuola">Città</label>
+        <select id="comuneScuola" class="select" disabled>
+          <option value="">Seleziona…</option>
+        </select>
+        <div class="hint" id="hint-comune-scuola" aria-live="polite"></div>
+      </div>
+
+      <div class="field" id="field-istituto-scuola" hidden>
+        <label for="istitutoScuola">Istituto principale</label>
+        <select id="istitutoScuola" class="select" disabled>
+          <option value="">Seleziona…</option>
+        </select>
+        <div class="hint" id="hint-istituto-scuola" aria-live="polite"></div>
+      </div>
+
+      <div class="field" id="field-plesso-scuola" hidden>
+        <label for="plessoScuola">Plesso</label>
+        <select id="plessoScuola" class="select" disabled>
+          <option value="">Seleziona…</option>
+        </select>
+        <div class="hint" id="hint-plesso-scuola" aria-live="polite"></div>
+      </div>
     </section>
 
-    <!-- INVIO -->
     <section class="card">
       <h2 class="section-title">Invio su Microsoft Forms</h2>
       <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
@@ -182,7 +209,6 @@
     </div>
   </footer>
 
-  <!-- JS (cache-busting v=12) -->
   <script src="js/config.js?v=12" defer></script>
   <script src="js/utils/dom.js?v=12" defer></script>
   <script src="js/utils/validators.js?v=12" defer></script>
@@ -190,6 +216,6 @@
   <script src="js/components/FieldHandlers.js?v=12" defer></script>
   <script src="js/services/dataLoader.js?v=12" defer></script>
   <script src="js/components/SelectCascade.js?v=12" defer></script>
-  <script src="js/app.js?v=12" defer></script>
+  <script src="js/scuole.js?v=12" defer></script> <script src="js/app.js?v=12" defer></script>
 </body>
 </html>
