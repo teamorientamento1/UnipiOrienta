@@ -9,8 +9,30 @@
   <base href="/MASCHERA-CODICE-FISCALE/">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="styles/form.css?v=8">
-  <link rel="stylesheet" href="styles/main.css?v=8">
+  <link rel="stylesheet" href="styles/form.css?v=10">
+  <link rel="stylesheet" href="styles/main.css?v=10">
+
+  <!-- CSS critico inline (failsafe se i CSS esterni non si caricano) -->
+  <style>
+    :root{--unipi:#04477B}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;line-height:1.4;background:#fff;color:#111}
+    .container{max-width:1000px;margin:0 auto;padding:16px}
+    .site-header{border-bottom:1px solid #e5e7eb;background:#fff}
+    .brand{display:flex;align-items:center;gap:16px;padding:12px 16px}
+    .brand__logo{max-height:72px;height:auto;width:auto;display:block}
+    h1{font-size:1.4rem;margin:0}
+    h2{font-size:1.2rem;margin:24px 0 12px}
+    .form-row{display:grid;gap:6px;margin-bottom:12px}
+    label{font-weight:600}
+    input,select,button{font:inherit}
+    input[type=text],input[type=date],select{border:1px solid #d0d5dd;border-radius:8px;padding:10px 12px}
+    .hint,.muted{color:#6b7280;font-size:.9rem}
+    .actions{margin-top:12px}
+    .actions button{border:1px solid var(--unipi);background:#fff;color:var(--unipi);border-radius:10px;padding:10px 14px;cursor:pointer}
+    img{max-width:100%}
+  </style>
 
   <!-- Favicons (opzionale) -->
   <link rel="icon" href="assets/favicon.png">
@@ -18,6 +40,7 @@
 <body>
   <header class="site-header">
     <div class="brand">
+      <!-- Hai rinominato il file in unipi-logo.png -->
       <img src="assets/unipi-logo.png" alt="Logo Università di Pisa" class="brand__logo">
       <div class="brand__titles">
         <h1>Maschera — Iscrizione evento</h1>
@@ -83,21 +106,21 @@
 
       <!-- Provincia/Comune di nascita -->
       <div class="form-row">
-        <label for="prov_nascita">Provincia di nascita</label>
+        <label>Provincia di nascita</label>
         <div id="select-prov-nascita" class="select-host" aria-live="polite"></div>
       </div>
       <div class="form-row">
-        <label for="comune_nascita">Comune di nascita</label>
+        <label>Comune di nascita</label>
         <div id="select-comune-nascita" class="select-host" aria-live="polite"></div>
       </div>
 
       <!-- Provincia/Comune di residenza -->
       <div class="form-row">
-        <label for="prov_residenza">Provincia di residenza</label>
+        <label>Provincia di residenza</label>
         <div id="select-prov-residenza" class="select-host" aria-live="polite"></div>
       </div>
       <div class="form-row">
-        <label for="comune_residenza">Comune di residenza</label>
+        <label>Comune di residenza</label>
         <div id="select-comune-residenza" class="select-host" aria-live="polite"></div>
       </div>
     </section>
@@ -105,16 +128,15 @@
     <!-- ==================== SCUOLA ==================== -->
     <section aria-labelledby="section-scuola">
       <h2 id="section-scuola">Informazioni sulla scuola</h2>
-      <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso (nei prossimi step).</p>
-      <!-- La cascata scuola verrà iniettata automaticamente sotto questo titolo
-           dallo script SchoolCascade.js -->
+      <p class="muted">Regione → Provincia → Città → Istituto principale → Plesso</p>
+      <!-- La cascata scuola viene iniettata automaticamente -->
       <div id="school-cascade"></div>
     </section>
 
     <!-- ==================== INVIO FORMS ==================== -->
     <section aria-labelledby="section-forms">
       <h2 id="section-forms">Invio su Microsoft Forms</h2>
-      <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
+      <p class="muted">Il prefilling verso Forms sarà collegato più avanti.</p>
       <div class="actions">
         <button type="button" id="btn-continua-forms" disabled>Continua su Forms</button>
       </div>
@@ -125,12 +147,12 @@
     <p>© Università di Pisa — Progetto “Maschera”.</p>
   </footer>
 
-  <!-- ==================== SCRIPT ==================== -->
-  <script src="js/utils/events.js?v=8"></script>
-  <script src="js/services/dataLoader.js?v=8"></script>
-  <script src="js/app.js?v=8"></script>
-
+  <!-- ==================== SCRIPT (con defer) ==================== -->
+  <script defer src="js/utils/events.js?v=10"></script>
+  <script defer src="js/services/dataLoader.js?v=10"></script>
+  <script defer src="js/app.js?v=10"></script>
   <!-- School cascade (Regione → Provincia → Città → Istituto → Plesso) -->
-  <script src="js/components/SchoolCascade.js?v=1"></script>
+  <script defer src="js/components/SchoolCascade.js?v=1"></script>
 </body>
 </html>
+
