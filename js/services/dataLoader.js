@@ -1,12 +1,13 @@
 /**
- * dataLoader.js (no demo fallback, cache-busting, percorsi Pages)
- * Carica i 4 JSON reali da /data/ e fornisce utilità di normalizzazione.
+ * dataLoader.js — FIX province con etichette (no "069"), cache-busting semplice
+ * Carica i JSON reali da /data/ e fornisce utilità per Province→Comuni e Paesi.
+ * Compatibile con SelectCascade.js esistente.
  */
 (function(){
-  const VERSION = "v7"; // cambia quando fai un nuovo deploy
+  const VERSION = "v8"; // bump per cache-busting
   const q = (url) => `${url}?${VERSION}`;
 
-  // Percorsi *relativi* alla root del progetto (no slash iniziale!)
+  // Percorsi *relativi* alla root del progetto (coerenti con <base> di Pages)
   const PATHS = {
     COMUNI:  q("data/data_comuni_min.cleaned.json"),
     GEO:     q("data/data_geo_hierarchy_min.cleaned.json"),
@@ -26,7 +27,7 @@
   async function loadScuole(){  return fetchJSON(PATHS.SCUOLE); }
   async function loadPaesi(){   return fetchJSON(PATHS.PAESI); }
 
-  // --- Normalizzazioni flessibili ---
+  // --- Normalizzazioni ---
   // Paesi: accetta sia array puro sia { nazioni:[...] }
   function normalizeCountries(raw){
     if (Array.isArray(raw)) return raw;
@@ -34,47 +35,57 @@
     return [];
   }
 
-  // Province→Comuni (nomi) da:
-  // 1) geo: { Regione: { Provincia: [Comuni] } }  (preferito)
-  // 2) comuni: array di record (usa campi comuni/provincia/label se presenti)
+  /**
+   * buildProvinceMap({ geo, comuni }) -> Map<labelProvincia, Array<labelComune>>
+   * Obiettivo: far vedere Nomi provincia (es. "Chieti (CH)"), non ID tipo "069".
+   *
+   * geo atteso nel formato { province: [ { id: "069", label: "Chieti (CH)", sigla:"CH", reg_id:"13" }, ... ] }
+   * comuni atteso come array di { label:"Altino", prov_id:"069", reg_id:"13", ... }
+   */
   function buildProvinceMap({ geo, comuni }){
     const collator = new Intl.Collator("it", { sensitivity: "base" });
 
-    // Caso 1: geo strutturato per nomi
-    if (geo && typeof geo === "object"){
-      const m = new Map();
-      Object.values(geo).forEach(regionObj => {
-        if (!regionObj || typeof regionObj !== "object") return;
-        Object.entries(regionObj).forEach(([prov, comuniArr]) => {
-          if (!Array.isArray(comuniArr)) return;
-          const uniq = Array.from(new Set(comuniArr.filter(Boolean)));
-          uniq.sort(collator.compare);
-          m.set(prov, uniq);
-        });
-      });
-      if (m.size > 0) return m;
+    // Mappa prov_id -> label leggibile
+    const provLabelById = new Map();
+    if (geo && Array.isArray(geo.province)){
+      for (const p of geo.province){
+        const id = String(p.id ?? "").trim();
+        const label = String(p.label ?? "").trim();
+        if (id && label) provLabelById.set(id, label);
+      }
     }
 
-    // Caso 2: derivazione dai "comuni"
-    const m2 = new Map();
-    (comuni || []).forEach(rec => {
-      // Nomi tolleranti su campi frequenti
-      const provName = rec.provincia || rec.prov || rec.prov_name || rec.prov_id || null;
-      const comuneName = rec.comune || rec.label || rec.nome || null;
-      if (!provName || !comuneName) return;
-      if (!m2.has(provName)) m2.set(provName, []);
-      const arr = m2.get(provName);
-      if (!arr.includes(comuneName)) arr.push(comuneName);
-    });
-    // ordina
-    m2.forEach(list => list.sort(collator.compare));
-    return m2;
+    // Raggruppo i comuni per id provincia
+    const comuniByProvId = new Map();
+    for (const c of Array.isArray(comuni) ? comuni : []){
+      const pid = String(c.prov_id ?? "").trim();
+      const cname = String(c.label ?? "").trim();
+      if (!pid || !cname) continue;
+      if (!comuniByProvId.has(pid)) comuniByProvId.set(pid, []);
+      comuniByProvId.get(pid).push(cname);
+    }
+
+    // Converto in Map<labelProvincia, [comuni ordinati]>
+    const out = new Map();
+    for (const [pid, list] of comuniByProvId.entries()){
+      const provLabel = provLabelById.get(pid) || pid; // fallback: se manca geo
+      const sorted = list.filter(Boolean);
+      // de-dup + sort
+      const uniq = Array.from(new Set(sorted)).sort(collator.compare);
+      out.set(provLabel, uniq);
+    }
+
+    // Ordino le chiavi della mappa per label (stabile)
+    const ordered = new Map([...out.entries()].sort((a,b)=> collator.compare(a[0], b[0])));
+    return ordered;
   }
 
-  // Utility: lista province ordinate
+  /**
+   * provincesFromMap(map) -> Array<labelProvincia>
+   * Restituisce le province ordinate alfabeticamente come le vuole SelectCascade.
+   */
   function provincesFromMap(map){
-    const collator = new Intl.Collator("it", { sensitivity: "base" });
-    return Array.from(map.keys()).sort(collator.compare);
+    return Array.from(map.keys());
   }
 
   // API pubblica

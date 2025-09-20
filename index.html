@@ -4,17 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <!-- BASE: imposta la root dei percorsi relativi su GitHub Pages -->
-  <!-- ATTENZIONE: usa ESATTAMENTE il nome della tua repo e mantieni lo slash finale -->
-  <base href="/MASCHERA-CODICE-FISCALE/">
+  <!-- BASE DINAMICO: si attiva SOLO su GitHub Pages -->
+  <script>
+    (function () {
+      try {
+        var host = location.hostname.toLowerCase();
+        var isGH = host.endsWith('github.io');
+        if (isGH) {
+          // Per project pages: /<repo>/index.html -> prendi il primo segmento come repo
+          var segs = location.pathname.split('/').filter(Boolean);
+          var repo = segs.length ? ('/' + segs[0] + '/') : '/';
+          var base = document.createElement('base');
+          base.href = repo;
+          document.head.appendChild(base);
+        }
+      } catch (e) { /* offline: nessun <base> */ }
+    })();
+  </script>
 
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
 
-  <!-- CSS (cache-busting v=8) -->
-  <link rel="preload" href="styles/variables.css?v=8" as="style">
-  <link rel="stylesheet" href="styles/variables.css?v=8">
-  <link rel="stylesheet" href="styles/base.css?v=8">
-  <link rel="stylesheet" href="styles/form.css?v=8">
+  <!-- CSS (cache-busting v=12) -->
+  <link rel="preload" href="styles/variables.css?v=12" as="style">
+  <link rel="stylesheet" href="styles/variables.css?v=12">
+  <link rel="stylesheet" href="styles/base.css?v=12">
+  <link rel="stylesheet" href="styles/form.css?v=12">
 </head>
 <body>
   <header class="site-header">
@@ -96,7 +110,6 @@
           <input id="searchPaeseEstero" class="input" type="text" placeholder="Cerca paese… (opzionale)">
           <select id="paeseEstero" class="select" disabled>
             <option value="">Seleziona…</option>
-            <!-- ALTRO + paesi da JSON -->
           </select>
           <div class="hint" id="hint-paese-estero" aria-live="polite">Se non trovi il tuo paese, scegli “ALTRO”.</div>
         </div>
@@ -169,14 +182,14 @@
     </div>
   </footer>
 
-  <!-- JS: ordine importante (cache-busting v=8) -->
-  <script src="js/config.js?v=8" defer></script>
-  <script src="js/utils/dom.js?v=8" defer></script>
-  <script src="js/utils/validators.js?v=8" defer></script>
-  <script src="js/utils/events.js?v=8" defer></script>
-  <script src="js/components/FieldHandlers.js?v=8" defer></script>
-  <script src="js/services/dataLoader.js?v=8" defer></script>
-  <script src="js/components/SelectCascade.js?v=8" defer></script>
-  <script src="js/app.js?v=8" defer></script>
+  <!-- JS (cache-busting v=12) -->
+  <script src="js/config.js?v=12" defer></script>
+  <script src="js/utils/dom.js?v=12" defer></script>
+  <script src="js/utils/validators.js?v=12" defer></script>
+  <script src="js/utils/events.js?v=12" defer></script>
+  <script src="js/components/FieldHandlers.js?v=12" defer></script>
+  <script src="js/services/dataLoader.js?v=12" defer></script>
+  <script src="js/components/SelectCascade.js?v=12" defer></script>
+  <script src="js/app.js?v=12" defer></script>
 </body>
 </html>
