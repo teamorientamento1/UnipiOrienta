@@ -1,55 +1,27 @@
-/**
- * FieldHandlers.js
- * Reveal progressivo Step 2 — ANAGRAFICA
- */
-
 const FieldHandlers = (() => {
   const { qs, show, hide, setError, clearError } = window.Dom;
-  const { normalizeCF, isValidCFBasic, isLikelyName, toTitleCase, isValidDateStr } = window.Validators;
+  const { isLikelyName, toTitleCase, isValidDateStr } = window.Validators;
 
-  // Riferimenti
-  let elCF, fldCF, hintCF;
-  let elNome, fldNome, hintNome;
-  let elCognome, fldCognome, hintCognome;
-  let grpNC;
-  let elData, fldData, hintData;
-  let elGenere, fldGenere, hintGenere;
-  let grpDG;
-  let elEsteroSi, elEsteroNo, fldEstero, grpEstero;
+  let elNome, fldNome, elCognome, fldCognome, elData, fldData, elGenere, fldGenere, grpDG, grpEstero;
 
   function cacheElements(){
-    fldCF   = qs("#field-cf");   elCF   = qs("#cf");   hintCF = qs("#hint-cf");
-    fldNome = qs("#field-nome"); elNome = qs("#nome"); hintNome = qs("#hint-nome");
-    fldCognome = qs("#field-cognome"); elCognome = qs("#cognome"); hintCognome = qs("#hint-cognome");
-    grpNC   = qs("#group-nomecognome");
-
-    fldData = qs("#field-datanascita"); elData = qs("#dataNascita"); hintData = qs("#hint-datanascita");
-    fldGenere = qs("#field-genere"); elGenere = qs("#genere"); hintGenere = qs("#hint-genere");
-    grpDG   = qs("#group-datagenere");
-
-    fldEstero = qs("#field-estero"); grpEstero = qs("#group-estero");
-    elEsteroSi = qs("#esteroSi"); elEsteroNo = qs("#esteroNo");
+    fldNome = qs("#field-nome"); elNome = qs("#nome");
+    fldCognome = qs("#field-cognome"); elCognome = qs("#cognome");
+    fldData = qs("#field-datanascita"); elData = qs("#dataNascita");
+    fldGenere = qs("#field-genere"); elGenere = qs("#genere");
+    grpDG = qs("#group-datagenere");
+    grpEstero = qs("#group-estero");
   }
-
-  // --- VALIDAZIONI E REVEAL ---
-
-  function onCFInput(){
-    const v = normalizeCF(elCF.value);
-    elCF.value = v; // normalizza maiuscole/spazi
-
-    clearError(fldCF);
-    if (v.length === 0) {
-      // reset a monte
-      hide(grpNC); hide(grpDG); hide(grpEstero);
-      return;
+  
+  function calculateAge(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
-    if (!isValidCFBasic(v)) {
-      setError(fldCF, "Inserisci un codice fiscale nel formato corretto (16 caratteri).");
-      hide(grpNC); hide(grpDG); hide(grpEstero);
-      return;
-    }
-    // valido → mostra Nome/Cognome
-    show(grpNC);
+    return age;
   }
 
   function onNomeBlur(){
@@ -61,13 +33,8 @@ const FieldHandlers = (() => {
 
   function onNomeCognomeInput(){
     clearError(fldNome); clearError(fldCognome);
-
     const okNome = isLikelyName(elNome.value);
     const okCognome = isLikelyName(elCognome.value);
-
-    if (!okNome && elNome.value.trim().length>0) setError(fldNome, "Nome non valido.");
-    if (!okCognome && elCognome.value.trim().length>0) setError(fldCognome, "Cognome non valido.");
-
     if (okNome && okCognome) {
       show(grpDG);
     } else {
@@ -75,28 +42,53 @@ const FieldHandlers = (() => {
     }
   }
 
-  function onDataChange(){
+  function onDataNascitaChange(){
     clearError(fldData);
-    const v = elData.value;
-    if (v && !isValidDateStr(v)) {
-      setError(fldData, "Data non valida.");
+    const dateValue = elData.value;
+    hide(grpEstero);
+
+    if (!dateValue || !isValidDateStr(dateValue)) {
+      if (dateValue) setError(fldData, "Data non valida.");
+      revealEsteroIfReady();
+      return;
     }
+    
+    const age = calculateAge(dateValue);
+    const MIN_AGE = 13;
+    const MAX_AGE = 20;
+
+    if (age < MIN_AGE) {
+      setError(fldData, `L'evento è riservato a partecipanti con almeno ${MIN_AGE} anni.`);
+      window.Modal.show(
+        "Età non Valida",
+        `L'evento è riservato a partecipanti con almeno ${MIN_AGE} anni. Non è possibile procedere.`,
+        { closeText: "Chiudi" }
+      );
+      revealEsteroIfReady();
+      return;
+    }
+    
+    if (age > MAX_AGE) {
+      window.Modal.show(
+        "Verifica Età",
+        "Attenzione, l'evento è principalmente rivolto a studenti delle scuole superiori. Confermi di voler procedere?",
+        { closeText: "OK, procedo" }
+      );
+    }
+
     revealEsteroIfReady();
   }
 
   function onGenereChange(){
     clearError(fldGenere);
-    const v = elGenere.value;
-    if (!v) {
-      setError(fldGenere, "Seleziona il genere.");
-    }
     revealEsteroIfReady();
   }
 
   function revealEsteroIfReady(){
-    const okData = elData.value && isValidDateStr(elData.value);
-    const okGenere = !!elGenere.value;
-    if (okData && okGenere) {
+    const isAgeValid = elData.value && isValidDateStr(elData.value) && calculateAge(elData.value) >= 13;
+    const isGenereSelected = !!elGenere.value;
+    
+    if (isAgeValid && isGenereSelected) {
       show(grpEstero);
     } else {
       hide(grpEstero);
@@ -104,23 +96,13 @@ const FieldHandlers = (() => {
   }
 
   function wireEvents(){
-    // CF
-    elCF.addEventListener("input", onCFInput);
-
-    // Nome/Cognome
     elNome.addEventListener("input", onNomeCognomeInput);
     elCognome.addEventListener("input", onNomeCognomeInput);
     elNome.addEventListener("blur", onNomeBlur);
     elCognome.addEventListener("blur", onCognomeBlur);
-
-    // Data/Genere
-    elData.addEventListener("change", onDataChange);
-    elData.addEventListener("input", onDataChange);
+    elData.addEventListener("change", onDataNascitaChange);
+    elData.addEventListener("input", onDataNascitaChange);
     elGenere.addEventListener("change", onGenereChange);
-
-    // Estero (per ora nessun reveal successivo in Step 2)
-    if (elEsteroSi) elEsteroSi.addEventListener("change", ()=>{ /* placeholder */ });
-    if (elEsteroNo) elEsteroNo.addEventListener("change", ()=>{ /* placeholder */ });
   }
 
   function initAnagrafica(){
@@ -130,5 +112,4 @@ const FieldHandlers = (() => {
 
   return { initAnagrafica };
 })();
-
 window.FieldHandlers = FieldHandlers;

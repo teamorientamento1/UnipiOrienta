@@ -28,24 +28,15 @@
   async function loadPaesi(){   return fetchJSON(PATHS.PAESI); }
 
   // --- Normalizzazioni ---
-  // Paesi: accetta sia array puro sia { nazioni:[...] }
   function normalizeCountries(raw){
     if (Array.isArray(raw)) return raw;
     if (raw && Array.isArray(raw.nazioni)) return raw.nazioni;
     return [];
   }
 
-  /**
-   * buildProvinceMap({ geo, comuni }) -> Map<labelProvincia, Array<labelComune>>
-   * Obiettivo: far vedere Nomi provincia (es. "Chieti (CH)"), non ID tipo "069".
-   *
-   * geo atteso nel formato { province: [ { id: "069", label: "Chieti (CH)", sigla:"CH", reg_id:"13" }, ... ] }
-   * comuni atteso come array di { label:"Altino", prov_id:"069", reg_id:"13", ... }
-   */
   function buildProvinceMap({ geo, comuni }){
     const collator = new Intl.Collator("it", { sensitivity: "base" });
 
-    // Mappa prov_id -> label leggibile
     const provLabelById = new Map();
     if (geo && Array.isArray(geo.province)){
       for (const p of geo.province){
@@ -55,48 +46,40 @@
       }
     }
 
-    // Raggruppo i comuni per id provincia
     const comuniByProvId = new Map();
     for (const c of Array.isArray(comuni) ? comuni : []){
       const pid = String(c.prov_id ?? "").trim();
       const cname = String(c.label ?? "").trim();
-      if (!pid || !cname) continue;
+      // ✅ CORREZIONE: Usiamo "belfiore" invece di "cadastral_code"
+      const ccode = String(c.belfiore ?? "").trim(); 
+      
+      if (!pid || !cname || !ccode) continue;
+      
       if (!comuniByProvId.has(pid)) comuniByProvId.set(pid, []);
-      comuniByProvId.get(pid).push(cname);
+      comuniByProvId.get(pid).push({ label: cname, code: ccode });
     }
 
-    // Converto in Map<labelProvincia, [comuni ordinati]>
     const out = new Map();
     for (const [pid, list] of comuniByProvId.entries()){
-      const provLabel = provLabelById.get(pid) || pid; // fallback: se manca geo
-      const sorted = list.filter(Boolean);
-      // de-dup + sort
-      const uniq = Array.from(new Set(sorted)).sort(collator.compare);
-      out.set(provLabel, uniq);
+      const provLabel = provLabelById.get(pid) || pid;
+      list.sort((a, b) => collator.compare(a.label, b.label));
+      out.set(provLabel, list);
     }
 
-    // Ordino le chiavi della mappa per label (stabile)
     const ordered = new Map([...out.entries()].sort((a,b)=> collator.compare(a[0], b[0])));
     return ordered;
   }
 
-  /**
-   * provincesFromMap(map) -> Array<labelProvincia>
-   * Restituisce le province ordinate alfabeticamente come le vuole SelectCascade.
-   */
   function provincesFromMap(map){
     return Array.from(map.keys());
   }
 
   // API pubblica
   window.DataLoader = {
-    // raw loaders
     loadComuni,
     loadGeo,
     loadScuole,
     loadPaesi,
-
-    // helpers
     normalizeCountries,
     buildProvinceMap,
     provincesFromMap

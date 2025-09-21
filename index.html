@@ -22,11 +22,15 @@
   </script>
 
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 
   <link rel="preload" href="styles/variables.css?v=12" as="style">
   <link rel="stylesheet" href="styles/variables.css?v=12">
   <link rel="stylesheet" href="styles/base.css?v=12">
   <link rel="stylesheet" href="styles/form.css?v=12">
+  <link rel="stylesheet" href="styles/codice-fiscale.css?v=12"> 
+  <link rel="stylesheet" href="styles/modal.css?v=12">
 </head>
 <body>
   <header class="site-header">
@@ -40,158 +44,143 @@
   </header>
 
   <main class="container">
-    <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
-      <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
+    <form autocomplete="off" method="post" action="javascript:void(0);">
+      <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
+        <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
 
-      <div class="field" id="field-cf">
-        <label for="cf">Codice fiscale</label>
-        <input id="cf" class="input" type="text" inputmode="latin" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Inserisci il tuo codice fiscale">
-        <div class="hint" id="hint-cf" aria-live="polite"></div>
-      </div>
-
-      <div id="group-nomecognome" hidden>
-        <div class="form-row">
-          <div class="field" id="field-nome">
-            <label for="nome">Nome</label>
-            <input id="nome" class="input" type="text" autocomplete="given-name" placeholder="Nome">
-            <div class="hint" id="hint-nome" aria-live="polite"></div>
+        <div class="field" id="field-cf">
+          <label for="cf-1">Codice fiscale</label>
+          <div class="cf-container">
+            <input type="text" id="cf-1" class="cf-segment" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-2" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-3" class="cf-segment hidden" maxlength="2" placeholder="--" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-4" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-5" class="cf-segment hidden" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
           </div>
+          <div class="hint" id="hint-cf" aria-live="polite"></div>
+        </div>
 
-          <div class="field" id="field-cognome">
-            <label for="cognome">Cognome</label>
-            <input id="cognome" class="input" type="text" autocomplete="family-name" placeholder="Cognome">
-            <div class="hint" id="hint-cognome" aria-live="polite"></div>
+        <div id="group-nomecognome" hidden>
+          <div class="form-row">
+            <div class="field" id="field-nome">
+              <label for="nome">Nome</label>
+              <input id="nome" class="input" type="text" autocomplete="off" placeholder="Nome">
+              <div class="hint" id="hint-nome" aria-live="polite"></div>
+            </div>
+            <div class="field" id="field-cognome">
+              <label for="cognome">Cognome</label>
+              <input id="cognome" class="input" type="text" autocomplete="off" placeholder="Cognome">
+              <div class="hint" id="hint-cognome" aria-live="polite"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div id="group-datagenere" hidden>
-        <div class="form-row">
-          <div class="field" id="field-datanascita">
-            <label for="dataNascita">Data di nascita</label>
-            <input id="dataNascita" class="input" type="date" min="1900-01-01">
-            <div class="hint" id="hint-datanascita" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-genere">
-            <label for="genere">Genere</label>
-            <select id="genere" class="select">
-              <option value="">Seleziona…</option>
-              <option value="M">Maschio (M)</option>
-              <option value="F">Femmina (F)</option>
-            </select>
-            <div class="hint" id="hint-genere" aria-live="polite"></div>
+        <div id="group-datagenere" hidden>
+          <div class="form-row">
+            <div class="field" id="field-datanascita">
+              <label for="dataNascita">Data di nascita</label>
+              <input id="dataNascita" class="input" type="date" min="1900-01-01" autocomplete="off">
+              <div class="hint" id="hint-datanascita" aria-live="polite"></div>
+            </div>
+            <div class="field" id="field-genere">
+              <label for="genere">Genere</label>
+              <select id="genere" class="select" autocomplete="off">
+                <option value="">Seleziona…</option>
+                <option value="M">Maschio (M)</option>
+                <option value="F">Femmina (F)</option>
+                <option value="N">Preferisco non dichiararlo</option>
+              </select>
+              <div class="hint" id="hint-genere" aria-live="polite"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div id="group-estero" hidden>
-        <div class="field" id="field-estero">
-          <label>Sei nato all'estero?</label>
-          <div style="display:flex; gap:1rem; justify-content:center; align-items:center;">
-            <label><input type="radio" name="estero" id="esteroNo" value="no"> No</label>
-            <label><input type="radio" name="estero" id="esteroSi" value="si"> Sì</label>
+        <div id="group-estero" hidden>
+          <div class="field" id="field-estero">
+            <label>Sei nato all'estero?</label>
+            <div style="display:flex; gap:1rem; justify-content:center; align-items:center;">
+              <label><input type="radio" name="estero" id="esteroNo" value="no"> No</label>
+              <label><input type="radio" name="estero" id="esteroSi" value="si"> Sì</label>
+            </div>
+            <div class="hint" id="hint-estero" aria-live="polite"></div>
           </div>
-          <div class="hint" id="hint-estero" aria-live="polite"></div>
         </div>
-      </div>
 
-      <div id="group-paese-estero" hidden>
-        <div class="field" id="field-paese-estero">
-          <label for="paeseEstero">Paese di nascita (estero)</label>
-          <input id="searchPaeseEstero" class="input" type="text" placeholder="Cerca paese… (opzionale)">
-          <select id="paeseEstero" class="select" disabled>
-            <option value="">Seleziona…</option>
-          </select>
-          <div class="hint" id="hint-paese-estero" aria-live="polite">Se non trovi il tuo paese, scegli “ALTRO”.</div>
-        </div>
-      </div>
-
-      <div id="group-nascita" hidden>
-        <div class="form-row">
-          <div class="field" id="field-prov-nascita">
-            <label for="provinciaNascita">Provincia di nascita</label>
-            <input id="searchProvinciaNascita" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
-            <select id="provinciaNascita" class="select" disabled>
+        <div id="group-paese-estero" hidden>
+          <div class="field" id="field-paese-estero">
+            <label for="paeseEstero">Paese di nascita (estero)</label>
+            <select id="paeseEstero" class="select" disabled autocomplete="off">
               <option value="">Seleziona…</option>
             </select>
-            <div class="hint" id="hint-prov-nascita" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-comune-nascita" hidden>
-            <label for="comuneNascita">Comune di nascita</label>
-            <input id="searchComuneNascita" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
-            <select id="comuneNascita" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-comune-nascita" aria-live="polite"></div>
+            <div class="hint" id="hint-paese-estero" aria-live="polite">Digita per cercare. Se non trovi il tuo paese, scrivilo e premi Invio.</div>
           </div>
         </div>
-      </div>
 
-      <div id="group-residenza" hidden>
-        <div class="form-row">
-          <div class="field" id="field-prov-res">
-            <label for="provinciaResidenza">Provincia di residenza</label>
-            <input id="searchProvinciaResidenza" class="input" type="text" placeholder="Cerca provincia… (opzionale)">
-            <select id="provinciaResidenza" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-prov-res" aria-live="polite"></div>
-          </div>
-
-          <div class="field" id="field-comune-res" hidden>
-            <label for="comuneResidenza">Comune di residenza</label>
-            <input id="searchComuneResidenza" class="input" type="text" placeholder="Cerca comune… (opzionale)" disabled>
-            <select id="comuneResidenza" class="select" disabled>
-              <option value="">Seleziona…</option>
-            </select>
-            <div class="hint" id="hint-comune-res" aria-live="polite"></div>
+        <div id="group-nascita" hidden>
+          <div class="form-row">
+            <div class="field" id="field-prov-nascita">
+              <label for="provinciaNascita">Provincia di nascita</label>
+              <select id="provinciaNascita" class="select" disabled autocomplete="off">
+                <option value="">Seleziona…</option>
+              </select>
+              <div class="hint" id="hint-prov-nascita" aria-live="polite"></div>
+            </div>
+            <div class="field" id="field-comune-nascita">
+              <label for="comuneNascita">Comune di nascita</label>
+              <select id="comuneNascita" class="select" disabled autocomplete="off">
+                <option value="">Seleziona…</option>
+              </select>
+              <div class="hint" id="hint-comune-nascita" aria-live="polite"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div id="group-residenza" hidden>
+          <div class="form-row">
+            <div class="field" id="field-prov-res">
+              <label for="provinciaResidenza">Provincia di residenza</label>
+              <select id="provinciaResidenza" class="select" disabled autocomplete="off">
+                <option value="">Seleziona…</option>
+              </select>
+              <div class="hint" id="hint-prov-res" aria-live="polite"></div>
+            </div>
+            <div class="field" id="field-comune-res">
+              <label for="comuneResidenza">Comune di residenza</label>
+              <select id="comuneResidenza" class="select" disabled autocomplete="off">
+                <option value="">Seleziona…</option>
+              </select>
+              <div class="hint" id="hint-comune-res" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
 
     <section class="card" id="section-scuola" aria-labelledby="h2-scuola" hidden>
       <h2 class="section-title" id="h2-scuola">Informazioni sulla scuola</h2>
-
       <div class="field" id="field-regione-scuola">
         <label for="regioneScuola">Regione</label>
-        <select id="regioneScuola" class="select">
-          <option value="">Seleziona…</option>
-        </select>
+        <select id="regioneScuola" class="select" autocomplete="off"><option value="">Seleziona…</option></select>
         <div class="hint" id="hint-regione-scuola" aria-live="polite"></div>
       </div>
-
       <div class="field" id="field-prov-scuola" hidden>
         <label for="provinciaScuola">Provincia</label>
-        <select id="provinciaScuola" class="select" disabled>
-          <option value="">Seleziona…</option>
-        </select>
+        <select id="provinciaScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
         <div class="hint" id="hint-prov-scuola" aria-live="polite"></div>
       </div>
-
       <div class="field" id="field-comune-scuola" hidden>
         <label for="comuneScuola">Città</label>
-        <select id="comuneScuola" class="select" disabled>
-          <option value="">Seleziona…</option>
-        </select>
+        <select id="comuneScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
         <div class="hint" id="hint-comune-scuola" aria-live="polite"></div>
       </div>
-
       <div class="field" id="field-istituto-scuola" hidden>
         <label for="istitutoScuola">Istituto principale</label>
-        <select id="istitutoScuola" class="select" disabled>
-          <option value="">Seleziona…</option>
-        </select>
+        <select id="istitutoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
         <div class="hint" id="hint-istituto-scuola" aria-live="polite"></div>
       </div>
-
       <div class="field" id="field-plesso-scuola" hidden>
         <label for="plessoScuola">Plesso</label>
-        <select id="plessoScuola" class="select" disabled>
-          <option value="">Seleziona…</option>
-        </select>
+        <select id="plessoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
         <div class="hint" id="hint-plesso-scuola" aria-live="polite"></div>
       </div>
     </section>
@@ -209,13 +198,32 @@
     </div>
   </footer>
 
+  <div class="modal-overlay" id="cf-check-modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-body">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modal-title"></h3>
+      <p class="modal-body" id="modal-body"></p>
+      <div class="modal-actions" style="display:flex; gap:1rem; justify-content:center;">
+        <button class="btn btn--ghost" id="modal-proceed" hidden>Procedi Comunque</button>
+        <button class="btn" id="modal-close">OK, ho capito</button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/config.js?v=12" defer></script>
   <script src="js/utils/dom.js?v=12" defer></script>
   <script src="js/utils/validators.js?v=12" defer></script>
+  <script src="js/utils/codice-fiscale-calculator.js?v=12" defer></script>
   <script src="js/utils/events.js?v=12" defer></script>
   <script src="js/components/FieldHandlers.js?v=12" defer></script>
   <script src="js/services/dataLoader.js?v=12" defer></script>
   <script src="js/components/SelectCascade.js?v=12" defer></script>
-  <script src="js/scuole.js?v=12" defer></script> <script src="js/app.js?v=12" defer></script>
+  <script src="js/modal-handler.js?v=12" defer></script>
+  <script src="js/advanced-validator.js?v=12" defer></script>
+  <script src="js/scuole.js?v=12" defer></script>
+  <script src="js/anagrafica-flow.js?v=12" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
+  <script src="js/choices-init.js?v=12" defer></script>
+  <script src="js/codice-fiscale-handler.js?v=12" defer></script>
+  <script src="js/app.js?v=12" defer></script>
 </body>
 </html>

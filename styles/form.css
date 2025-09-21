@@ -77,3 +77,10 @@ input, select {
   width:100%;
   min-height:44px;
 }
+
+/* ✅ CLASSE AGGIUNTA PER IL BLOCCO SEZIONE 👇 */
+.section--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
