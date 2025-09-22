@@ -31,7 +31,8 @@ body{
   color:inherit;
   text-decoration:none;
 }
-.brand__logo{height:40px;width:auto;display:block}
+/* ✅ MODIFICA: Aumentata l'altezza del logo */
+.brand__logo{height:50px;width:auto;display:block}
 .brand__title{font-weight:600}
 .page-title{
   margin-left:auto;

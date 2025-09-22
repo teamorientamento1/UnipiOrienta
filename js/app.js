@@ -50,18 +50,16 @@
           nascitaAPI = window.SelectCascade.initProvinceComune({
             provinciaSelectId: 'provinciaNascita',
             comuneSelectId: 'comuneNascita',
-            fieldComuneId: 'field-comune-nascita',
-            defaultValue: 'Pisa (PI)'
+            fieldComuneId: 'field-comune-nascita'
           });
-          nascitaAPI.onChange(({ provincia, comune }) => {
-            if (provincia && comune) {
+          nascitaAPI.onChange(({ comune }) => {
+            if (comune) {
               show(grpResidenza);
               if (!residenzaAPI) {
                  residenzaAPI = window.SelectCascade.initProvinceComune({
                     provinciaSelectId: 'provinciaResidenza',
                     comuneSelectId: 'comuneResidenza',
-                    fieldComuneId: 'field-comune-res',
-                    defaultValue: 'Pisa (PI)'
+                    fieldComuneId: 'field-comune-res'
                  });
               }
             } else {
@@ -82,8 +80,7 @@
                 residenzaAPI = window.SelectCascade.initProvinceComune({
                     provinciaSelectId: 'provinciaResidenza',
                     comuneSelectId: 'comuneResidenza',
-                    fieldComuneId: 'field-comune-res',
-                    defaultValue: 'Pisa (PI)'
+                    fieldComuneId: 'field-comune-res'
                 });
             }
         } else {

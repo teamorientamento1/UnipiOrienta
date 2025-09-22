@@ -41,7 +41,7 @@
 
   function analizzaDiscrepanzaCF(userData, cfInserito) {
     const cfCorretto = window.CodiceFiscaleCalculator.calculate(userData);
-    if (!cfCorretto) return { hasError: false };
+    if (!cfCorretto) return { hasError: true, message: "Impossibile calcolare il Codice Fiscale dai dati inseriti.", fields: ['field-nome', 'field-cognome', 'field-datanascita', 'field-genere', 'field-comune-nascita', 'field-paese-estero'] };
 
     const cfInseritoParsed = window.CodiceFiscaleCalculator.parse(cfInserito);
     const cfCorrettoParsed = window.CodiceFiscaleCalculator.parse(cfCorretto);
@@ -101,41 +101,42 @@
     } else {
       const risultato = analizzaDiscrepanzaCF(userData, cfInserito);
       const popupTitle = "Dati Anagrafici Incoerenti";
-
-      risultato.fields.forEach(fieldId => {
-          const field = qs(`#${fieldId}`);
-          if(field) setError(field, 'Dato non coerente');
-      });
       
       blockScuolaSection();
 
-      if (state.warningState >= 1) {
-        window.Modal.show(
-          popupTitle,
-          "I dati inseriti risultano ancora incoerenti. Se ritieni che siano corretti, puoi procedere comunque.",
-          { 
-            showProceed: true,
-            // ✅ MODIFICA: Nasconde il pulsante "OK, ho capito"
-            showClose: false,
-            onProceed: () => { 
-              state.isOverridden = true; 
-              unblockScuolaSection(); 
-              clearAllErrors();
-              ANAGRAFICA_FIELD_IDS.forEach(id => setOk(qs(`#${id}`), 'Dato accettato'));
+      // ✅ CORREZIONE: La logica per mostrare errori e popup ora è unificata e funziona sempre.
+      if (risultato && risultato.hasError) {
+        risultato.fields.forEach(fieldId => {
+            const field = qs(`#${fieldId}`);
+            if(field) setError(field, 'Dato non coerente con il Codice Fiscale');
+        });
+
+        if (state.warningState >= 1) {
+          window.Modal.show(
+            popupTitle,
+            "I dati inseriti risultano ancora incoerenti. Se ritieni che siano corretti, puoi procedere comunque.",
+            { 
+              showProceed: true,
+              showClose: false,
+              onProceed: () => { 
+                state.isOverridden = true; 
+                unblockScuolaSection(); 
+                clearAllErrors();
+                ANAGRAFICA_FIELD_IDS.forEach(id => setOk(qs(`#${id}`), 'Dato accettato'));
+              }
             }
-          }
-        );
-      } else {
-        window.Modal.show(
-          popupTitle,
-          // ✅ MODIFICA: Cambiato il testo per essere meno specifico sul tempo.
-          risultato.message + " La sezione successiva verrà sbloccata a breve per darti il tempo di ricontrollare i dati."
-        );
-        state.warningState = 1;
-        clearTimeout(state.timer);
-        state.timer = setTimeout(() => {
-          unblockScuolaSection();
-        }, 8000);
+          );
+        } else {
+          window.Modal.show(
+            popupTitle,
+            risultato.message + " La sezione successiva verrà sbloccata a breve per darti il tempo di ricontrollare i dati."
+          );
+          state.warningState = 1;
+          clearTimeout(state.timer);
+          state.timer = setTimeout(() => {
+            unblockScuolaSection();
+          }, 8000);
+        }
       }
     }
   }

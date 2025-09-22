@@ -140,6 +140,20 @@
           fields.plesso.hidden = false;
         }
       });
+
+      // ✅ NUOVA LOGICA: Mostra le sezioni finali dopo la selezione del plesso
+      const sectionContatti = document.getElementById('section-contatti');
+      const sectionSubmit = document.getElementById('section-submit');
+      
+      selects.plesso.addEventListener('change', () => {
+        if (selects.plesso.value) {
+          sectionContatti.hidden = false;
+          sectionSubmit.hidden = false;
+        } else {
+          sectionContatti.hidden = true;
+          sectionSubmit.hidden = true;
+        }
+      });
     };
   });
 })();

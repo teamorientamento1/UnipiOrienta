@@ -40,19 +40,23 @@
     return (consonants + vowels + "XXX").substring(0, 3);
   }
 
-  /**
-   * ✅ FUNZIONE CORRETTA
-   * Usa Moment.js per interpretare correttamente la data di nascita
-   * prima di estrarre anno, mese e giorno per il codice fiscale.
-   */
   function getDataCode(dataNascita, genere) {
-    // Definiamo i formati possibili, come in validators.js
-    const formats = ['YYYY-MM-DD', 'DD-MM-YYYY', 'DD/MM/YYYY'];
+    // --- DIAGNOSTICA INTERNA ALLA DATA ---
+    console.log("--- Funzione getDataCode ---");
+    console.log("Data ricevuta in input:", dataNascita);
+    // ------------------------------------
+
+    const formats = ['d - m - Y', 'DD - MM - YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY'];
     const m = moment(dataNascita, formats, true);
     
-    // Convertiamo l'oggetto moment in un oggetto Date nativo di JavaScript
-    const date = m.toDate();
+    // --- DIAGNOSTICA INTERNA ALLA DATA ---
+    console.log("La data è stata capita (isValid)?", m.isValid());
+    console.log("--------------------------");
+    // ------------------------------------
 
+    if (!m.isValid()) return null;
+
+    const date = m.toDate();
     const year = date.getFullYear().toString().slice(-2);
     const month = MONTH_CODES[date.getMonth()];
     let day = date.getDate();
@@ -79,9 +83,13 @@
   function calculate(data) {
     const { nome, cognome, dataNascita, genere, codiceBelfiore } = data;
     if (!nome || !cognome || !dataNascita || !genere || !codiceBelfiore) return null;
+    
     const cognomeCode = getCognomeCode(cognome);
     const nomeCode = getNomeCode(nome);
     const dataCode = getDataCode(dataNascita, genere);
+    
+    if (!dataCode) return null;
+    
     const belfioreCode = codiceBelfiore.toUpperCase();
     const cfParziale = cognomeCode + nomeCode + dataCode + belfioreCode;
     const controlCode = getControlCode(cfParziale);
