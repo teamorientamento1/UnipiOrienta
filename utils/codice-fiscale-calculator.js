@@ -13,7 +13,6 @@
     'U': 16, 'V': 10, 'W': 22, 'X': 25, 'Y': 24, 'Z': 23
   };
 
-  // ✅ NUOVA COSTANTE: Mappa per la sostituzione in caso di omocodia
   const OMOCODIA_MAP = {
     '0': 'L', '1': 'M', '2': 'N', '3': 'P', '4': 'Q', '5': 'R', '6': 'S', '7': 'T', '8': 'U', '9': 'V'
   };
@@ -41,8 +40,19 @@
     return (consonants + vowels + "XXX").substring(0, 3);
   }
 
+  /**
+   * ✅ FUNZIONE CORRETTA
+   * Usa Moment.js per interpretare correttamente la data di nascita
+   * prima di estrarre anno, mese e giorno per il codice fiscale.
+   */
   function getDataCode(dataNascita, genere) {
-    const date = new Date(dataNascita);
+    // Definiamo i formati possibili, come in validators.js
+    const formats = ['YYYY-MM-DD', 'DD-MM-YYYY', 'DD/MM/YYYY'];
+    const m = moment(dataNascita, formats, true);
+    
+    // Convertiamo l'oggetto moment in un oggetto Date nativo di JavaScript
+    const date = m.toDate();
+
     const year = date.getFullYear().toString().slice(-2);
     const month = MONTH_CODES[date.getMonth()];
     let day = date.getDate();
@@ -100,16 +110,11 @@
     };
   }
 
-  /**
-   * ✅ NUOVA FUNZIONE: Genera le 7 possibili varianti di omocodia.
-   * @param {string} cfTeorico - Il CF standard calcolato.
-   * @returns {string[]} Un array contenente le 7 varianti omocodiche.
-   */
   function generaVariazioniOmocodia(cfTeorico) {
     if (!cfTeorico || cfTeorico.length !== 16) return [];
     
     const baseCf = cfTeorico.substring(0, 15).split('');
-    const numericIndices = [14, 13, 12, 10, 9, 7, 6]; // Indici dei 7 numeri, da destra a sinistra
+    const numericIndices = [14, 13, 12, 10, 9, 7, 6];
     const varianti = [];
 
     for (const index of numericIndices) {
@@ -128,7 +133,7 @@
   window.CodiceFiscaleCalculator = {
     calculate: calculate,
     parse: parse,
-    generaVariazioniOmocodia: generaVariazioniOmocodia // Esponiamo la nuova funzione
+    generaVariazioniOmocodia: generaVariazioniOmocodia
   };
 
 })();
