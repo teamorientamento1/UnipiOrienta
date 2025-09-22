@@ -34,14 +34,33 @@ const Validators = (() => {
     return (v || "").toLowerCase().replace(/(^|[\s'’-])([a-zà-öø-ÿ])/giu, (m, p1, p2) => p1 + p2.toUpperCase());
   }
 
-  function isValidDateStr(yyyy_mm_dd) {
-    if (!yyyy_mm_dd) return false;
-    const d = new Date(yyyy_mm_dd);
-    if (Number.isNaN(d.getTime())) return false;
-    const min = new Date("1900-01-01");
-    const today = new Date();
-    if (d < min || d > today) return false;
-    return true;
+  /**
+   * ✅ FUNZIONE CORRETTA
+   * Valida una stringa di data usando Moment.js per gestire in modo affidabile
+   * sia il formato 'AAAA-MM-GG' che 'GG-MM-AAAA'.
+   */
+  function isValidDateStr(dateStr) {
+    if (!dateStr) return false;
+
+    // Definiamo i formati di data che vogliamo accettare.
+    const formats = ['YYYY-MM-DD', 'DD-MM-YYYY', 'DD/MM/YYYY'];
+
+    // Usiamo moment.js per analizzare la data. Il 'true' finale attiva la modalità "rigorosa",
+    // che garantisce che la data corrisponda esattamente a uno dei formati.
+    const m = moment(dateStr, formats, true);
+
+    // Se la data non è valida secondo nessuno dei formati, la funzione si ferma.
+    if (!m.isValid()) return false;
+
+    // Eseguiamo controlli aggiuntivi per assicurarsi che la data sia ragionevole.
+    const minYear = 1900;
+    const today = moment(); // Data di oggi
+
+    if (m.year() < minYear || m.isAfter(today)) {
+      return false; // La data è troppo nel passato o è nel futuro
+    }
+
+    return true; // La data è valida!
   }
 
   return {

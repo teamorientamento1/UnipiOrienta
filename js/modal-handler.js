@@ -33,7 +33,15 @@
     modalBody.textContent = message;
     
     modalProceedBtn.hidden = !options.showProceed;
-    modalCloseBtn.textContent = options.closeText || "OK, ho capito";
+    
+    // ✅ NUOVA LOGICA: Nasconde il pulsante "Close" se `showClose` è esplicitamente false.
+    // Di default, il pulsante rimane visibile per compatibilità.
+    if (options.showClose === false) {
+      modalCloseBtn.hidden = true;
+    } else {
+      modalCloseBtn.hidden = false;
+      modalCloseBtn.textContent = options.closeText || "OK, ho capito";
+    }
     
     currentCallbacks = {
       onClose: options.onClose,

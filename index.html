@@ -10,20 +10,20 @@
         var host = location.hostname.toLowerCase();
         var isGH = host.endsWith('github.io');
         if (isGH) {
-          // Per project pages: /<repo>/index.html -> prendi il primo segmento come repo
           var segs = location.pathname.split('/').filter(Boolean);
           var repo = segs.length ? ('/' + segs[0] + '/') : '/';
           var base = document.createElement('base');
           base.href = repo;
           document.head.appendChild(base);
         }
-      } catch (e) { /* offline: nessun <base> */ }
+      } catch (e) { /* offline */ }
     })();
   </script>
 
   <title>Maschera — Iscrizione Evento • Università di Pisa</title>
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
   <link rel="preload" href="styles/variables.css?v=12" as="style">
   <link rel="stylesheet" href="styles/variables.css?v=12">
@@ -31,6 +31,10 @@
   <link rel="stylesheet" href="styles/form.css?v=12">
   <link rel="stylesheet" href="styles/codice-fiscale.css?v=12"> 
   <link rel="stylesheet" href="styles/modal.css?v=12">
+  <link rel="stylesheet" href="styles/pikaday-theme.css?v=12">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/it.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -44,7 +48,7 @@
   </header>
 
   <main class="container">
-    <form autocomplete="off" method="post" action="javascript:void(0);">
+    <form autocomplete="new-password" method="post" action="javascript:void(0);">
       <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
         <h2 class="section-title" id="h2-anagrafica">Anagrafica</h2>
 
@@ -79,7 +83,7 @@
           <div class="form-row">
             <div class="field" id="field-datanascita">
               <label for="dataNascita">Data di nascita</label>
-              <input id="dataNascita" class="input" type="date" min="1900-01-01" autocomplete="off">
+              <input id="dataNascita" class="input" type="text" autocomplete="off" placeholder="GG - MM - AAAA">
               <div class="hint" id="hint-datanascita" aria-live="polite"></div>
             </div>
             <div class="field" id="field-genere">
@@ -154,41 +158,44 @@
           </div>
         </div>
       </section>
+    
+      <section class="card" id="section-scuola" aria-labelledby="h2-scuola" hidden>
+        <h2 class="section-title" id="h2-scuola">Informazioni sulla scuola</h2>
+        <div class="field" id="field-regione-scuola">
+          <label for="regioneScuola">Regione</label>
+          <select id="regioneScuola" class="select" autocomplete="off"><option value="">Seleziona…</option></select>
+          <div class="hint" id="hint-regione-scuola" aria-live="polite"></div>
+        </div>
+        <div class="field" id="field-prov-scuola" hidden>
+          <label for="provinciaScuola">Provincia</label>
+          <select id="provinciaScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
+          <div class="hint" id="hint-prov-scuola" aria-live="polite"></div>
+        </div>
+        <div class="field" id="field-comune-scuola" hidden>
+          <label for="comuneScuola">Città</label>
+          <select id="comuneScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
+          <div class="hint" id="hint-comune-scuola" aria-live="polite"></div>
+        </div>
+        <div class="field" id="field-istituto-scuola" hidden>
+          <label for="istitutoScuola">Istituto principale</label>
+          <select id="istitutoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
+          <div class="hint" id="hint-istituto-scuola" aria-live="polite"></div>
+        </div>
+        <div class="field" id="field-plesso-scuola" hidden>
+          <label for="plessoScuola">Plesso</label>
+          <select id="plessoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
+          <div class="hint" id="hint-plesso-scuola" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="card" id="section-submit">
+        <h2 class="section-title">Completa l'iscrizione</h2>
+        <p class="muted">Una volta compilati tutti i campi obbligatori, potrai procedere all'iscrizione sul portale dedicato.</p>
+        <div style="text-align:center; margin-top:1.5rem;">
+          <button class="btn" id="submit-btn" type="button" disabled>Procedi all'iscrizione</button>
+        </div>
+      </section>
     </form>
-
-    <section class="card" id="section-scuola" aria-labelledby="h2-scuola" hidden>
-      <h2 class="section-title" id="h2-scuola">Informazioni sulla scuola</h2>
-      <div class="field" id="field-regione-scuola">
-        <label for="regioneScuola">Regione</label>
-        <select id="regioneScuola" class="select" autocomplete="off"><option value="">Seleziona…</option></select>
-        <div class="hint" id="hint-regione-scuola" aria-live="polite"></div>
-      </div>
-      <div class="field" id="field-prov-scuola" hidden>
-        <label for="provinciaScuola">Provincia</label>
-        <select id="provinciaScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
-        <div class="hint" id="hint-prov-scuola" aria-live="polite"></div>
-      </div>
-      <div class="field" id="field-comune-scuola" hidden>
-        <label for="comuneScuola">Città</label>
-        <select id="comuneScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
-        <div class="hint" id="hint-comune-scuola" aria-live="polite"></div>
-      </div>
-      <div class="field" id="field-istituto-scuola" hidden>
-        <label for="istitutoScuola">Istituto principale</label>
-        <select id="istitutoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
-        <div class="hint" id="hint-istituto-scuola" aria-live="polite"></div>
-      </div>
-      <div class="field" id="field-plesso-scuola" hidden>
-        <label for="plessoScuola">Plesso</label>
-        <select id="plessoScuola" class="select" disabled autocomplete="off"><option value="">Seleziona…</option></select>
-        <div class="hint" id="hint-plesso-scuola" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2 class="section-title">Invio su Microsoft Forms</h2>
-      <p class="muted">Prefilling verso Forms sarà collegato più avanti (mappa ID ⇄ parametri).</p>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -224,6 +231,12 @@
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
   <script src="js/choices-init.js?v=12" defer></script>
   <script src="js/codice-fiscale-handler.js?v=12" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js" defer></script>
+  <script src="js/datepicker-init.js?v=12" defer></script>
+  
+  <script src="js/form-submit-handler.js?v=12" defer></script>
+
   <script src="js/app.js?v=12" defer></script>
+  <script src="js/autofill-fix.js?v=12" defer></script>
 </body>
 </html>

@@ -1,20 +1,22 @@
 /**
  * advanced-validator.js
- * Gestisce le validazioni avanzate e incrociate con feedback specifico:
- * 1. Coerenza anagrafica vs. Codice Fiscale (con omocodia).
- * 2. Coerenza geografica Residenza vs. Scuola.
+ * Gestisce le validazioni avanzate e incrociate con feedback specifico.
  */
 (function() {
   if (!window.CodiceFiscaleCalculator || !window.Dom || !window.Modal) {
     return console.error("ERRORE CRITICO: Dipendenze mancanti per AdvancedValidator.");
   }
   
-  const { qs } = window.Dom;
+  const { qs, setOk, setError, clearError } = window.Dom;
   let isInitialized = false;
 
+  const ANAGRAFICA_FIELD_IDS = [
+    'field-cf', 'field-nome', 'field-cognome', 'field-datanascita', 
+    'field-genere', 'field-comune-nascita', 'field-paese-estero'
+  ];
+
   const validationStates = {
-    cf: { isOverridden: false, warningState: 0, timer: null },
-    geo: { isOverridden: false, warningState: 0, timer: null }
+    cf: { isOverridden: false, warningState: 0, timer: null }
   };
 
   let anagraficaFields, cfTrigger, geoTrigger, scuolaSection, scuolaFields;
@@ -30,10 +32,10 @@
   }
   
   function clearAllErrors() {
-    const fieldIds = ['field-cf', 'field-nome', 'field-cognome', 'field-datanascita', 'field-genere', 'field-comune-nascita', 'field-paese-estero', 'field-prov-res', 'field-prov-scuola'];
+    const fieldIds = ['field-nome', 'field-cognome', 'field-datanascita', 'field-genere', 'field-comune-nascita', 'field-paese-estero', 'field-prov-res', 'field-prov-scuola'];
     fieldIds.forEach(id => {
-        const field = qs(`#${id}`);
-        if (field) window.Dom.clearError(field);
+      const field = qs(`#${id}`);
+      if (field) clearError(field);
     });
   }
 
@@ -49,35 +51,22 @@
     let errors = [];
     let conflictingFieldIds = ['field-cf'];
 
-    if (cfInseritoParsed.codiceCognome !== cfCorrettoParsed.codiceCognome) {
-      errors.push("il **cognome**");
-      conflictingFieldIds.push('field-cognome');
-    }
-    if (cfInseritoParsed.codiceNome !== cfCorrettoParsed.codiceNome) {
-      errors.push("il **nome**");
-      conflictingFieldIds.push('field-nome');
-    }
-    if (cfInseritoParsed.codiceAnno !== cfCorrettoParsed.codiceAnno || 
-        cfInseritoParsed.codiceMese !== cfCorrettoParsed.codiceMese || 
-        cfInseritoParsed.codiceGiorno !== cfCorrettoParsed.codiceGiorno) {
-      errors.push("la **data di nascita** o il **genere**");
-      conflictingFieldIds.push('field-datanascita', 'field-genere');
-    }
-    if (cfInseritoParsed.codiceBelfiore !== cfCorrettoParsed.codiceBelfiore) {
-      errors.push("il **luogo di nascita**");
-      conflictingFieldIds.push('field-comune-nascita', 'field-paese-estero');
-    }
+    if (cfInseritoParsed.codiceCognome !== cfCorrettoParsed.codiceCognome) errors.push("il **cognome**"), conflictingFieldIds.push('field-cognome');
+    if (cfInseritoParsed.codiceNome !== cfCorrettoParsed.codiceNome) errors.push("il **nome**"), conflictingFieldIds.push('field-nome');
+    if (cfInseritoParsed.codiceAnno !== cfCorrettoParsed.codiceAnno || cfInseritoParsed.codiceMese !== cfCorrettoParsed.codiceMese || cfInseritoParsed.codiceGiorno !== cfCorrettoParsed.codiceGiorno) errors.push("la **data di nascita** o il **genere**"), conflictingFieldIds.push('field-datanascita', 'field-genere');
+    if (cfInseritoParsed.codiceBelfiore !== cfCorrettoParsed.codiceBelfiore) errors.push("il **luogo di nascita**"), conflictingFieldIds.push('field-comune-nascita', 'field-paese-estero');
     
     if (errors.length === 0) return { hasError: false };
-
-    let finalMessage = "I seguenti dati non sembrano coerenti con il Codice Fiscale: " + errors.join(', ') + ". Per favore, ricontrolla i campi evidenziati.";
-    return { hasError: true, message: finalMessage, fields: conflictingFieldIds };
+    return { hasError: true, message: "I seguenti dati non sembrano coerenti con il Codice Fiscale: " + errors.join(', ') + ". Per favore, ricontrolla.", fields: conflictingFieldIds };
   }
 
   function runCfValidation() {
     clearAllErrors();
     const state = validationStates.cf;
-    if (state.isOverridden) return;
+    if (state.isOverridden) {
+      unblockScuolaSection();
+      return;
+    }
 
     const userData = {
       nome: document.getElementById('nome').value,
@@ -86,101 +75,103 @@
       genere: document.getElementById('genere').value,
     };
     
-    const esteroNoRadio = document.getElementById('esteroNo');
-    if (esteroNoRadio.checked) {
-      const comuneSelect = document.getElementById('comuneNascita');
-      const selectedOption = comuneSelect.options[comuneSelect.selectedIndex];
-      userData.codiceBelfiore = selectedOption ? selectedOption.dataset.belfiore : null;
-    } else {
-      const paeseSelect = document.getElementById('paeseEstero');
-      const selectedOption = paeseSelect.options[paeseSelect.selectedIndex];
-      userData.codiceBelfiore = selectedOption ? selectedOption.dataset.belfiore : null;
-    }
+    const isEstero = document.getElementById('esteroSi').checked;
+    const luogoNascitaSelect = document.getElementById(isEstero ? 'paeseEstero' : 'comuneNascita');
+    const selectedOption = luogoNascitaSelect.options[luogoNascitaSelect.selectedIndex];
+    userData.codiceBelfiore = selectedOption ? selectedOption.dataset.belfiore : null;
     
     const cfInserito = Array.from(document.querySelectorAll('.cf-segment')).map(input => input.value).join('').toUpperCase();
 
     if (!userData.nome || !userData.cognome || !userData.dataNascita || !userData.genere || !userData.codiceBelfiore || cfInserito.length !== 16) {
+      blockScuolaSection();
       return;
     }
     
     const cfCalcolato = CodiceFiscaleCalculator.calculate(userData);
-    let isValid = (cfCalcolato === cfInserito);
-
-    if (!isValid && cfCalcolato) {
-      const variazioni = CodiceFiscaleCalculator.generaVariazioniOmocodia(cfCalcolato);
-      if (variazioni.includes(cfInserito)) {
-        isValid = true;
-        console.log("Rilevato caso di omocodia valido.");
-      }
-    }
+    let isValid = (cfCalcolato === cfInserito) || (cfCalcolato && CodiceFiscaleCalculator.generaVariazioniOmocodia(cfCalcolato).includes(cfInserito));
     
     if (isValid) {
-      if (!validationStates.geo.isOverridden && document.getElementById('provinciaResidenza').value === document.getElementById('provinciaScuola').value) {
-        unblockScuolaSection();
-      }
+      state.warningState = 0;
+      clearTimeout(state.timer);
+      ANAGRAFICA_FIELD_IDS.forEach(id => {
+        const field = qs(`#${id}`);
+        if (field) setOk(field, id === 'field-cf' ? '' : 'Dato coerente');
+      });
+      unblockScuolaSection();
     } else {
       const risultato = analizzaDiscrepanzaCF(userData, cfInserito);
-      blockScuolaSection();
+      const popupTitle = "Dati Anagrafici Incoerenti";
+
       risultato.fields.forEach(fieldId => {
           const field = qs(`#${fieldId}`);
-          if(field) window.Dom.setError(field);
+          if(field) setError(field, 'Dato non coerente');
       });
       
-      const popupTitle = "Controllo Dati Specifico";
-      if (state.warningState === 2) {
-        window.Modal.show(popupTitle, risultato.message, { 
-          showProceed: true,
-          onProceed: () => { state.isOverridden = true; unblockScuolaSection(); clearAllErrors(); }
-        });
-      } else {
-        window.Modal.show(popupTitle, risultato.message, { 
-          onClose: () => {
-            clearTimeout(state.timer);
-            state.timer = setTimeout(() => { state.warningState = 2; unblockScuolaSection(); }, 8000);
+      blockScuolaSection();
+
+      if (state.warningState >= 1) {
+        window.Modal.show(
+          popupTitle,
+          "I dati inseriti risultano ancora incoerenti. Se ritieni che siano corretti, puoi procedere comunque.",
+          { 
+            showProceed: true,
+            // ✅ MODIFICA: Nasconde il pulsante "OK, ho capito"
+            showClose: false,
+            onProceed: () => { 
+              state.isOverridden = true; 
+              unblockScuolaSection(); 
+              clearAllErrors();
+              ANAGRAFICA_FIELD_IDS.forEach(id => setOk(qs(`#${id}`), 'Dato accettato'));
+            }
           }
-        });
+        );
+      } else {
+        window.Modal.show(
+          popupTitle,
+          // ✅ MODIFICA: Cambiato il testo per essere meno specifico sul tempo.
+          risultato.message + " La sezione successiva verrà sbloccata a breve per darti il tempo di ricontrollare i dati."
+        );
         state.warningState = 1;
+        clearTimeout(state.timer);
+        state.timer = setTimeout(() => {
+          unblockScuolaSection();
+        }, 8000);
       }
     }
   }
 
   function runGeoValidation() {
-    const state = validationStates.geo;
-    if (state.isOverridden) return;
-
     const residenzaProv = document.getElementById('provinciaResidenza').value;
     const scuolaProv = document.getElementById('provinciaScuola').value;
+    
+    const fieldResidenza = qs('#field-prov-res');
+    const fieldScuola = qs('#field-prov-scuola');
 
-    if (!residenzaProv || !scuolaProv || residenzaProv === scuolaProv) {
-      return;
-    }
+    if (!residenzaProv || !scuolaProv) return;
 
-    blockScuolaSection();
-    window.Dom.setError(qs('#field-prov-res'));
-    window.Dom.setError(qs('#field-prov-scuola'));
+    clearError(fieldResidenza);
+    clearError(fieldScuola);
 
-    if (state.warningState === 2) {
-      window.Modal.show("Controllo Coerenza Geografica", "La provincia della scuola è ancora diversa da quella di residenza. Se sei sicuro, puoi procedere.", { 
-        showProceed: true,
-        onProceed: () => { state.isOverridden = true; unblockScuolaSection(); clearAllErrors(); }
-      });
+    if (residenzaProv === scuolaProv) {
+      setOk(fieldResidenza, 'Province coerenti');
+      setOk(fieldScuola, '');
     } else {
-      window.Modal.show("Controllo Coerenza Geografica", "Attenzione: la provincia della scuola selezionata è diversa da quella di residenza. I dati sono corretti?", {
-        onClose: () => {
-          clearTimeout(state.timer);
-          state.timer = setTimeout(() => { state.warningState = 2; unblockScuolaSection(); }, 8000);
-        }
-      });
-      state.warningState = 1;
+      setError(fieldResidenza, 'Provincia diversa da quella della scuola');
+      setError(fieldScuola, '');
+      
+      window.Modal.show(
+        "Verifica Dati", 
+        "La provincia di residenza non coincide con quella della scuola. Ti invitiamo a verificare che i dati siano corretti.",
+        { closeText: "OK, ho capito" }
+      );
     }
   }
 
   function onAnagraficaChange(event) {
-    Object.values(validationStates).forEach(state => {
-      state.isOverridden = false;
-      state.warningState = 0;
-      clearTimeout(state.timer);
-    });
+    const state = validationStates.cf;
+    state.isOverridden = false;
+    state.warningState = 0;
+    clearTimeout(state.timer);
     unblockScuolaSection();
     clearAllErrors();
   }
@@ -205,7 +196,6 @@
       anagraficaFields.forEach(field => field.addEventListener('input', onAnagraficaChange));
 
       isInitialized = true;
-      console.log("Modulo di validazione avanzato inizializzato.");
     };
 
     tryInit();

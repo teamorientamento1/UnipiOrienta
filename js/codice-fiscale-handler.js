@@ -3,6 +3,8 @@
     const cfContainer = document.querySelector('.cf-container');
     if (!cfContainer) return;
 
+    // ✅ MODIFICA: Selezioniamo il contenitore del campo per la validazione
+    const fieldCf = document.getElementById('field-cf');
     const inputs = Array.from(cfContainer.querySelectorAll('.cf-segment'));
     const hint = document.getElementById('hint-cf');
 
@@ -12,7 +14,9 @@
         inputs[i].classList.add('hidden');
         inputs[i].classList.remove('error');
       }
-      hint.textContent = '';
+      // ✅ MODIFICA: Pulisce lo stato (sia ok che error)
+      window.Dom.clearError(fieldCf);
+      hint.textContent = ''; // Assicura che l'hint venga svuotato
     };
 
     inputs.forEach((input, index) => {
@@ -28,39 +32,37 @@
         if (value.length >= maxLength && index < inputs.length - 1) {
           const nextInput = inputs[index + 1];
           nextInput.classList.remove('hidden');
-          // nextInput.focus(); // <-- MODIFICA: Riga rimossa
         }
 
         if (inputs.every(i => i.value.length === i.maxLength)) {
           validateAndHighlight();
+        } else {
+          // ✅ MODIFICA: Se il CF non è completo, pulisce lo stato
+          window.Dom.clearError(fieldCf);
         }
       });
 
-      // Gestisce il tasto backspace
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
-          // inputs[index - 1].focus(); // <-- MODIFICA: Riga rimossa
+          // Gestione backspace
         }
       });
     });
 
     const validateAndHighlight = () => {
       inputs.forEach(input => input.classList.remove('error'));
-      hint.textContent = '';
       const cf = inputs.map(input => input.value).join('').toUpperCase();
       if (cf.length !== 16) return;
 
       const result = validateCodiceFiscale(cf);
 
       if (result.isValid) {
-        hint.textContent = 'Codice Fiscale formalmente valido.';
-        hint.style.color = 'green';
+        // ✅ MODIFICA: Usa la nuova funzione per lo stato di successo
+        window.Dom.setOk(fieldCf, 'Codice Fiscale formalmente valido.');
         document.getElementById('group-nomecognome').hidden = false;
-        // Rimosso il focus automatico anche qui per coerenza
-        // document.getElementById('field-nome').querySelector('input').focus();
       } else {
-        hint.textContent = result.message;
-        hint.style.color = '#D32F2F';
+        // ✅ MODIFICA: Usa la nuova funzione per lo stato di errore
+        window.Dom.setError(fieldCf, result.message);
         highlightErrorSegment(result.errorIndex);
       }
     };
@@ -68,12 +70,47 @@
     const highlightErrorSegment = (errorIndex) => {
       if (errorIndex === -1) return;
       let segmentIndex = 0;
-      if (errorIndex <= 3) segmentIndex = 0;
-      else if (errorIndex <= 6) segmentIndex = 1;
-      else if (errorIndex <= 8) segmentIndex = 2;
-      else if (errorIndex <= 11) segmentIndex = 3;
-      else if (errorIndex <= 15) segmentIndex = 4;
-      inputs[segmentIndex].classList.add('error');
+      if (errorIndex < 6) segmentIndex = 0; // Cognome+Nome
+      else if (errorIndex < 8) segmentIndex = 1; // Anno
+      else if (errorIndex < 9) segmentIndex = 2; // Mese
+      else if (errorIndex < 11) segmentIndex = 3; // Giorno
+      else if (errorIndex < 15) segmentIndex = 4; // Comune
+      else if (errorIndex === 15) segmentIndex = 4; // Controllo (evidenzia l'ultimo)
+      
+      // La logica precedente era un po' off, questa è più precisa
+      const lengthMap = [6, 2, 1, 2, 5]; 
+      let cumulativeLength = 0;
+      for (let i = 0; i < lengthMap.length; i++) {
+        cumulativeLength += lengthMap[i];
+        if (errorIndex < cumulativeLength) {
+            segmentIndex = i;
+            break;
+        }
+      }
+      
+      // Fallback per l'ultimo carattere
+      if (errorIndex === 15) {
+        segmentIndex = 4; 
+      }
+
+      // Correggo la mappatura ai 5 input attuali
+      const inputMap = [
+          { start: 0, end: 3, index: 0 },
+          { start: 4, end: 6, index: 1 },
+          { start: 7, end: 8, index: 2 },
+          { start: 9, end: 11, index: 3 },
+          { start: 12, end: 15, index: 4 }
+      ];
+
+      let inputSegmentToHighlight = 0;
+      for (const map of inputMap) {
+          if (errorIndex >= map.start && errorIndex <= map.end) {
+              inputSegmentToHighlight = map.index;
+              break;
+          }
+      }
+      
+      inputs[inputSegmentToHighlight].classList.add('error');
     };
 
     const validateCodiceFiscale = (cf) => {

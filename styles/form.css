@@ -43,14 +43,36 @@
   box-shadow: 0 0 0 3px rgba(4,71,123,.15);
 }
 
-/* Errori */
+/* ✅ STATO DI SUCCESSO (OK) */
+.field--ok .input,
+.field--ok .select {
+  border-color: var(--ok);
+  background-color: #f0fff4; /* Verde molto chiaro */
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, .1);
+}
+.field--ok .hint {
+  color: var(--ok);
+  font-weight: 500;
+}
+
+/* ❌ STATO DI ERRORE */
 .field--error .input,
-.field--error .select{
+.field--error .select {
   border-color: var(--error);
   background: var(--error-bg);
   box-shadow: 0 0 0 3px rgba(185,28,28,.1);
 }
-.field--error .hint{ color: var(--error); }
+.field--error .hint { color: var(--error); }
+
+
+/*
+ * ✅ NUOVA REGOLA MANCANTE PER IL CODICE FISCALE
+ * Applica il bordo verde ai segmenti del CF quando il contenitore è valido.
+ */
+.field--ok .cf-segment {
+  border-color: var(--ok);
+}
+
 
 /* Bottoni */
 .btn{
@@ -78,7 +100,7 @@ input, select {
   min-height:44px;
 }
 
-/* ✅ CLASSE AGGIUNTA PER IL BLOCCO SEZIONE 👇 */
+/* CLASSE AGGIUNTA PER IL BLOCCO SEZIONE */
 .section--disabled {
   opacity: 0.6;
   pointer-events: none;
