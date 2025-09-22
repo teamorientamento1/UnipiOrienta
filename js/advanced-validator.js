@@ -104,7 +104,6 @@
       
       blockScuolaSection();
 
-      // ✅ CORREZIONE: La logica per mostrare errori e popup ora è unificata e funziona sempre.
       if (risultato && risultato.hasError) {
         risultato.fields.forEach(fieldId => {
             const field = qs(`#${fieldId}`);
@@ -176,6 +175,34 @@
     unblockScuolaSection();
     clearAllErrors();
   }
+  
+  // ✅ NUOVA FUNZIONE: Aggiunge un avviso di conferma prima di modificare un campo già valido
+  function addConfirmationBeforeChange(fieldElement) {
+    fieldElement.addEventListener('focus', (event) => {
+      const fieldContainer = fieldElement.closest('.field');
+      // Controlla se il campo è già stato validato con successo
+      if (fieldContainer && fieldContainer.classList.contains('field--ok')) {
+        event.preventDefault();
+        fieldElement.blur(); // Impedisce subito la modifica
+
+        window.Modal.show(
+          "Attenzione: Dati Corretti",
+          "Questi dati ci risultano corretti. Sei sicuro di volerli modificare? Quest'azione causerà il reset del sondaggio.",
+          {
+            showProceed: true, // Mostra il pulsante "Procedi"
+            closeText: "Non voglio modificarli",
+            onProceed: () => {
+              // Se l'utente conferma, ricarica la pagina per resettare tutto
+              window.location.reload();
+            },
+            onClose: () => {
+              // Se l'utente annulla, non fa nulla
+            }
+          }
+        );
+      }
+    });
+  }
 
   function init() {
     if (isInitialized) return;
@@ -195,6 +222,9 @@
       cfTrigger.addEventListener('focus', runCfValidation);
       geoTrigger.addEventListener('change', runGeoValidation);
       anagraficaFields.forEach(field => field.addEventListener('input', onAnagraficaChange));
+      
+      // ✅ NUOVO: Applica la sicurezza a tutti i campi dell'anagrafica
+      anagraficaFields.forEach(addConfirmationBeforeChange);
 
       isInitialized = true;
     };

@@ -8,12 +8,10 @@
     const submitBtn = document.getElementById('submit-btn');
     if (!submitBtn) return;
 
-    // Lista degli ID dei campi obbligatori per abilitare il pulsante
     const requiredFieldIds = [
       'nome', 'cognome', 'dataNascita', 'genere', 'comuneResidenza', 'plessoScuola', 'emailPrimaria'
     ];
 
-    // Funzione che controlla se il form è completo
     const checkFormCompleteness = () => {
       const allFieldsFilled = requiredFieldIds.every(id => {
         const field = document.getElementById(id);
@@ -28,18 +26,31 @@
       const cfValue = Array.from(cfCompleto).map(input => input.value).join('');
       const cfIsFilled = cfValue.length === 16;
       
-      submitBtn.disabled = !(allFieldsFilled && luogoNascitaFilled && cfIsFilled);
+      // ✅ NUOVO CONTROLLO: Verifica anche che l'email primaria abbia un formato valido
+      const emailPrimariaField = document.getElementById('emailPrimaria');
+      const isEmailValid = window.Validators.isValidEmail(emailPrimariaField.value);
+
+      submitBtn.disabled = !(allFieldsFilled && luogoNascitaFilled && cfIsFilled && isEmailValid);
     };
 
-    // Aggiungi un listener a tutti i campi del form
     const fieldsToWatch = document.querySelectorAll('form input, form select');
     fieldsToWatch.forEach(field => {
       field.addEventListener('input', checkFormCompleteness);
       field.addEventListener('change', checkFormCompleteness);
     });
 
-    // Aggiungi il gestore per il click sul pulsante
     submitBtn.addEventListener('click', () => {
+      // ✅ NUOVO CONTROLLO: Verifica la presenza di errori prima di procedere
+      const errorFields = document.querySelectorAll('.field--error');
+      if (errorFields.length > 0) {
+        window.Modal.show(
+          "Attenzione",
+          "Ci sono ancora dei campi con errori o non validi. Correggili prima di procedere.",
+          { closeText: "OK, correggo" }
+        );
+        return; // Blocca il reindirizzamento
+      }
+      
       redirectToMicrosoftForms();
     });
 
