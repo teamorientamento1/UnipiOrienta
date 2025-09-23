@@ -41,18 +41,9 @@
   }
 
   function getDataCode(dataNascita, genere) {
-    // --- DIAGNOSTICA INTERNA ALLA DATA ---
-    console.log("--- Funzione getDataCode ---");
-    console.log("Data ricevuta in input:", dataNascita);
-    // ------------------------------------
-
-    const formats = ['d - m - Y', 'DD - MM - YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY'];
+    // ✅ CORREZIONE: Usa il formato corretto per moment.js (DD - MM - YYYY) per corrispondere all'output del calendario
+    const formats = ['DD - MM - YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY'];
     const m = moment(dataNascita, formats, true);
-    
-    // --- DIAGNOSTICA INTERNA ALLA DATA ---
-    console.log("La data è stata capita (isValid)?", m.isValid());
-    console.log("--------------------------");
-    // ------------------------------------
 
     if (!m.isValid()) return null;
 

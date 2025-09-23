@@ -54,7 +54,17 @@
     <form autocomplete="new-password" method="post" action="javascript:void(0);">
       <section class="card" id="section-anagrafica" aria-labelledby="h2-anagrafica">
         <h2 class="section-title" id="h2-anagrafica" style="text-align: center;">Anagrafica</h2>
-        <div class="field" id="field-cf"> <label for="cf-1">Codice fiscale</label> <div class="cf-container"> <input type="text" id="cf-1" class="cf-segment" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false"> <input type="text" id="cf-2" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false"> <input type="text" id="cf-3" class="cf-segment hidden" maxlength="2" placeholder="--" autocomplete="off" spellcheck="false"> <input type="text" id="cf-4" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false"> <input type="text" id="cf-5" class="cf-segment hidden" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false"> </div> <div class="hint" id="hint-cf" aria-live="polite"></div> </div>
+        <div class="field" id="field-cf">
+          <label for="cf-1">Codice fiscale</label>
+          <div class="cf-container">
+            <input type="text" id="cf-1" class="cf-segment" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-2" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-3" class="cf-segment hidden" maxlength="2" placeholder="--" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-4" class="cf-segment hidden" maxlength="3" placeholder="---" autocomplete="off" spellcheck="false">
+            <input type="text" id="cf-5" class="cf-segment hidden" maxlength="4" placeholder="----" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="hint" id="hint-cf" aria-live="polite"></div>
+        </div>
         <div id="group-nomecognome" hidden> <div class="form-row"> <div class="field" id="field-nome"> <label for="nome">Nome</label> <input id="nome" class="input" type="text" autocomplete="off" placeholder="Nome"> <div class="hint" id="hint-nome" aria-live="polite"></div> </div> <div class="field" id="field-cognome"> <label for="cognome">Cognome</label> <input id="cognome" class="input" type="text" autocomplete="off" placeholder="Cognome"> <div class="hint" id="hint-cognome" aria-live="polite"></div> </div> </div> </div>
         <div id="group-datagenere" hidden> <div class="form-row"> <div class="field" id="field-datanascita"> <label for="dataNascita">Data di nascita</label> <input id="dataNascita" class="input" type="text" autocomplete="off" placeholder="GG - MM - AAAA"> <div class="hint" id="hint-datanascita" aria-live="polite"></div> </div> <div class="field" id="field-genere"> <label for="genere">Genere</label> <select id="genere" class="select" autocomplete="off"> <option value="">Seleziona…</option> <option value="M">Maschio (M)</option> <option value="F">Femmina (F)</option> <option value="N">Preferisco non dichiararlo</option> </select> <div class="hint" id="hint-genere" aria-live="polite"></div> </div> </div> </div>
         <div id="group-estero" hidden> <div class="field" id="field-estero"> <label>Sei nato all'estero?</label> <div style="display:flex; gap:1rem; justify-content:center; align-items:center;"> <label><input type="radio" name="estero" id="esteroNo" value="no"> No</label> <label><input type="radio" name="estero" id="esteroSi" value="si"> Sì</label> </div> <div class="hint" id="hint-estero" aria-live="polite"></div> </div> </div>

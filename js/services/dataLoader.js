@@ -7,12 +7,12 @@
   const VERSION = "v8"; // bump per cache-busting
   const q = (url) => `${url}?${VERSION}`;
 
-  // Percorsi *relativi* alla root del progetto (coerenti con <base> di Pages)
   const PATHS = {
     COMUNI:  q("data/data_comuni_min.cleaned.json"),
     GEO:     q("data/data_geo_hierarchy_min.cleaned.json"),
     SCUOLE:  q("data/data_scuole_min.json"),
-    PAESI:   q("data/data_paesi_esteri.json")
+    PAESI:   q("data/data_paesi_esteri.json"),
+    ISCRITTI: q("data/data_iscritti.json")
   };
 
   async function fetchJSON(url){
@@ -21,13 +21,12 @@
     return res.json();
   }
 
-  // --- Loader “reali” (nessun fallback demo in produzione) ---
   async function loadComuni(){  return fetchJSON(PATHS.COMUNI); }
   async function loadGeo(){     return fetchJSON(PATHS.GEO); }
   async function loadScuole(){  return fetchJSON(PATHS.SCUOLE); }
   async function loadPaesi(){   return fetchJSON(PATHS.PAESI); }
+  async function loadIscritti(){ return fetchJSON(PATHS.ISCRITTI); }
 
-  // --- Normalizzazioni ---
   function normalizeCountries(raw){
     if (Array.isArray(raw)) return raw;
     if (raw && Array.isArray(raw.nazioni)) return raw.nazioni;
@@ -36,7 +35,6 @@
 
   function buildProvinceMap({ geo, comuni }){
     const collator = new Intl.Collator("it", { sensitivity: "base" });
-
     const provLabelById = new Map();
     if (geo && Array.isArray(geo.province)){
       for (const p of geo.province){
@@ -45,27 +43,21 @@
         if (id && label) provLabelById.set(id, label);
       }
     }
-
     const comuniByProvId = new Map();
     for (const c of Array.isArray(comuni) ? comuni : []){
       const pid = String(c.prov_id ?? "").trim();
       const cname = String(c.label ?? "").trim();
-      // ✅ CORREZIONE: Usiamo "belfiore" invece di "cadastral_code"
       const ccode = String(c.belfiore ?? "").trim(); 
-      
       if (!pid || !cname || !ccode) continue;
-      
       if (!comuniByProvId.has(pid)) comuniByProvId.set(pid, []);
       comuniByProvId.get(pid).push({ label: cname, code: ccode });
     }
-
     const out = new Map();
     for (const [pid, list] of comuniByProvId.entries()){
       const provLabel = provLabelById.get(pid) || pid;
       list.sort((a, b) => collator.compare(a.label, b.label));
       out.set(provLabel, list);
     }
-
     const ordered = new Map([...out.entries()].sort((a,b)=> collator.compare(a[0], b[0])));
     return ordered;
   }
@@ -74,12 +66,12 @@
     return Array.from(map.keys());
   }
 
-  // API pubblica
   window.DataLoader = {
     loadComuni,
     loadGeo,
     loadScuole,
     loadPaesi,
+    loadIscritti,
     normalizeCountries,
     buildProvinceMap,
     provincesFromMap

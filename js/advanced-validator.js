@@ -7,7 +7,7 @@
     return console.error("ERRORE CRITICO: Dipendenze mancanti per AdvancedValidator.");
   }
   
-  const { qs, setOk, setError, clearError } = window.Dom;
+  const { qs, show, hide, setOk, setError, clearError } = window.Dom;
   let isInitialized = false;
 
   const ANAGRAFICA_FIELD_IDS = [
@@ -95,7 +95,7 @@
       clearTimeout(state.timer);
       ANAGRAFICA_FIELD_IDS.forEach(id => {
         const field = qs(`#${id}`);
-        if (field) setOk(field, id === 'field-cf' ? '' : 'Dato coerente');
+        if (field) setOk(field, id === 'field-cf' ? 'Dati coerenti' : '');
       });
       unblockScuolaSection();
     } else {
@@ -176,27 +176,23 @@
     clearAllErrors();
   }
   
-  // ✅ NUOVA FUNZIONE: Aggiunge un avviso di conferma prima di modificare un campo già valido
   function addConfirmationBeforeChange(fieldElement) {
     fieldElement.addEventListener('focus', (event) => {
       const fieldContainer = fieldElement.closest('.field');
-      // Controlla se il campo è già stato validato con successo
       if (fieldContainer && fieldContainer.classList.contains('field--ok')) {
         event.preventDefault();
-        fieldElement.blur(); // Impedisce subito la modifica
+        fieldElement.blur(); 
 
         window.Modal.show(
           "Attenzione: Dati Corretti",
           "Questi dati ci risultano corretti. Sei sicuro di volerli modificare? Quest'azione causerà il reset del sondaggio.",
           {
-            showProceed: true, // Mostra il pulsante "Procedi"
+            showProceed: true,
             closeText: "Non voglio modificarli",
             onProceed: () => {
-              // Se l'utente conferma, ricarica la pagina per resettare tutto
               window.location.reload();
             },
             onClose: () => {
-              // Se l'utente annulla, non fa nulla
             }
           }
         );
@@ -213,17 +209,18 @@
       scuolaFields = Array.from(scuolaSection.querySelectorAll('input, select'));
       cfTrigger = document.getElementById('regioneScuola');
       geoTrigger = document.getElementById('provinciaScuola');
+      const residenzaTrigger = document.getElementById('provinciaResidenza');
 
-      if (!scuolaSection || !cfTrigger || !geoTrigger || anagraficaFields.length === 0) {
+      if (!scuolaSection || !cfTrigger || !geoTrigger || anagraficaFields.length === 0 || !residenzaTrigger) {
         setTimeout(tryInit, 100);
         return;
       }
 
       cfTrigger.addEventListener('focus', runCfValidation);
       geoTrigger.addEventListener('change', runGeoValidation);
-      anagraficaFields.forEach(field => field.addEventListener('input', onAnagraficaChange));
+      residenzaTrigger.addEventListener('change', runGeoValidation);
       
-      // ✅ NUOVO: Applica la sicurezza a tutti i campi dell'anagrafica
+      anagraficaFields.forEach(field => field.addEventListener('input', onAnagraficaChange));
       anagraficaFields.forEach(addConfirmationBeforeChange);
 
       isInitialized = true;

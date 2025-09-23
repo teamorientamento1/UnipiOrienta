@@ -16,7 +16,8 @@ const Validators = (() => {
 
   function isValidDateStr(dateStr) {
     if (!dateStr) return false;
-    const formats = ['DD - MM - YYYY', 'd - m - Y', 'YYYY-MM-DD', 'DD/MM/YYYY'];
+    // ✅ CORREZIONE: Usa il formato corretto per moment.js (DD - MM - YYYY)
+    const formats = ['DD - MM - YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY'];
     const m = moment(dateStr, formats, true);
     if (!m.isValid()) return false;
     const minYear = 1900;
