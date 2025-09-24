@@ -8,7 +8,6 @@
     const submitBtn = document.getElementById('submit-btn');
     if (!submitBtn) return;
     
-    // ✅ NUOVO: Flag per gestire il cooldown del disallineamento geografico
     let userAcknowledgedGeoWarning = false;
 
     const requiredFieldIds = [
@@ -35,7 +34,6 @@
     fieldsToWatch.forEach(field => {
       const listener = () => {
         checkFormCompleteness();
-        // Se l'utente cambia un dato, deve rivedere l'avviso
         userAcknowledgedGeoWarning = false;
       };
       field.addEventListener('input', listener);
@@ -53,7 +51,6 @@
       const isGeoScuolaError = errorFieldIds.has('field-prov-scuola');
       const isOnlyGeoError = errorFieldIds.size > 0 && errorFieldIds.size === (isGeoResError ? 1 : 0) + (isGeoScuolaError ? 1 : 0);
 
-      // ✅ LOGICA CORRETTA: si attiva solo se c'è l'errore geografico E l'utente non ha già aspettato
       if (isOnlyGeoError && !userAcknowledgedGeoWarning) {
         window.Modal.show(
           "Verifica Coerenza Dati",
@@ -67,7 +64,6 @@
           submitBtn.disabled = false;
           submitBtn.style.opacity = '1';
           delete submitBtn.dataset.disabledForCooldown;
-          // L'utente ha scontato la "pena", ora può procedere
           userAcknowledgedGeoWarning = true;
         }, 8000);
         return;
@@ -116,27 +112,50 @@
         alert("Errore: Configurazione per Microsoft Forms non trovata.");
         return;
       }
+      
+      // ✅ Logica migliorata: prepariamo prima tutti i dati da inviare
+      const dataToSend = {};
+      
+      // 1. Raccoglie i valori da tutti i campi semplici
+      for (const formId of Object.keys(window.CONFIG.MS_FORMS_MAPPING)) {
+        const field = document.getElementById(formId);
+        if (field) {
+          dataToSend[formId] = field.value;
+        }
+      }
+      
+      // 2. Gestisce i casi speciali
+      const cfValue = Array.from(document.querySelectorAll('.cf-segment')).map(input => input.value).join('');
+      if (cfValue.length === 16) {
+        dataToSend.codiceFiscale = cfValue.toUpperCase();
+      }
+
+      // 3. ✅ ECCO LA NUOVA LOGICA PER I NATI ALL'ESTERO
+      const isEstero = document.getElementById('esteroSi').checked;
+      if (isEstero) {
+        const paeseNascita = document.getElementById('paeseEstero').value;
+        // Invia il nome del paese a entrambi i campi del Form
+        dataToSend.luogoNascita = paeseNascita;      // Questo andrà nel campo "Città di nascita"
+        dataToSend.provinciaNascita = paeseNascita;  // Questo andrà nel campo "Provincia di nascita"
+      } else {
+        // Per i nati in Italia, i valori vengono presi dai rispettivi campi
+        dataToSend.luogoNascita = document.getElementById('comuneNascita').value;
+        dataToSend.provinciaNascita = document.getElementById('provinciaNascita').value;
+      }
+
+      // 4. Costruisce l'URL finale
       const { MS_FORMS_BASE_URL, MS_FORMS_MAPPING } = window.CONFIG;
       let finalUrl = MS_FORMS_BASE_URL;
+
       for (const [formId, msFormsId] of Object.entries(MS_FORMS_MAPPING)) {
-        let value = '';
-        if (formId === 'codiceFiscale') {
-          const cfValue = Array.from(document.querySelectorAll('.cf-segment')).map(input => input.value).join('');
-          if (cfValue.length === 16) value = cfValue.toUpperCase();
-        } else if (formId === 'luogoNascita') {
-          const isEstero = document.getElementById('esteroSi').checked;
-          const fieldId = isEstero ? 'paeseEstero' : 'comuneNascita';
-          const field = document.getElementById(fieldId);
-          if (field) value = field.value;
-        } else {
-          const field = document.getElementById(formId);
-          if (field) value = field.value;
-        }
+        const value = dataToSend[formId];
         if (value) {
           finalUrl += `&${msFormsId}=${encodeURIComponent(value)}`;
         }
       }
+      
       window.location.href = finalUrl;
     };
+    
   });
 })();
