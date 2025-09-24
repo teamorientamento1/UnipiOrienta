@@ -1,181 +1,798 @@
 [
-  { "label": "AFGHANISTAN", "belfiore": "Z200" },
-  { "label": "ALBANIA", "belfiore": "Z101" },
-  { "label": "ALGERIA", "belfiore": "Z300" },
-  { "label": "ANDORRA", "belfiore": "Z102" },
-  { "label": "ANGOLA", "belfiore": "Z301" },
-  { "label": "ARABIA SAUDITA", "belfiore": "Z202" },
-  { "label": "ARGENTINA", "belfiore": "Z600" },
-  { "label": "ARMENIA", "belfiore": "Z153" },
-  { "label": "AUSTRALIA", "belfiore": "Z700" },
-  { "label": "AUSTRIA", "belfiore": "Z103" },
-  { "label": "AZERBAIGIAN", "belfiore": "Z154" },
-  { "label": "BAHAMAS", "belfiore": "Z500" },
-  { "label": "BAHREIN", "belfiore": "Z203" },
-  { "label": "BANGLADESH", "belfiore": "Z204" },
-  { "label": "BARBADOS", "belfiore": "Z501" },
-  { "label": "BELGIO", "belfiore": "Z104" },
-  { "label": "BELIZE", "belfiore": "Z502" },
-  { "label": "BENIN", "belfiore": "Z302" },
-  { "label": "BHUTAN", "belfiore": "Z205" },
-  { "label": "BIELORUSSIA", "belfiore": "Z155" },
-  { "label": "BOLIVIA", "belfiore": "Z601" },
-  { "label": "BOSNIA-ERZEGOVINA", "belfiore": "Z156" },
-  { "label": "BOTSWANA", "belfiore": "Z303" },
-  { "label": "BRASILE", "belfiore": "Z602" },
-  { "label": "BRUNEI", "belfiore": "Z206" },
-  { "label": "BULGARIA", "belfiore": "Z105" },
-  { "label": "BURKINA FASO", "belfiore": "Z304" },
-  { "label": "BURUNDI", "belfiore": "Z305" },
-  { "label": "CAMBOGIA", "belfiore": "Z207" },
-  { "label": "CAMERUN", "belfiore": "Z306" },
-  { "label": "CANADA", "belfiore": "Z400" },
-  { "label": "CAPO VERDE", "belfiore": "Z307" },
-  { "label": "CECOSLOVACCHIA", "belfiore": "Z107" },
-  { "label": "CIAD", "belfiore": "Z308" },
-  { "label": "CILE", "belfiore": "Z603" },
-  { "label": "CINA", "belfiore": "Z210" },
-  { "label": "CIPRO", "belfiore": "Z211" },
-  { "label": "COLOMBIA", "belfiore": "Z604" },
-  { "label": "COMORE", "belfiore": "Z309" },
-  { "label": "CONGO", "belfiore": "Z310" },
-  { "label": "COREA DEL NORD", "belfiore": "Z212" },
-  { "label": "COREA DEL SUD", "belfiore": "Z213" },
-  { "label": "COSTA D'AVORIO", "belfiore": "Z311" },
-  { "label": "COSTA RICA", "belfiore": "Z503" },
-  { "label": "CROAZIA", "belfiore": "Z157" },
-  { "label": "CUBA", "belfiore": "Z504" },
-  { "label": "DANIMARCA", "belfiore": "Z108" },
-  { "label": "DOMINICA", "belfiore": "Z505" },
-  { "label": "ECUADOR", "belfiore": "Z605" },
-  { "label": "EGITTO", "belfiore": "Z313" },
-  { "label": "EL SALVADOR", "belfiore": "Z506" },
-  { "label": "EMIRATI ARABI UNITI", "belfiore": "Z215" },
-  { "label": "ESTONIA", "belfiore": "Z158" },
-  { "label": "ETIOPIA", "belfiore": "Z314" },
-  { "label": "FEDERAZIONE RUSSA", "belfiore": "Z154" },
-  { "label": "FIGI", "belfiore": "Z701" },
-  { "label": "FILIPPINE", "belfiore": "Z216" },
-  { "label": "FINLANDIA", "belfiore": "Z109" },
-  { "label": "FRANCIA", "belfiore": "Z110" },
-  { "label": "GABON", "belfiore": "Z315" },
-  { "label": "GAMBIA", "belfiore": "Z316" },
-  { "label": "GEORGIA", "belfiore": "Z159" },
-  { "label": "GERMANIA", "belfiore": "Z112" },
-  { "label": "GHANA", "belfiore": "Z317" },
-  { "label": "GIAMAICA", "belfiore": "Z507" },
-  { "label": "GIAPPONE", "belfiore": "Z218" },
-  { "label": "GIBILTERRA", "belfiore": "Z113" },
-  { "label": "GIBUTI", "belfiore": "Z318" },
-  { "label": "GIORDANIA", "belfiore": "Z219" },
-  { "label": "GRECIA", "belfiore": "Z114" },
-  { "label": "GRENADA", "belfiore": "Z508" },
-  { "label": "GUATEMALA", "belfiore": "Z509" },
-  { "label": "GUINEA", "belfiore": "Z319" },
-  { "label": "GUINEA-BISSAU", "belfiore": "Z320" },
-  { "label": "GUYANA", "belfiore": "Z606" },
-  { "label": "HAITI", "belfiore": "Z510" },
-  { "label": "HONDURAS", "belfiore": "Z511" },
-  { "label": "INDIA", "belfiore": "Z222" },
-  { "label": "INDONESIA", "belfiore": "Z223" },
-  { "label": "IRAN", "belfiore": "Z224" },
-  { "label": "IRAQ", "belfiore": "Z225" },
-  { "label": "IRLANDA", "belfiore": "Z115" },
-  { "label": "ISLANDA", "belfiore": "Z116" },
-  { "label": "ISRAELE", "belfiore": "Z227" },
-  { "label": "JUGOSLAVIA", "belfiore": "Z117" },
-  { "label": "KAZAKISTAN", "belfiore": "Z160" },
-  { "label": "KENYA", "belfiore": "Z321" },
-  { "label": "KIRGHIZISTAN", "belfiore": "Z161" },
-  { "label": "KUWAIT", "belfiore": "Z228" },
-  { "label": "LAOS", "belfiore": "Z229" },
-  { "label": "LESOTHO", "belfiore": "Z322" },
-  { "label": "LETTONIA", "belfiore": "Z162" },
-  { "label": "LIBANO", "belfiore": "Z230" },
-  { "label": "LIBERIA", "belfiore": "Z323" },
-  { "label": "LIBIA", "belfiore": "Z324" },
-  { "label": "LIECHTENSTEIN", "belfiore": "Z118" },
-  { "label": "LITUANIA", "belfiore": "Z163" },
-  { "label": "LUSSEMBURGO", "belfiore": "Z119" },
-  { "label": "MACEDONIA DEL NORD", "belfiore": "Z164" },
-  { "label": "MADAGASCAR", "belfiore": "Z325" },
-  { "label": "MALAWI", "belfiore": "Z326" },
-  { "label": "MALAYSIA", "belfiore": "Z232" },
-  { "label": "MALDIVE", "belfiore": "Z231" },
-  { "label": "MALI", "belfiore": "Z327" },
-  { "label": "MALTA", "belfiore": "Z120" },
-  { "label": "MAROCCO", "belfiore": "Z328" },
-  { "label": "MAURITANIA", "belfiore": "Z329" },
-  { "label": "MAURIZIO", "belfiore": "Z330" },
-  { "label": "MESSICO", "belfiore": "Z401" },
-  { "label": "MOLDAVIA", "belfiore": "Z165" },
-  { "label": "MONACO", "belfiore": "Z121" },
-  { "label": "MONGOLIA", "belfiore": "Z233" },
-  { "label": "MONTENEGRO", "belfiore": "Z168" },
-  { "label": "MOZAMBICO", "belfiore": "Z331" },
-  { "label": "MYANMAR", "belfiore": "Z206" },
-  { "label": "NAMIBIA", "belfiore": "Z332" },
-  { "label": "NEPAL", "belfiore": "Z234" },
-  { "label": "NICARAGUA", "belfiore": "Z512" },
-  { "label": "NIGER", "belfiore": "Z333" },
-  { "label": "NIGERIA", "belfiore": "Z334" },
-  { "label": "NORVEGIA", "belfiore": "Z122" },
-  { "label": "NUOVA ZELANDA", "belfiore": "Z702" },
-  { "label": "OMAN", "belfiore": "Z235" },
-  { "label": "PAESI BASSI", "belfiore": "Z123" },
-  { "label": "PAKISTAN", "belfiore": "Z236" },
-  { "label": "PANAMA", "belfiore": "Z513" },
-  { "label": "PAPUA NUOVA GUINEA", "belfiore": "Z703" },
-  { "label": "PARAGUAY", "belfiore": "Z607" },
-  { "label": "PERU'", "belfiore": "Z608" },
-  { "label": "POLONIA", "belfiore": "Z124" },
-  { "label": "PORTOGALLO", "belfiore": "Z125" },
-  { "label": "QATAR", "belfiore": "Z237" },
-  { "label": "REGNO UNITO", "belfiore": "Z111" },
-  { "label": "REPUBBLICA CENTRAFRICANA", "belfiore": "Z335" },
-  { "label": "REPUBBLICA CECA", "belfiore": "Z157" },
-  { "label": "REPUBBLICA DOMINICANA", "belfiore": "Z514" },
-  { "label": "ROMANIA", "belfiore": "Z127" },
-  { "label": "RUANDA", "belfiore": "Z336" },
-  { "label": "SAINT KITTS E NEVIS", "belfiore": "Z515" },
-  { "label": "SAINT VINCENT E GRENADINE", "belfiore": "Z517" },
-  { "label": "SALOMONE, ISOLE", "belfiore": "Z704" },
-  { "label": "SAMOA", "belfiore": "Z705" },
-  { "label": "SAN MARINO", "belfiore": "Z128" },
-  { "label": "SANTA LUCIA", "belfiore": "Z516" },
-  { "label": "SENEGAL", "belfiore": "Z337" },
-  { "label": "SERBIA", "belfiore": "Z167" },
-  { "label": "SIERRA LEONE", "belfiore": "Z338" },
-  { "label": "SINGAPORE", "belfiore": "Z239" },
-  { "label": "SIRIA", "belfiore": "Z240" },
-  { "label": "SLOVACCHIA", "belfiore": "Z166" },
-  { "label": "SLOVENIA", "belfiore": "Z129" },
-  { "label": "SOMALIA", "belfiore": "Z339" },
-  { "label": "SPAGNA", "belfiore": "Z130" },
-  { "label": "SRI LANKA", "belfiore": "Z209" },
-  { "label": "STATI UNITI D'AMERICA", "belfiore": "Z403" },
-  { "label": "SUDAFRICA", "belfiore": "Z340" },
-  { "label": "SUDAN", "belfiore": "Z341" },
-  { "label": "SVEZIA", "belfiore": "Z131" },
-  { "label": "SVIZZERA", "belfiore": "Z132" },
-  { "label": "SWAZILAND", "belfiore": "Z342" },
-  { "label": "TAGIKISTAN", "belfiore": "Z252" },
-  { "label": "TANZANIA", "belfiore": "Z343" },
-  { "label": "THAILANDIA", "belfiore": "Z241" },
-  { "label": "TOGO", "belfiore": "Z344" },
-  { "label": "TRINIDAD E TOBAGO", "belfiore": "Z518" },
-  { "label": "TUNISIA", "belfiore": "Z345" },
-  { "label": "TURCHIA", "belfiore": "Z133" },
-  { "label": "TURKMENISTAN", "belfiore": "Z253" },
-  { "label": "UCRAINA", "belfiore": "Z134" },
-  { "label": "UGANDA", "belfiore": "Z346" },
-  { "label": "UNGHERIA", "belfiore": "Z135" },
-  { "label": "URUGUAY", "belfiore": "Z609" },
-  { "label": "UZBEKISTAN", "belfiore": "Z254" },
-  { "label": "VENEZUELA", "belfiore": "Z610" },
-  { "label": "VIETNAM", "belfiore": "Z242" },
-  { "label": "YEMEN", "belfiore": "Z243" },
-  { "label": "ZAIRE", "belfiore": "Z310" },
-  { "label": "ZAMBIA", "belfiore": "Z347" },
-  { "label": "ZIMBABWE", "belfiore": "Z348" }
+  {
+    "label": "AFGHANISTAN",
+    "belfiore": "Z200"
+  },
+  {
+    "label": "ALBANIA",
+    "belfiore": "Z100"
+  },
+  {
+    "label": "ALGERIA",
+    "belfiore": "Z300"
+  },
+  {
+    "label": "ANDORRA",
+    "belfiore": "Z101"
+  },
+  {
+    "label": "ANGOLA",
+    "belfiore": "Z301"
+  },
+  {
+    "label": "ANTIGUA E BARBUDA",
+    "belfiore": "Z500"
+  },
+  {
+    "label": "ARABIA SAUDITA",
+    "belfiore": "Z202"
+  },
+  {
+    "label": "ARGENTINA",
+    "belfiore": "Z600"
+  },
+  {
+    "label": "ARMENIA",
+    "belfiore": "Z153"
+  },
+  {
+    "label": "AUSTRALIA",
+    "belfiore": "Z700"
+  },
+  {
+    "label": "AUSTRIA",
+    "belfiore": "Z102"
+  },
+  {
+    "label": "AZERBAIGIAN",
+    "belfiore": "Z154"
+  },
+  {
+    "label": "BAHAMAS",
+    "belfiore": "Z503"
+  },
+  {
+    "label": "BAHREIN",
+    "belfiore": "Z203"
+  },
+  {
+    "label": "BANGLADESH",
+    "belfiore": "Z204"
+  },
+  {
+    "label": "BARBADOS",
+    "belfiore": "Z504"
+  },
+  {
+    "label": "BELGIO",
+    "belfiore": "Z103"
+  },
+  {
+    "label": "BELIZE",
+    "belfiore": "Z505"
+  },
+  {
+    "label": "BENIN",
+    "belfiore": "Z310"
+  },
+  {
+    "label": "BHUTAN",
+    "belfiore": "Z205"
+  },
+  {
+    "label": "BIELORUSSIA",
+    "belfiore": "Z155"
+  },
+  {
+    "label": "BOLIVIA",
+    "belfiore": "Z601"
+  },
+  {
+    "label": "BOSNIA-ERZEGOVINA",
+    "belfiore": "Z156"
+  },
+  {
+    "label": "BOTSWANA",
+    "belfiore": "Z304"
+  },
+  {
+    "label": "BRASILE",
+    "belfiore": "Z602"
+  },
+  {
+    "label": "BRUNEI",
+    "belfiore": "Z206"
+  },
+  {
+    "label": "BULGARIA",
+    "belfiore": "Z104"
+  },
+  {
+    "label": "BURKINA FASO",
+    "belfiore": "Z302"
+  },
+  {
+    "label": "BURUNDI",
+    "belfiore": "Z305"
+  },
+  {
+    "label": "CAMBOGIA",
+    "belfiore": "Z207"
+  },
+  {
+    "label": "CAMERUN",
+    "belfiore": "Z306"
+  },
+  {
+    "label": "CANADA",
+    "belfiore": "Z506"
+  },
+  {
+    "label": "CAPO VERDE",
+    "belfiore": "Z307"
+  },
+  {
+    "label": "CECOSLOVACCHIA",
+    "belfiore": "Z106"
+  },
+  {
+    "label": "CENTRAFRICANA, REPUBBLICA",
+    "belfiore": "Z308"
+  },
+  {
+    "label": "CIAD",
+    "belfiore": "Z309"
+  },
+  {
+    "label": "CILE",
+    "belfiore": "Z603"
+  },
+  {
+    "label": "CINA",
+    "belfiore": "Z209"
+  },
+  {
+    "label": "CIPRO",
+    "belfiore": "Z105"
+  },
+  {
+    "label": "COLOMBIA",
+    "belfiore": "Z604"
+  },
+  {
+    "label": "COMORE",
+    "belfiore": "Z347"
+  },
+  {
+    "label": "CONGO",
+    "belfiore": "Z348"
+  },
+  {
+    "label": "COREA DEL NORD",
+    "belfiore": "Z210"
+  },
+  {
+    "label": "COREA DEL SUD",
+    "belfiore": "Z211"
+  },
+  {
+    "label": "COSTA D'AVORIO",
+    "belfiore": "Z311"
+  },
+  {
+    "label": "COSTA RICA",
+    "belfiore": "Z507"
+  },
+  {
+    "label": "CROAZIA",
+    "belfiore": "Z157"
+  },
+  {
+    "label": "CUBA",
+    "belfiore": "Z508"
+  },
+  {
+    "label": "DANIMARCA",
+    "belfiore": "Z107"
+  },
+  {
+    "label": "DOMINICA",
+    "belfiore": "Z509"
+  },
+  {
+    "label": "DOMINICANA, REPUBBLICA",
+    "belfiore": "Z510"
+  },
+  {
+    "label": "ECUADOR",
+    "belfiore": "Z605"
+  },
+  {
+    "label": "EGITTO",
+    "belfiore": "Z312"
+  },
+  {
+    "label": "EL SALVADOR",
+    "belfiore": "Z511"
+  },
+  {
+    "label": "EMIRATI ARABI UNITI",
+    "belfiore": "Z212"
+  },
+  {
+    "label": "ERITREA",
+    "belfiore": "Z158"
+  },
+  {
+    "label": "ESTONIA",
+    "belfiore": "Z159"
+  },
+  {
+    "label": "ETIOPIA",
+    "belfiore": "Z313"
+  },
+  {
+    "label": "FIGI",
+    "belfiore": "Z701"
+  },
+  {
+    "label": "FILIPPINE",
+    "belfiore": "Z213"
+  },
+  {
+    "label": "FINLANDIA",
+    "belfiore": "Z108"
+  },
+  {
+    "label": "FRANCIA",
+    "belfiore": "Z109"
+  },
+  {
+    "label": "GABON",
+    "belfiore": "Z314"
+  },
+  {
+    "label": "GAMBIA",
+    "belfiore": "Z315"
+  },
+  {
+    "label": "GEORGIA",
+    "belfiore": "Z160"
+  },
+  {
+    "label": "GERMANIA",
+    "belfiore": "Z112"
+  },
+  {
+    "label": "GERMANIA (REPUBBLICA DEMOCRATICA)",
+    "belfiore": "Z111"
+  },
+  {
+    "label": "GERMANIA (REPUBBLICA FEDERALE)",
+    "belfiore": "Z110"
+  },
+  {
+    "label": "GHANA",
+    "belfiore": "Z316"
+  },
+  {
+    "label": "GIAMAICA",
+    "belfiore": "Z512"
+  },
+  {
+    "label": "GIAPPONE",
+    "belfiore": "Z214"
+  },
+  {
+    "label": "GIBILTERRA",
+    "belfiore": "Z113"
+  },
+  {
+    "label": "GIBUTI",
+    "belfiore": "Z349"
+  },
+  {
+    "label": "GIORDANIA",
+    "belfiore": "Z215"
+  },
+  {
+    "label": "GRECIA",
+    "belfiore": "Z114"
+  },
+  {
+    "label": "GRENADA",
+    "belfiore": "Z513"
+  },
+  {
+    "label": "GUATEMALA",
+    "belfiore": "Z514"
+  },
+  {
+    "label": "GUINEA",
+    "belfiore": "Z317"
+  },
+  {
+    "label": "GUINEA BISSAU",
+    "belfiore": "Z319"
+  },
+  {
+    "label": "GUINEA EQUATORIALE",
+    "belfiore": "Z318"
+  },
+  {
+    "label": "GUYANA",
+    "belfiore": "Z606"
+  },
+  {
+    "label": "HAITI",
+    "belfiore": "Z515"
+  },
+  {
+    "label": "HONDURAS",
+    "belfiore": "Z516"
+  },
+  {
+    "label": "INDIA",
+    "belfiore": "Z216"
+  },
+  {
+    "label": "INDONESIA",
+    "belfiore": "Z217"
+  },
+  {
+    "label": "IRAN",
+    "belfiore": "Z218"
+  },
+  {
+    "label": "IRAQ",
+    "belfiore": "Z219"
+  },
+  {
+    "label": "IRLANDA",
+    "belfiore": "Z115"
+  },
+  {
+    "label": "ISLANDA",
+    "belfiore": "Z116"
+  },
+  {
+    "label": "ISRAELE",
+    "belfiore": "Z220"
+  },
+  {
+    "label": "JUGOSLAVIA",
+    "belfiore": "Z117"
+  },
+  {
+    "label": "KAZAKISTAN",
+    "belfiore": "Z161"
+  },
+  {
+    "label": "KENYA",
+    "belfiore": "Z320"
+  },
+  {
+    "label": "KIRGHIZISTAN",
+    "belfiore": "Z162"
+  },
+  {
+    "label": "KIRIBATI",
+    "belfiore": "Z705"
+  },
+  {
+    "label": "KUWAIT",
+    "belfiore": "Z221"
+  },
+  {
+    "label": "LAOS",
+    "belfiore": "Z222"
+  },
+  {
+    "label": "LESOTHO",
+    "belfiore": "Z321"
+  },
+  {
+    "label": "LETTONIA",
+    "belfiore": "Z163"
+  },
+  {
+    "label": "LIBANO",
+    "belfiore": "Z223"
+  },
+  {
+    "label": "LIBERIA",
+    "belfiore": "Z322"
+  },
+  {
+    "label": "LIBIA",
+    "belfiore": "Z323"
+  },
+  {
+    "label": "LIECHTENSTEIN",
+    "belfiore": "Z118"
+  },
+  {
+    "label": "LITUANIA",
+    "belfiore": "Z164"
+  },
+  {
+    "label": "LUSSEMBURGO",
+    "belfiore": "Z119"
+  },
+  {
+    "label": "MACEDONIA DEL NORD",
+    "belfiore": "Z165"
+  },
+  {
+    "label": "MADAGASCAR",
+    "belfiore": "Z324"
+  },
+  {
+    "label": "MALAWI",
+    "belfiore": "Z325"
+  },
+  {
+    "label": "MALAYSIA",
+    "belfiore": "Z225"
+  },
+  {
+    "label": "MALDIVE",
+    "belfiore": "Z224"
+  },
+  {
+    "label": "MALI",
+    "belfiore": "Z326"
+  },
+  {
+    "label": "MALTA",
+    "belfiore": "Z120"
+  },
+  {
+    "label": "MAROCCO",
+    "belfiore": "Z327"
+  },
+  {
+    "label": "MARSHALL, ISOLE",
+    "belfiore": "Z706"
+  },
+  {
+    "label": "MAURITANIA",
+    "belfiore": "Z328"
+  },
+  {
+    "label": "MAURIZIO",
+    "belfiore": "Z329"
+  },
+  {
+    "label": "MESSICO",
+    "belfiore": "Z517"
+  },
+  {
+    "label": "MICRONESIA",
+    "belfiore": "Z707"
+  },
+  {
+    "label": "MOLDAVIA",
+    "belfiore": "Z166"
+  },
+  {
+    "label": "MONACO",
+    "belfiore": "Z121"
+  },
+  {
+    "label": "MONGOLIA",
+    "belfiore": "Z226"
+  },
+  {
+    "label": "MONTENEGRO",
+    "belfiore": "Z167"
+  },
+  {
+    "label": "MOZAMBICO",
+    "belfiore": "Z330"
+  },
+  {
+    "label": "MYANMAR",
+    "belfiore": "Z208"
+  },
+  {
+    "label": "NAMIBIA",
+    "belfiore": "Z350"
+  },
+  {
+    "label": "NAURU",
+    "belfiore": "Z702"
+  },
+  {
+    "label": "NEPAL",
+    "belfiore": "Z227"
+  },
+  {
+    "label": "NICARAGUA",
+    "belfiore": "Z518"
+  },
+  {
+    "label": "NIGER",
+    "belfiore": "Z331"
+  },
+  {
+    "label": "NIGERIA",
+    "belfiore": "Z332"
+  },
+  {
+    "label": "NORVEGIA",
+    "belfiore": "Z122"
+  },
+  {
+    "label": "NUOVA ZELANDA",
+    "belfiore": "Z703"
+  },
+  {
+    "label": "OMAN",
+    "belfiore": "Z228"
+  },
+  {
+    "label": "PAESI BASSI",
+    "belfiore": "Z123"
+  },
+  {
+    "label": "PAKISTAN",
+    "belfiore": "Z229"
+  },
+  {
+    "label": "PALAU",
+    "belfiore": "Z708"
+  },
+  {
+    "label": "PALESTINA",
+    "belfiore": "Z250"
+  },
+  {
+    "label": "PANAMA",
+    "belfiore": "Z519"
+  },
+  {
+    "label": "PAPUA NUOVA GUINEA",
+    "belfiore": "Z704"
+  },
+  {
+    "label": "PARAGUAY",
+    "belfiore": "Z607"
+  },
+  {
+    "label": "PERU'",
+    "belfiore": "Z608"
+  },
+  {
+    "label": "POLONIA",
+    "belfiore": "Z124"
+  },
+  {
+    "label": "PORTOGALLO",
+    "belfiore": "Z125"
+  },
+  {
+    "label": "QATAR",
+    "belfiore": "Z230"
+  },
+  {
+    "label": "REGNO UNITO",
+    "belfiore": "Z116"
+  },
+  {
+    "label": "REPUBBLICA CECA",
+    "belfiore": "Z150"
+  },
+  {
+    "label": "REPUBBLICA SLOVACCA",
+    "belfiore": "Z151"
+  },
+  {
+    "label": "ROMANIA",
+    "belfiore": "Z129"
+  },
+  {
+    "label": "RUANDA",
+    "belfiore": "Z333"
+  },
+  {
+    "label": "RUSSIA",
+    "belfiore": "Z158"
+  },
+  {
+    "label": "SAINT KITTS E NEVIS",
+    "belfiore": "Z520"
+  },
+  {
+    "label": "SAINT VINCENT E GRENADINE",
+    "belfiore": "Z522"
+  },
+  {
+    "label": "SALOMONE, ISOLE",
+    "belfiore": "Z709"
+  },
+  {
+    "label": "SAMOA",
+    "belfiore": "Z710"
+  },
+  {
+    "label": "SAN MARINO",
+    "belfiore": "Z130"
+  },
+  {
+    "label": "SANTA LUCIA",
+    "belfiore": "Z521"
+  },
+  {
+    "label": "SAO TOME' E PRINCIPE",
+    "belfiore": "Z334"
+  },
+  {
+    "label": "SENEGAL",
+    "belfiore": "Z335"
+  },
+  {
+    "label": "SERBIA",
+    "belfiore": "Z168"
+  },
+  {
+    "label": "SEYCHELLES",
+    "belfiore": "Z336"
+  },
+  {
+    "label": "SIERRA LEONE",
+    "belfiore": "Z337"
+  },
+  {
+    "label": "SINGAPORE",
+    "belfiore": "Z231"
+  },
+  {
+    "label": "SIRIA",
+    "belfiore": "Z232"
+  },
+  {
+    "label": "SLOVENIA",
+    "belfiore": "Z152"
+  },
+  {
+    "label": "SOMALIA",
+    "belfiore": "Z338"
+  },
+  {
+    "label": "SPAGNA",
+    "belfiore": "Z131"
+  },
+  {
+    "label": "SRI LANKA",
+    "belfiore": "Z233"
+  },
+  {
+    "label": "STATI UNITI D'AMERICA",
+    "belfiore": "Z501"
+  },
+  {
+    "label": "SUD SUDAN",
+    "belfiore": "Z351"
+  },
+  {
+    "label": "SUDAFRICA",
+    "belfiore": "Z339"
+  },
+  {
+    "label": "SUDAN",
+    "belfiore": "Z340"
+  },
+  {
+    "label": "SURINAME",
+    "belfiore": "Z609"
+  },
+  {
+    "label": "SVEZIA",
+    "belfiore": "Z132"
+  },
+  {
+    "label": "SVIZZERA",
+    "belfiore": "Z133"
+  },
+  {
+    "label": "SWAZILAND",
+    "belfiore": "Z341"
+  },
+  {
+    "label": "TAGIKISTAN",
+    "belfiore": "Z169"
+  },
+  {
+    "label": "TAIWAN",
+    "belfiore": "Z234"
+  },
+  {
+    "label": "TANZANIA",
+    "belfiore": "Z342"
+  },
+  {
+    "label": "THAILANDIA",
+    "belfiore": "Z235"
+  },
+  {
+    "label": "TIMOR ORIENTALE",
+    "belfiore": "Z711"
+  },
+  {
+    "label": "TOGO",
+    "belfiore": "Z343"
+  },
+  {
+    "label": "TONGA",
+    "belfiore": "Z712"
+  },
+  {
+    "label": "TRINIDAD E TOBAGO",
+    "belfiore": "Z523"
+  },
+  {
+    "label": "TUNISIA",
+    "belfiore": "Z344"
+  },
+  {
+    "label": "TURCHIA",
+    "belfiore": "Z134"
+  },
+  {
+    "label": "TURKMENISTAN",
+    "belfiore": "Z170"
+  },
+  {
+    "label": "TUVALU",
+    "belfiore": "Z713"
+  },
+  {
+    "label": "UCRAINA",
+    "belfiore": "Z138"
+  },
+  {
+    "label": "UGANDA",
+    "belfiore": "Z345"
+  },
+  {
+    "label": "UNGHERIA",
+    "belfiore": "Z135"
+  },
+  {
+    "label": "URUGUAY",
+    "belfiore": "Z610"
+  },
+  {
+    "label": "UZBEKISTAN",
+    "belfiore": "Z171"
+  },
+  {
+    "label": "VANUATU",
+    "belfiore": "Z714"
+  },
+  {
+    "label": "VATICANO, CITTA' DEL",
+    "belfiore": "Z136"
+  },
+  {
+    "label": "VENEZUELA",
+    "belfiore": "Z611"
+  },
+  {
+    "label": "VIETNAM",
+    "belfiore": "Z236"
+  },
+  {
+    "label": "YEMEN",
+    "belfiore": "Z237"
+  },
+  {
+    "label": "ZAMBIA",
+    "belfiore": "Z346"
+  },
+  {
+    "label": "ZIMBABWE",
+    "belfiore": "Z352"
+  }
 ]
