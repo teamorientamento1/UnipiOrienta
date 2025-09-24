@@ -70,11 +70,9 @@
           const regioni = allScuoleData.map(scuola => scuola.regione);
           populateSelect(selects.regione, regioni);
 
-          const defaultRegione = 'Toscana';
-          if (Array.from(selects.regione.options).some(opt => opt.value === defaultRegione)) {
-            selects.regione.value = defaultRegione;
-            selects.regione.dispatchEvent(new Event('change'));
-          }
+          // ✅ BLOCCO DI CODICE RIMOSSO
+          // Le righe che impostavano "Toscana" di default sono state eliminate da qui.
+          
         })
         .catch(error => console.error('Errore nel caricamento del file JSON delle scuole:', error));
 
@@ -141,7 +139,6 @@
         }
       });
 
-      // ✅ NUOVA LOGICA: Mostra le sezioni finali dopo la selezione del plesso
       const sectionContatti = document.getElementById('section-contatti');
       const sectionSubmit = document.getElementById('section-submit');
       
