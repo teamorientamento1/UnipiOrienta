@@ -25,7 +25,7 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   width: 90%;
-  max-width: 450px;
+  max-width: 550px; /* Aumentata leggermente la larghezza massima */
   text-align: center;
   transform: scale(0.95);
   transition: transform 0.3s;
@@ -44,4 +44,23 @@
 .modal-body {
   margin-bottom: var(--space-4);
   line-height: 1.6;
+}
+
+/* ✅ NUOVE REGOLE PER LA MODALE PRIVACY */
+.privacy-content {
+  max-height: 40vh; /* Altezza massima del box di testo */
+  overflow-y: auto; /* Abilita lo scroll verticale */
+  border: 1px solid #e2e8f0;
+  padding: var(--space-4);
+  text-align: left;
+  line-height: 1.6;
+  margin-top: var(--space-4);
+  border-radius: var(--radius);
+  background: #f8fafc;
+}
+
+#privacy-accept-btn:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
 }

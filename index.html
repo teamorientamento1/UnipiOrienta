@@ -43,7 +43,7 @@
         <img src="assets/unipi-logo.png" alt="Logo Università di Pisa" class="brand__logo">
         </a>
       <h1 class="page-title" style="text-align: right; line-height: 1.2; letter-spacing: 0.5px;">
-        <span style="color: var(--unipi-blue); font-weight: 700;">UNIPI</span><span style="color: white; -webkit-text-stroke: 1.5px var(--unipi-blue); text-stroke: 1.5px var(--unipi-blue); font-weight: 700;">ORIENTA</span>
+        <span style="color: var(--unipi-blue); font-weight: 700;">UNIPI</span><span id="dynamic-title-span" style="color: white; -webkit-text-stroke: 1.5px var(--unipi-blue); text-stroke: 1.5px var(--unipi-blue); font-weight: 700;">ORIENTA</span>
         <br>
         <small style="font-size: 0.6em; color: var(--muted); font-weight: 400; letter-spacing: 0px;">Segui la tua inclinazione</small>
       </h1>
@@ -101,8 +101,8 @@
       <section class="card" id="section-submit" aria-labelledby="h2-submit" hidden>
         <h2 class="section-title" id="h2-submit" style="text-align: center;">Completa l'iscrizione</h2>
         <p class="muted" style="text-align: center;">
-          Una volta compilati tutti i campi obbligatori, potrai verificare l'iscrizione sul portale dedicato. 
-          Ti sei iscritto al canale Telegram? <a href="https://t.me/+v7u-P89gQapjNjU0"_blank">Ecco il link</a>.
+          Una volta compilati tutti i campi obbligatori, potrai completare l'iscrizione sul portale dedicato. 
+          Ti sei iscritto al canale Telegram? <a href="https://t.me/tuocanale" target="_blank">Ecco il link</a>.
         </p>
         <div style="text-align:center; margin-top:1.5rem;">
           <button class="btn" id="submit-btn" type="button" disabled>Procedi all'iscrizione</button>
@@ -124,6 +124,30 @@
       <div class="modal-actions" style="display:flex; gap:1rem; justify-content:center;">
         <button class="btn btn--ghost" id="modal-proceed" hidden>Procedi Comunque</button>
         <button class="btn" id="modal-close">OK, ho capito</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay visible" id="privacy-modal-maggiorenni">
+    <div class="modal-content">
+      <h3 class="modal-title">Informativa per il trattamento dei dati personali (per maggiorenni)</h3>
+      <div class="privacy-content" id="privacy-content-maggiorenni">
+        <p>Caricamento informativa in corso...</p>
+      </div>
+      <div class="modal-actions" style="margin-top: 1rem;">
+        <button class="btn" id="privacy-accept-btn-maggiorenni" disabled>Ho letto e accetto</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="privacy-modal-minorenni">
+    <div class="modal-content">
+      <h3 class="modal-title">Informativa per il trattamento dei dati personali (per minorenni)</h3>
+      <div class="privacy-content" id="privacy-content-minorenni">
+        <p>Caricamento informativa in corso...</p>
+      </div>
+      <div class="modal-actions" style="margin-top: 1rem;">
+        <button class="btn" id="privacy-accept-btn-minorenni" disabled>Ho letto e accetto</button>
       </div>
     </div>
   </div>
@@ -151,7 +175,76 @@
   <script src="js/form-submit-handler.js?v=12" defer></script>
   <script src="js/app.js?v=12" defer></script>
   <script src="js/autofill-fix.js?v=12" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const titleSpan = document.getElementById('dynamic-title-span');
+      if (!titleSpan) return;
+      const cacheBuster = `?v=${Date.now()}`;
+      fetch(`data/config_evento.json${cacheBuster}`)
+        .then(response => {
+          if (!response.ok) { throw new Error('File di configurazione non trovato.'); }
+          return response.json();
+        })
+        .then(config => {
+          if (config && config.titolo) {
+            titleSpan.textContent = config.titolo;
+          }
+        })
+        .catch(error => {
+          console.error('Impossibile caricare il titolo dinamico:', error);
+        });
+    });
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modalMaggiorenni = document.getElementById('privacy-modal-maggiorenni');
+      const contentMaggiorenni = document.getElementById('privacy-content-maggiorenni');
+      const acceptBtnMaggiorenni = document.getElementById('privacy-accept-btn-maggiorenni');
+
+      const modalMinorenni = document.getElementById('privacy-modal-minorenni');
+      const contentMinorenni = document.getElementById('privacy-content-minorenni');
+      const acceptBtnMinorenni = document.getElementById('privacy-accept-btn-minorenni');
+
+      if (!modalMaggiorenni || !modalMinorenni) return;
+
+      const loadPrivacyText = (url, contentElement) => {
+        fetch(url)
+          .then(response => {
+            if (!response.ok) throw new Error('File informativa non trovato.');
+            return response.text();
+          })
+          .then(html => {
+            contentElement.innerHTML = html;
+          })
+          .catch(error => {
+            contentElement.innerHTML = '<p>Errore nel caricamento dell\'informativa. Riprova più tardi.</p>';
+            console.error(error);
+          });
+      };
+      
+      loadPrivacyText('data/informativa_maggiorenni.html', contentMaggiorenni);
+      loadPrivacyText('data/informativa_minorenni.html', contentMinorenni);
+
+      function checkScroll(contentElement, buttonElement) {
+        const isScrolledToEnd = contentElement.scrollHeight - contentElement.scrollTop <= contentElement.clientHeight + 1;
+        if (isScrolledToEnd) {
+          buttonElement.disabled = false;
+        }
+      }
+
+      contentMaggiorenni.addEventListener('scroll', () => checkScroll(contentMaggiorenni, acceptBtnMaggiorenni));
+      acceptBtnMaggiorenni.addEventListener('click', () => {
+        modalMaggiorenni.classList.remove('visible');
+        modalMinorenni.classList.add('visible');
+      });
+
+      contentMinorenni.addEventListener('scroll', () => checkScroll(contentMinorenni, acceptBtnMinorenni));
+      acceptBtnMinorenni.addEventListener('click', () => {
+        modalMinorenni.classList.remove('visible');
+      });
+    });
+  </script>
 </body>
-
 </html>
-
