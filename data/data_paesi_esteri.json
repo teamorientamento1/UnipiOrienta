@@ -164,7 +164,7 @@
     "belfiore": "Z347"
   },
   {
-    "label": "CONGO",
+    "label": "REPUBBLICA DEL CONGO",
     "belfiore": "Z348"
   },
   {
@@ -790,9 +790,14 @@
   {
     "label": "ZAMBIA",
     "belfiore": "Z346"
+  {
+    "label": "REPUBBLICA DEMOCRATICA DEL CONGO",
+    "belfiore": "Z249"
+  },
   },
   {
     "label": "ZIMBABWE",
     "belfiore": "Z352"
   }
 ]
+
