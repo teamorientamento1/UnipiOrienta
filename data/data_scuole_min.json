@@ -78391,5 +78391,12 @@
         "citta": "Verona",
         "ist_princ_nome": null,
         "plesso_nome": "LICEO SCIENTIFICO LAVINIA MONDIN"
+    },
+    {
+    "regione": "Toscana",
+    "provincia": "Massa-Carrara (MS)",
+    "citta": "Carrara",
+    "ist_princ_nome": "LICEO SPORTIVO \"NOBEL\"",
+    "plesso_nome": "LICEO SPORTIVO \"NOBEL\""
     }
 ]
