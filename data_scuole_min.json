@@ -21,6 +21,20 @@
         "plesso_nome": "\"SALVATORELLI-MONETA\" PROFESSIONALE"
     },
     {
+        "regione": "Toscana",
+        "provincia": "Firenze (FI)",
+        "citta": "Empoli",
+        "ist_princ_nome": "LICEO DELLE SCIENZE UMANE \"ISTITUTO SANTISSIMA ANNUNZIATA\"",
+        "plesso_nome": "LICEO DELLE SCIENZE UMANE \"ISTITUTO SANTISSIMA ANNUNZIATA\""
+    },
+    {
+        "regione": "Toscana",
+        "provincia": "Firenze (FI)",
+        "citta": "Empoli",
+        "ist_princ_nome": "\"ISTITUTO CALASANZIO\"",
+        "plesso_nome": "\"ISTITUTO CALASANZIO\""
+    },
+    {
         "regione": "Lazio",
         "provincia": "Frosinone (FR)",
         "citta": "Alatri",
@@ -78391,5 +78405,12 @@
         "citta": "Verona",
         "ist_princ_nome": null,
         "plesso_nome": "LICEO SCIENTIFICO LAVINIA MONDIN"
+    },
+    {
+    "regione": "Toscana",
+    "provincia": "Massa-Carrara (MS)",
+    "citta": "Carrara",
+    "ist_princ_nome": "LICEO SPORTIVO \"NOBEL\"",
+    "plesso_nome": "LICEO SPORTIVO \"NOBEL\""
     }
 ]
