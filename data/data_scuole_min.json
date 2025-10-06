@@ -21,6 +21,20 @@
         "plesso_nome": "\"SALVATORELLI-MONETA\" PROFESSIONALE"
     },
     {
+        "regione": "Toscana",
+        "provincia": "Firenze (FI)",
+        "citta": "Empoli",
+        "ist_princ_nome": "LICEO DELLE SCIENZE UMANE \"ISTITUTO SANTISSIMA ANNUNZIATA\"",
+        "plesso_nome": "LICEO DELLE SCIENZE UMANE \"ISTITUTO SANTISSIMA ANNUNZIATA\""
+    },
+    {
+        "regione": "Toscana",
+        "provincia": "Firenze (FI)",
+        "citta": "Empoli",
+        "ist_princ_nome": "\"ISTITUTO CALASANZIO\"",
+        "plesso_nome": "\"ISTITUTO CALASANZIO\""
+    },
+    {
         "regione": "Lazio",
         "provincia": "Frosinone (FR)",
         "citta": "Alatri",
