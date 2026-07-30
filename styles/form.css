@@ -1,0 +1,108 @@
+/* Layout righe */
+.form-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:var(--space-4);
+}
+@media (max-width: 760px){
+  .form-row{ grid-template-columns: 1fr; }
+}
+
+/* Utilità visibilità */
+.hidden{ display:none !important; }
+[hidden]{ display:none !important; }
+
+/* Campi base */
+.field{ margin-top: var(--space-4); }
+.field label{
+  display:block;
+  text-align:center;           /* etichetta centrata */
+  font-weight:600;
+  margin-bottom:.35rem;
+}
+.hint{
+  margin-top:.35rem;
+  font-size:.9rem;
+  color:var(--muted);
+  text-align:center;           /* hint centrato */
+}
+
+.input, .select, .btn{ font:inherit; }
+.input, .select{
+  width:100%;
+  min-height:44px;             /* target touch friendly */
+  padding:.7rem .9rem;
+  border:1px solid #cbd5e1;
+  border-radius:12px;
+  background:#fff;
+  transition: border-color .2s, box-shadow .2s, background-color .2s;
+}
+.input:focus, .select:focus{
+  outline:none;
+  border-color: var(--unipi-blue);
+  box-shadow: 0 0 0 3px rgba(4,71,123,.15);
+}
+
+/* ✅ STATO DI SUCCESSO (OK) */
+.field--ok .input,
+.field--ok .select {
+  border-color: var(--ok);
+  background-color: #f0fff4; /* Verde molto chiaro */
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, .1);
+}
+.field--ok .hint {
+  color: var(--ok);
+  font-weight: 500;
+}
+
+/* ❌ STATO DI ERRORE */
+.field--error .input,
+.field--error .select {
+  border-color: var(--error);
+  background: var(--error-bg);
+  box-shadow: 0 0 0 3px rgba(185,28,28,.1);
+}
+.field--error .hint { color: var(--error); }
+
+
+/*
+ * ✅ NUOVA REGOLA MANCANTE PER IL CODICE FISCALE
+ * Applica il bordo verde ai segmenti del CF quando il contenitore è valido.
+ */
+.field--ok .cf-segment {
+  border-color: var(--ok);
+}
+
+
+/* Bottoni */
+.btn{
+  display:inline-block;
+  padding:.8rem 1.1rem;
+  border-radius:12px;
+  border:1px solid var(--unipi-blue);
+  background: var(--unipi-blue);
+  color:#fff;
+  cursor:pointer;
+}
+.btn:disabled{ opacity:.6; cursor:default; }
+.btn--ghost{ background:#fff; color:var(--unipi-blue); }
+
+/* --- SAFETY: rendi sempre visibili gli input in caso di cache/conflitti CSS --- */
+input, select {
+  background:#fff;
+  border:1px solid #cbd5e1;
+}
+.input, .select {
+  display:block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width:100%;
+  min-height:44px;
+}
+
+/* CLASSE AGGIUNTA PER IL BLOCCO SEZIONE */
+.section--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}

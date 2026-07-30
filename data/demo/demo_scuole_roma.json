@@ -1,0 +1,23 @@
+[
+  {
+    "regione": "Lazio",
+    "provincia": "Roma",
+    "citta": "Roma",
+    "ist_princ_nome": "Liceo Classico Giulio Cesare",
+    "plesso_nome": "Sede Centrale Corso Trieste"
+  },
+  {
+    "regione": "Lazio",
+    "provincia": "Roma",
+    "citta": "Roma",
+    "ist_princ_nome": "Liceo Scientifico Enriques",
+    "plesso_nome": "Sede Centrale Via della Villa di Lucina"
+  },
+  {
+    "regione": "Lazio",
+    "provincia": "Roma",
+    "citta": "Roma",
+    "ist_princ_nome": "Liceo Linguistico Maria Montessori",
+    "plesso_nome": "Sede Centrale Via A. Manzoni"
+  }
+]

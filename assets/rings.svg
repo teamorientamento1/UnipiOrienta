@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <!-- Anelli intrecciati ispirati al manifesto UNIPIORIENTA 2026 -->
+  <!-- rosa, in alto -->
+  <circle cx="1210" cy="-140" r="400" fill="none" stroke="#F7A8DC" stroke-width="100"/>
+  <!-- azzurro, alto destra -->
+  <circle cx="1620" cy="60" r="350" fill="none" stroke="#2180E8" stroke-width="105"/>
+  <!-- rosso con segmento giallo, a sinistra -->
+  <circle cx="180" cy="300" r="310" fill="none" stroke="#E8391B" stroke-width="105"/>
+  <path d="M 153 608.8 A 310 310 0 0 1 -128.8 273.0" fill="none" stroke="#FFCB05" stroke-width="105"/>
+  <!-- cobalto, basso sinistra -->
+  <circle cx="-40" cy="1040" r="300" fill="none" stroke="#2B3FD6" stroke-width="95"/>
+  <!-- verde, sul bordo destro -->
+  <circle cx="1930" cy="760" r="350" fill="none" stroke="#2FA470" stroke-width="105"/>
+  <!-- arancio con segmento cobalto, in basso -->
+  <circle cx="1290" cy="1230" r="330" fill="none" stroke="#F28A18" stroke-width="100"/>
+  <path d="M 965 1172.7 A 330 330 0 0 1 1278.5 900.2" fill="none" stroke="#2B3FD6" stroke-width="100"/>
+</svg>

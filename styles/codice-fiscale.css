@@ -1,0 +1,55 @@
+/* Stile per il contenitore delle caselle del Codice Fiscale */
+.cf-container {
+  display: flex;
+  gap: 0.5rem; /* Spazio tra le caselle */
+  justify-content: center;
+  align-items: center;
+  height: 45px; /* Altezza leggermente aumentata */
+}
+
+/* Stile per ogni singola casella (segmento) */
+.cf-segment {
+  font-family: monospace;
+  text-align: center;
+  text-transform: uppercase;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  padding: 0.5rem 0.1rem;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  font-size: 1.1rem; /* MODIFICA: Dimensione del font aumentata */
+}
+
+.cf-segment::placeholder {
+  color: #ccc;
+  text-transform: none;
+}
+
+.cf-segment:focus {
+  outline: none;
+  border-color: #04477B; /* Blu UniPi */
+  box-shadow: 0 0 5px rgba(4, 71, 123, 0.5);
+}
+
+/* MODIFICA: Aumentata di nuovo la larghezza di ogni casella */
+#cf-1, #cf-5 { width: 7ch; }
+#cf-2, #cf-4 { width: 6ch; }
+#cf-3 { width: 5ch; }
+
+/* Stile per nascondere le caselle */
+.cf-segment.hidden {
+  display: none;
+}
+
+/* Stile per la casella che contiene un errore */
+.cf-segment.error {
+  border-color: #D32F2F; /* Rosso per l'errore */
+  background-color: #FFEBEE;
+}
+
+/* * Stile per i segmenti quando il Codice Fiscale è valido.
+*/
+.field--ok .cf-segment {
+  border-color: var(--ok);
+  background-color: #f0fff4;
+}

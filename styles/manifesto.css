@@ -1,0 +1,98 @@
+/*
+ * manifesto.css — tema grafico ripreso dal manifesto UNIPIORIENTA 2026
+ * ("Alla scoperta di percorsi infiniti"): anelli intrecciati nei colori
+ * dell'evento su fondo bianco, testi in blu navy, titoli Poppins.
+ * Caricato per ultimo: sovrascrive lo stile base senza toccarlo.
+ */
+
+@font-face{
+  font-family:'Poppins'; font-style:normal; font-weight:400; font-display:swap;
+  src:url('../vendor/poppins-400.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Poppins'; font-style:normal; font-weight:600; font-display:swap;
+  src:url('../vendor/poppins-600.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Poppins'; font-style:normal; font-weight:700; font-display:swap;
+  src:url('../vendor/poppins-700.woff2') format('woff2');
+}
+
+:root{
+  --m-red:#E8391B;
+  --m-yellow:#FFCB05;
+  --m-pink:#F7A8DC;
+  --m-azure:#2180E8;
+  --m-green:#2FA470;
+  --m-orange:#F28A18;
+  --m-cobalt:#2B3FD6;
+  --m-navy:#16276B;
+}
+
+body{
+  font-family:'Poppins', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background:#ffffff url('../assets/rings.svg') center / cover no-repeat fixed;
+}
+
+/* ---- Header ---- */
+.site-header{ border-bottom:0; }
+.site-header::after{
+  content:""; display:block; height:8px;
+  background:linear-gradient(90deg,
+    var(--m-red) 0 16.66%, var(--m-yellow) 0 33.33%, var(--m-azure) 0 50%,
+    var(--m-green) 0 66.66%, var(--m-orange) 0 83.33%, var(--m-pink) 0 100%);
+}
+.page-title{ text-align:right; line-height:1.18; }
+.brand-unipi{
+  font-family:Georgia, 'Times New Roman', serif;
+  font-weight:700; color:var(--m-navy); letter-spacing:.5px;
+}
+.brand-orienta{
+  font-family:'Poppins', sans-serif;
+  font-weight:700; color:var(--m-azure); letter-spacing:.5px;
+}
+.brand-claim{
+  display:inline-block; font-size:.55em; font-weight:600; color:var(--m-navy);
+}
+.brand-date{
+  display:inline-block; font-size:.46em; font-weight:400;
+  color:#51619B; letter-spacing:.3px;
+}
+
+/* ---- Card e sezioni ---- */
+.card{
+  border:0; border-radius:20px;
+  box-shadow:0 10px 34px rgba(22,39,107,.10);
+}
+#section-anagrafica{ border-top:7px solid var(--m-azure); }
+#section-scuola{     border-top:7px solid var(--m-green); }
+#section-contatti{   border-top:7px solid var(--m-orange); }
+#section-submit{     border-top:7px solid var(--m-red); }
+
+.section-title{ color:var(--m-navy); font-weight:700; letter-spacing:.3px; }
+.section-title::before{
+  content:""; display:inline-block; vertical-align:-.08em;
+  width:.62em; height:.62em; border:.2em solid var(--m-azure);
+  border-radius:50%; margin-right:.42em;
+}
+#section-scuola   .section-title::before{ border-color:var(--m-green); }
+#section-contatti .section-title::before{ border-color:var(--m-orange); }
+#section-submit   .section-title::before{ border-color:var(--m-red); }
+
+/* ---- Campi ---- */
+.field label{ color:var(--m-navy); }
+.input:focus, .select:focus{
+  border-color:var(--m-azure);
+  box-shadow:0 0 0 3px rgba(33,128,232,.18);
+}
+
+/* ---- Pulsanti ---- */
+.btn{
+  border-radius:999px;
+  font-family:'Poppins', sans-serif; font-weight:600; letter-spacing:.2px;
+  padding:.9rem 1.7rem;
+  box-shadow:0 6px 16px rgba(20,103,200,.25);
+}
+.btn:not(:disabled):hover{ filter:brightness(1.08); }
+
+.site-footer{ background:#fff; }

@@ -1,0 +1,39 @@
+/*
+ * pikaday-theme.css
+ * Stile personalizzato per Pikaday in tema UniPi
+ */
+.pika-single {
+  color: #333;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-bottom-color: #bbb;
+  font-family: var(--font-sans);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.pika-label {
+  background-color: var(--unipi-blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: .6em .4em;
+}
+
+.pika-button:hover,
+.pika-row.pika-selected .pika-button {
+  color: #fff;
+  background: var(--unipi-blue);
+  box-shadow: none;
+}
+
+.pika-today .pika-button {
+  color: var(--unipi-blue);
+  font-weight: bold;
+}
+
+.is-selected .pika-button {
+  color: #fff;
+  background: var(--unipi-blue);
+  box-shadow: none;
+}
