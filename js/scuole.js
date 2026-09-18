@@ -1,4 +1,6 @@
 (function () {
+  window.SCUOLA_ALTRO = 'Altro (scuola non in elenco)';
+
   document.addEventListener('DOMContentLoaded', () => {
 
     const comuneResidenzaSelect = document.getElementById('comuneResidenza');
@@ -34,6 +36,12 @@
         plesso: document.getElementById('field-plesso-scuola')
       };
 
+      // Scuola non in elenco: voce "Altro" tra gli istituti + campo libero.
+      const ALTRO = window.SCUOLA_ALTRO;
+      const fieldAltra = document.getElementById('field-altra-scuola');
+      const inputAltra = document.getElementById('altraScuola');
+      const hideAltra = () => { fieldAltra.hidden = true; inputAltra.value = ''; };
+
       const populateSelect = (selectElement, items) => {
         const uniqueSortedItems = [...new Set(items)].filter(Boolean).sort();
         selectElement.innerHTML = '<option value="">Seleziona…</option>';
@@ -57,6 +65,7 @@
             selects[level].disabled = true;
             fields[level].hidden = true;
           }
+          hideAltra();
         }
       };
 
@@ -115,6 +124,7 @@
             )
             .map(scuola => scuola.ist_princ_nome);
           populateSelect(selects.istituto, istituti);
+          selects.istituto.add(new Option(ALTRO, ALTRO));
           fields.istituto.hidden = false;
         }
       });
@@ -125,7 +135,10 @@
         const selectedProvincia = selects.provincia.value;
         const selectedComune = selects.comune.value;
         const selectedIstituto = selects.istituto.value;
-        if (selectedIstituto) {
+        if (selectedIstituto === ALTRO) {
+          fieldAltra.hidden = false;
+          inputAltra.focus();
+        } else if (selectedIstituto) {
           const plessi = allScuoleData
             .filter(scuola =>
               scuola.regione === selectedRegione &&
@@ -142,15 +155,18 @@
       const sectionContatti = document.getElementById('section-contatti');
       const sectionSubmit = document.getElementById('section-submit');
       
-      selects.plesso.addEventListener('change', () => {
-        if (selects.plesso.value) {
+      const toggleContatti = () => {
+        if (selects.plesso.value || inputAltra.value.trim()) {
           sectionContatti.hidden = false;
           sectionSubmit.hidden = false;
         } else {
           sectionContatti.hidden = true;
           sectionSubmit.hidden = true;
         }
-      });
+      };
+      selects.plesso.addEventListener('change', toggleContatti);
+      selects.istituto.addEventListener('change', toggleContatti);
+      inputAltra.addEventListener('input', toggleContatti);
     };
   });
 })();

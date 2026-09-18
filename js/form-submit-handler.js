@@ -11,8 +11,14 @@
     let userAcknowledgedGeoWarning = false;
 
     const requiredFieldIds = [
-      'nome', 'cognome', 'dataNascita', 'genere', 'comuneResidenza', 'plessoScuola', 'emailPrimaria'
+      'nome', 'cognome', 'dataNascita', 'genere', 'comuneResidenza', 'emailPrimaria'
     ];
+
+    // Scuola scelta dall'elenco (plesso) oppure scritta a mano ("Altro").
+    const isAltraScuola = () => document.getElementById('istitutoScuola').value === window.SCUOLA_ALTRO;
+    const isScuolaFilled = () => isAltraScuola()
+      ? document.getElementById('altraScuola').value.trim() !== ''
+      : document.getElementById('plessoScuola').value !== '';
 
     const checkFormCompleteness = () => {
       const allFieldsFilled = requiredFieldIds.every(id => {
@@ -27,7 +33,7 @@
       const cfIsFilled = cfValue.length === 16;
       const emailPrimariaField = document.getElementById('emailPrimaria');
       const isEmailValid = window.Validators.isValidEmail(emailPrimariaField.value);
-      submitBtn.disabled = !(allFieldsFilled && luogoNascitaFilled && cfIsFilled && isEmailValid);
+      submitBtn.disabled = !(allFieldsFilled && isScuolaFilled() && luogoNascitaFilled && cfIsFilled && isEmailValid);
     };
 
     const fieldsToWatch = document.querySelectorAll('form input, form select');
@@ -157,6 +163,12 @@
         // Per i nati in Italia, i valori vengono presi dai rispettivi campi
         dataToSend.luogoNascita = document.getElementById('comuneNascita').value;
         dataToSend.provinciaNascita = document.getElementById('provinciaNascita').value;
+      }
+
+      // Scuola non in elenco: il nome scritto a mano va nel campo "plesso" del Form,
+      // l'istituto resta "Altro (scuola non in elenco)" per riconoscerle nell'export.
+      if (isAltraScuola()) {
+        dataToSend.plessoScuola = document.getElementById('altraScuola').value.trim();
       }
 
       // 4. Costruisce l'URL finale
