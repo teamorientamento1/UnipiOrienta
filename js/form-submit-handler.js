@@ -109,7 +109,7 @@
         if (giaIscritto) {
           window.Modal.show(
             "Iscrizione già presente",
-            "Il tuo Codice Fiscale risulta già registrato per questo evento. Se credi si tratti di un errore, o se vuoi modificare i tuoi dati, contatta l'organizzazione all'indirizzo email: orientamento@unipi.it",
+            "Il tuo Codice Fiscale risulta già registrato per questo evento. Se credi si tratti di un errore, o se vuoi modificare i tuoi dati, contatta l'organizzazione all'indirizzo email: orientamento@adm.unipi.it",
             { closeText: "Ho capito" }
           );
           submitBtn.textContent = "Procedi all'iscrizione";
