@@ -26,7 +26,9 @@
         return field && field.value.trim() !== '';
       });
       const isEstero = document.getElementById('esteroSi').checked;
-      const luogoNascitaId = isEstero ? 'paeseEstero' : 'comuneNascita';
+      const luogoNascitaId = isEstero && document.getElementById('paeseEstero').value === window.PAESE_ALTRO
+        ? 'altroPaese'
+        : (isEstero ? 'paeseEstero' : 'comuneNascita');
       const luogoNascitaFilled = document.getElementById(luogoNascitaId)?.value.trim() !== '';
       const cfCompleto = document.querySelectorAll('.cf-segment');
       const cfValue = Array.from(cfCompleto).map(input => input.value).join('');
@@ -155,7 +157,10 @@
       // 3. ✅ ECCO LA NUOVA LOGICA PER I NATI ALL'ESTERO
       const isEstero = document.getElementById('esteroSi').checked;
       if (isEstero) {
-        const paeseNascita = document.getElementById('paeseEstero').value;
+        const paeseSel = document.getElementById('paeseEstero');
+        const paeseNascita = paeseSel.value === window.PAESE_ALTRO
+          ? document.getElementById('altroPaese').value.trim()
+          : paeseSel.value;
         // Invia il nome del paese a entrambi i campi del Form
         dataToSend.luogoNascita = paeseNascita;      // Questo andrà nel campo "Città di nascita"
         dataToSend.provinciaNascita = paeseNascita;  // Questo andrà nel campo "Provincia di nascita"

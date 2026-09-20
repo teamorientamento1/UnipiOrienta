@@ -82,6 +82,13 @@
     
     const cfInserito = Array.from(document.querySelectorAll('.cf-segment')).map(input => input.value).join('').toUpperCase();
 
+    if (isEstero && luogoNascitaSelect.value && !userData.codiceBelfiore) {
+      // Paese fuori elenco: manca il codice catastale, il confronto con il CF non si può fare.
+      clearAllErrors();
+      unblockScuolaSection();
+      return;
+    }
+
     if (!userData.nome || !userData.cognome || !userData.dataNascita || !userData.genere || !userData.codiceBelfiore || cfInserito.length !== 16) {
       blockScuolaSection();
       return;

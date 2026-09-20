@@ -73,7 +73,12 @@
     esteroSi.addEventListener("change", onEsteroChange);
     esteroNo.addEventListener("change", onEsteroChange);
     
+    const fldAltroPaese = qs("#field-altro-paese");
+    const inpAltroPaese = qs("#altroPaese");
+
     paeseSel.addEventListener("change", () => {
+        const isAltro = paeseSel.value === window.PAESE_ALTRO;
+        if (isAltro) { show(fldAltroPaese); } else { hide(fldAltroPaese); inpAltroPaese.value = ''; }
         if(paeseSel.value) {
             show(grpResidenza);
             if (!residenzaAPI) {
@@ -91,6 +96,7 @@
     hide(grpPaeseEstero);
     hide(grpNascita);
     hide(grpResidenza);
+    hide(fldAltroPaese);
     hide(fldComuneNascita);
     hide(fldComuneResidenza);
     

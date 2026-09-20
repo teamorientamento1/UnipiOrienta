@@ -104,6 +104,9 @@
     }
   }
 
+  // Paese non in elenco: voce "Altro" + campo libero (come per le scuole).
+  window.PAESE_ALTRO = 'Altro (paese non in elenco)';
+
   async function initPaesi(selectId) {
      try {
         const selectEl = document.getElementById(selectId);
@@ -119,6 +122,8 @@
             option.dataset.belfiore = paese.belfiore;
             selectEl.appendChild(option);
         });
+
+        selectEl.add(new Option(window.PAESE_ALTRO, window.PAESE_ALTRO));
 
         selectEl.disabled = false;
         if(window.activateChoices) window.activateChoices(selectId);

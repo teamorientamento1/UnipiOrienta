@@ -6,6 +6,8 @@
     const fieldCf = document.getElementById('field-cf');
     const inputs = Array.from(cfContainer.querySelectorAll('.cf-segment'));
     const hint = document.getElementById('hint-cf');
+    // La nota per chi non ha il codice fiscale sparisce appena si inizia a digitarlo.
+    const notaSenzaCf = document.getElementById('nota-senza-cf');
 
     const resetFrom = (startIndex) => {
       for (let i = startIndex; i < inputs.length; i++) {
@@ -24,6 +26,7 @@
         input.value = sanitizedValue;
 
         const { value, maxLength } = input;
+        if (notaSenzaCf) notaSenzaCf.hidden = inputs.some(i => i.value.length > 0);
         input.classList.remove('error');
 
         if (value.length === 0) {
