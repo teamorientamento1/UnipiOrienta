@@ -42,6 +42,9 @@ def leggi_testo(percorso: str) -> str:
         wb = openpyxl.load_workbook(p, read_only=True)
         celle = []
         for ws in wb.worksheets:
+            # Gli export di Microsoft Forms dichiarano male l'area usata: senza questo
+            # reset openpyxl legge zero righe e la lista resterebbe vuota in silenzio.
+            ws.reset_dimensions()
             for riga in ws.iter_rows(values_only=True):
                 celle.extend(str(c) for c in riga if c is not None)
         return '\n'.join(celle)
